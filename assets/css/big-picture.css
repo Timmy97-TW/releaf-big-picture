@@ -65,37 +65,34 @@
 
 /* ---------------------------------------------------------------- frame --- */
 
-/* The heading sits left, the argument for the drawing sits right, and the key
-   sits under the argument. Stacking all four pushed the drawing off the screen,
-   which for a section whose whole claim is "one screen" was the wrong trade. */
-.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
-.bigpic__head { display: grid; gap: var(--sp-3); }
-.bigpic__head h2.band__title { margin-bottom: 0; }
-.bigpic__head .kicker { margin-bottom: var(--sp-2); }
-@media (min-width: 940px) {
-  .bigpic__head {
-    grid-template-columns: minmax(0, 20rem) minmax(0, 33rem);
-    column-gap: var(--sp-7); row-gap: var(--sp-3); align-items: start;
-  }
-  .bigpic__head .kicker         { grid-column: 1; grid-row: 1; }
-  .bigpic__head h2.band__title  { grid-column: 1; grid-row: 2; }
-  .bigpic__head .lede           { grid-column: 2; grid-row: 1 / 3; margin-top: 1px; }
-  .bigpic__head .bigpic__legend { grid-column: 2; grid-row: 3; margin-top: 0; }
-}
-.bigpic__legend {
-  display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-5);
-  margin-top: var(--sp-4); font-size: var(--text-xs); color: var(--gray-500);
-}
-.bigpic__legend span { display: inline-flex; align-items: center; gap: .5em; }
+/* One heading, then the drawing. The section used to open with a kicker, a
+   paragraph and a key; all three explained a figure that explains itself, and
+   between them they cost about two hundred pixels of the screen the drawing
+   was meant to fill. */
+.bigpic { padding: var(--sp-6) 0; }
+.bigpic h2.band__title { margin-bottom: 0; max-width: 22ch; }
 
-/* The mark vocabulary. One shape, three fills, used on every element in the
-   figure so a reader learns it once. */
-.mark {
-  width: 9px; height: 9px; flex: none;
-  border: 1.5px solid var(--leaf-700); background: var(--leaf-700);
+/* THE ICON SET. Drawn from our own hardware and from the system schematic:
+   the culture bottle has the ribbed cap and the stir bar the real one has, the
+   cartridge has its two side ports, DIOPAL has its sloped housing under a well
+   block, the photometer stands on its open square foot. Redraw a glyph if the
+   thing it stands for changes; do not swap in a library icon.
+
+   One stroke voice throughout: round caps and joins, no fills except the parts
+   that are meant to read as live (wells, cells, bands, residues). */
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.ico {
+  flex: none; fill: none; stroke: var(--leaf-700);
+  stroke-linecap: round; stroke-linejoin: round;
 }
-.mark--part  { background: none; }
-.mark--none  { background: none; border-style: dashed; border-color: var(--gray-500); }
+.ico .f   { fill: var(--leaf-500); stroke: none; }
+.ico .rod { stroke: var(--leaf-500); stroke-width: 2.8; }
+.ico--chip { width: 22px; height: 22px; stroke-width: 1.9; }
+.ico--step { width: 34px; height: 34px; stroke-width: 1.6; }
+
+/* A dashed outline is the whole evidence vocabulary now: it means designed and
+   not yet run. The readout says so in words, so the drawing needs no key. */
+[data-ev="none"] { border-style: dashed; }
 
 /* ----------------------------------------------------------------- grid --- */
 
@@ -157,8 +154,8 @@
 
 .chip {
   position: relative; z-index: var(--bp-z-node);
-  display: grid; gap: 2px; width: 100%; text-align: left;
-  padding: 8px 9px 9px;
+  display: flex; align-items: center; gap: 9px;
+  width: 100%; text-align: left; padding: 7px 9px 8px;
   font: inherit; color: inherit; cursor: default;
   background: var(--bp-face);
   border: 1px solid var(--bp-edge);
@@ -167,17 +164,13 @@
               background-color var(--bp-dur) var(--bp-ease),
               opacity var(--bp-dur) var(--bp-ease);
 }
-/* A card in either lane carries its name and nothing else. The sentence that
+/* A card carries an icon and a name and nothing else. The sentence that
    explains it is written under the drawing when you point at it, which keeps
    fourteen cards from becoming fourteen paragraphs competing with the line. */
 .chip__name {
-  display: block; padding-right: 15px;
+  display: block; min-width: 0;
   font-size: .8125rem; font-weight: 600; line-height: 1.3; color: var(--black);
 }
-/* The mark sits in the corner rather than in the line of the name. Sharing the
-   line cost about fifteen characters per label, which was the difference
-   between a one-line name and a two-line one on every card in the drawing. */
-.chip .mark, .step .mark { position: absolute; top: 7px; right: 8px; }
 
 .chip:hover, .chip[data-lit] { border-color: var(--bp-edge-on); background: var(--bp-face-on); }
 .chip:focus-visible { outline: 2px solid var(--leaf-700); outline-offset: 2px; }
@@ -197,7 +190,7 @@
   grid-row: 2; position: relative; z-index: var(--bp-z-node);
   align-self: center; margin-block: 10px;
   display: grid; gap: 2px; align-content: center; text-align: left;
-  min-height: 84px; padding: 9px 10px 10px;
+  min-height: 84px; padding: 8px 10px 10px;
   font: inherit; color: inherit; cursor: default;
   background: var(--bp-face);
   border: 1px solid var(--leaf-200);
@@ -207,12 +200,16 @@
               background-color var(--bp-dur) var(--bp-ease),
               opacity var(--bp-dur) var(--bp-ease);
 }
+.step__top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 6px; margin-bottom: 3px;
+}
 .step__n {
   font-family: var(--font-mono); font-size: .625rem; color: var(--gray-500);
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums; letter-spacing: .04em;
 }
 .step__name {
-  display: block; padding-right: 15px;
+  display: block;
   font-size: .9375rem; font-weight: 700; line-height: 1.22;
   letter-spacing: -.01em; color: var(--leaf-900);
 }
