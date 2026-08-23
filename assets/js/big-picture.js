@@ -4,25 +4,27 @@
    Two jobs, and no third.
 
      1  reveal      the one-shot entrance, matching .rise elsewhere on the page
-     2  emphasis    pointing at a piece of work lights the part of the line it
-                    belongs to and writes one sentence under the drawing
+     2  emphasis    pointing at a piece of work lights the run it belongs to and
+                    writes one sentence under the drawing
 
    NOTHING OPENS. There is no panel to build, no state to remember and no route
    to change. Every word in the figure is in the markup before this file runs,
    so the drawing is complete with scripting off. If a future edit starts
    storing content in here, the section has stopped doing its job.
 
-   The lighting rules, in full:
+   THE LIGHTING RULES, IN FULL
 
      a step        lights itself and the work that feeds it
-     a piece       lights itself, the step it joins, every step after that one,
-                   and the block at the end. That is the answer to the only
-                   question worth asking of a figure like this: how does my
-                   work reach a farm
-     the end block lights the whole line
+     a piece       lights itself, the step it joins, every step after that one
+                   on the same line, the node the two lines meet at, and the
+                   block after it. That is the answer to the only question
+                   worth asking of a figure like this: how does my work reach
+                   a farm
+     the node      lights both lines end to end, because that is what it joins
+     the end block lights everything
 
-   Segments of the line carry data-flow rather than data-lit, because a segment
-   belongs to the gap after a step rather than to the step itself.
+   Segments carry data-flow rather than data-lit, because a segment belongs to
+   the gap after a step rather than to the step itself.
    ========================================================================== */
 
 (function () {
@@ -30,6 +32,7 @@
 
   var figure  = document.getElementById("figure");
   var readout = document.getElementById("readout");
+  var join    = document.getElementById("join");
   var term    = document.getElementById("term");
   if (!figure || !readout) return;
 
@@ -58,12 +61,14 @@
 
   function clear() {
     figure.removeAttribute("data-focus");
+    figure.removeAttribute("data-line");
     steps.forEach(function (s) {
       s.removeAttribute("data-lit");
       s.removeAttribute("data-flow");
     });
     chips.forEach(function (c) { c.removeAttribute("data-lit"); });
     stacks.forEach(function (s) { s.removeAttribute("data-lit"); });
+    if (join) join.removeAttribute("data-lit");
     if (term) term.removeAttribute("data-lit");
     readout.innerHTML = REST;
     readout.removeAttribute("data-active");
@@ -75,39 +80,58 @@
     if (stack) stack.setAttribute("data-lit", "");
   }
 
+  /* light one line from a given column to its end, segments included */
+  function runOut(line, from) {
+    steps.forEach(function (s) {
+      if (s.getAttribute("data-line") !== line) return;
+      if (Number(s.getAttribute("data-step")) < from) return;
+      s.setAttribute("data-lit", "");
+      s.setAttribute("data-flow", "");
+    });
+  }
+
   function show(el) {
     clear();
     figure.setAttribute("data-focus", "1");
     readout.innerHTML = el.getAttribute("data-say") || REST;
     readout.setAttribute("data-active", "");
 
-    if (el === term) {                                    /* the whole line */
+    if (el === term) {                                   /* everything */
+      figure.setAttribute("data-line", "both");
       steps.forEach(function (s) {
         s.setAttribute("data-lit", "");
         s.setAttribute("data-flow", "");
       });
+      if (join) join.setAttribute("data-lit", "");
       term.setAttribute("data-lit", "");
       return;
     }
 
-    var n = Number(el.getAttribute("data-step"));
-    if (n) {                                              /* a step */
+    if (el === join) {                                   /* both lines, in full */
+      figure.setAttribute("data-line", "both");
+      runOut("wet", 1);
+      runOut("dry", 1);
+      join.setAttribute("data-lit", "");
+      if (term) term.setAttribute("data-lit", "");
+      return;
+    }
+
+    var line = el.getAttribute("data-line");
+    if (line) {                                          /* a step */
       el.setAttribute("data-lit", "");
+      var at = el.getAttribute("data-step");
       chips.forEach(function (c) {
-        if (Number(c.getAttribute("data-feeds")) === n) litChip(c);
+        if (c.getAttribute("data-feeds") === line && c.getAttribute("data-at") === at) litChip(c);
       });
       return;
     }
 
-    var joins = Number(el.getAttribute("data-feeds"));    /* a piece of work */
-    if (!joins) return;
+    var feeds = el.getAttribute("data-feeds");           /* a piece of work */
+    if (!feeds) return;
     litChip(el);
-    steps.forEach(function (s) {
-      var i = Number(s.getAttribute("data-step"));
-      if (i < joins) return;
-      s.setAttribute("data-lit", "");
-      if (i >= joins) s.setAttribute("data-flow", "");
-    });
+    figure.setAttribute("data-line", feeds);
+    runOut(feeds, Number(el.getAttribute("data-at")));
+    if (join) join.setAttribute("data-lit", "");
     if (term) term.setAttribute("data-lit", "");
   }
 

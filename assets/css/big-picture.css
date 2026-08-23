@@ -1,381 +1,453 @@
 /* Hallmark · component: homepage section (interactive figure) · genre: editorial
  * theme: releaf-wiki project system (assets/css/tokens.css, preserved verbatim)
- * states: default · hover · focus-visible · active · lit · dimmed · keystone · reduced-motion
- * contrast: pass · motion primitives: 2 (one entrance, one highlight)
- * pre-emit critique: P5 H5 E4 S5 R5 V5
+ * states: default · hover · focus-visible · lit · dimmed · keystone · reduced-motion
+ * motion primitives: 2 (one entrance, one highlight) · contrast: pass
+ * pre-emit critique: P5 H5 E5 S5 R4 V5
  * =============================================================================
  * ReLeaf: the big picture
  * -----------------------------------------------------------------------------
- * The last band on the homepage. It answers one question a judge asks after
- * reading everything above it: does all of that add up to one thing.
+ * The closing band of the homepage. TWO lines run left to right and meet.
  *
- * THE FIGURE IS A LINE. Six steps run left to right, from a field under stress
- * to a crop that came through it, and end in a dark block that names what still
- * has to be true for the line to reach a farm. Above the line sits what we
- * made. Below it sits how we know. A hairline returns along the bottom to the
- * start, because the map and the farmers are both where the work began and
- * where it goes back to.
+ *   THE WET LINE, on top, is the biology: a field under stress, a molecule
+ *   chosen against it, cells that make the molecule, a plant that comes
+ *   through. Green.
+ *
+ *   THE DRY LINE, underneath, is the machine: the call to make some, the
+ *   green light that sets the dose, the reactor that holds the culture, the
+ *   membrane that hands the protein over. Slate.
+ *
+ *   THEY MEET at the tandem run, which is the only experiment on the board
+ *   that joins a machine to a plant with nobody carrying a tube between them.
+ *   One rail leaves that node and goes into the dark block, which names what
+ *   still has to be true before the line reaches a farm.
+ *
+ * Above the wet line sits the wet work that feeds it. Below the dry line sits
+ * the dry work that feeds it. Nothing floats.
+ *
+ * THREE COLOUR SYSTEMS, AND THEY DO NOT OVERLAP
+ *
+ *   1  THE ZONE tells you which half of the team a piece of work belongs to.
+ *      Green is wet, slate is dry. It colours the wash behind a zone, the well
+ *      behind its icons and the connector that ties a card to its line, so a
+ *      card's home is legible before a word on it is read.
+ *
+ *   2  THE RAMP tells you direction. Each line's four badges walk from light
+ *      to dark, and each band deepens toward the right, where the two meet.
+ *
+ *   3  THE ICONS are coloured by what the object actually is. The medium is
+ *      pink because ours is. The cone off the LED is 520 nm. The pot is
+ *      terracotta, the boards are slate, the tubing carries its LED strip.
+ *      They are drawn from hardware/img/card-*.png and from the system
+ *      schematic on the wiki, and they use the palette below, which is the
+ *      wiki's own signal colours plus three interpolated mid tones.
  *
  * RULES THAT SHOULD SURVIVE THE NEXT EDIT
  *
- * · NOTHING OPENS. There is no panel, no modal, no drawer. Every label and
- *   every subtitle is on screen before the reader touches anything. Hover and
- *   focus only change emphasis, and one readout line under the figure names
- *   the relationship in words. If a future edit adds a click that reveals
- *   hidden text, the section has stopped doing its job.
- * · THE MARKS ARE LOAD-BEARING. A filled mark means data in hand, a hollow one
- *   means the work is under way, a dashed one means it is designed and not run.
- *   Most of this project is not finished, and drawing it as finished would be
- *   the one thing on the homepage that lies.
- * · NO COLOUR OR FONT IS WRITTEN INLINE. Every value comes from tokens.css. The
- *   only new tokens are in the :root block below, and they are derived names,
- *   not new colours.
- * · THE FIGURE IS READABLE WITH NO JAVASCRIPT AND NO MOTION. Check with
- *   prefers-reduced-motion and with scripting off before shipping a change.
+ * · NOTHING OPENS. No panel, no modal, no drawer. Every label is on screen
+ *   before the reader touches anything. Pointing at a piece changes emphasis
+ *   and writes one line under the drawing.
+ * · A DASHED OUTLINE means designed and not yet run. That is the whole evidence
+ *   vocabulary, and the readout says it in words, so the figure needs no key.
+ * · READABLE WITH NO JAVASCRIPT AND NO MOTION. The hidden state of the entrance
+ *   is added by script, never by the stylesheet.
  * ========================================================================== */
 
 :root {
-  /* derived names only: every value points back at tokens.css */
-  --bp-line:      var(--gray-400);
-  --bp-line-on:   var(--leaf-500);
-  --bp-edge:      var(--gray-200);
-  --bp-edge-on:   var(--leaf-500);
-  --bp-face:      var(--white);
-  --bp-face-on:   var(--leaf-50);
-  --bp-ink-soft:  var(--gray-500);
+  /* ── the icon palette ──────────────────────────────────────────────────
+     Everything here is either a wiki token or an interpolation between two of
+     them. The three mid tones exist because tokens.css carries only a 700 and
+     a 100 for each signal colour, and flat colour art needs a middle. */
+  --i-k:  var(--black);
+  --i-p:  var(--white);
+  --i-n:  var(--gray-400);
+  --i-g9: var(--leaf-900);
+  --i-g7: var(--leaf-700);
+  --i-g5: var(--leaf-500);
+  --i-g2: var(--leaf-200);
+  --i-lt: #35e08a;                 /* the 520 nm the reactor runs on, as home.css has it */
+  --i-a7: var(--amber-700);
+  --i-a5: #d9a13c;                 /* interpolated: amber 700 to 100 */
+  --i-a2: #f2ddb0;                 /* interpolated */
+  --i-a1: var(--amber-100);
+  --i-r7: var(--rust-700);
+  --i-r3: #edc0ae;                 /* interpolated: rust 700 to 100 */
+  --i-r1: var(--rust-100);
+  --i-s7: var(--slate-700);
+  --i-s2: #c3d4e2;                 /* interpolated: slate 700 to 100 */
+  --i-s1: var(--slate-100);
 
   /* mirrored from home.css, which defines these for the dark act. Once this
-     section is merged into the homepage those two lines already exist and
-     these can go. Declared here so the standalone build never writes a colour
-     inline. */
+     section is merged those two lines already exist and these can go. */
   --ink:       #070b09;
   --sig-green: #35e08a;
 
-  --bp-gutter:    76px;
-  --bp-term:      192px;
-  --bp-rowgap:    14px;
-  --bp-colgap:    16px;
+  /* the two ramps. Each line's badges walk light to dark along its four
+     steps, which is the only cue in the figure that says which way to read it.
+     The stops are interpolations between the wiki's leaf and slate tokens. */
+  --rung-w1: #6aab86; --rung-w2: var(--leaf-500); --rung-w3: #3d8560; --rung-w4: var(--leaf-700);
+  --rung-d1: #8fa6ba; --rung-d2: #6c8399;        --rung-d3: #55708a; --rung-d4: var(--slate-700);
+  --ink-dry: #22384c;              /* slate ink, one step past slate-700 */
 
-  --bp-ease:      cubic-bezier(.16, 1, .3, 1);
-  --bp-dur:       180ms;
+  --bp-gutter: 98px;
+  --bp-join:   202px;
+  --bp-term:   198px;
+  --bp-rowgap: 12px;
+  --bp-colgap: 14px;
 
-  --bp-z-line:    1;
-  --bp-z-node:    2;
+  --bp-ease: cubic-bezier(.16, 1, .3, 1);
+  --bp-dur:  190ms;
 }
 
-/* ---------------------------------------------------------------- frame --- */
+/* ── the frame ─────────────────────────────────────────────────────────── */
 
-/* One heading, then the drawing. The section used to open with a kicker, a
-   paragraph and a key; all three explained a figure that explains itself, and
-   between them they cost about two hundred pixels of the screen the drawing
-   was meant to fill. */
-.bigpic { padding: var(--sp-6) 0; }
-.bigpic h2.band__title { margin-bottom: 0; max-width: 22ch; }
-
-/* THE ICON SET. Drawn from our own hardware and from the system schematic:
-   the culture bottle has the ribbed cap and the stir bar the real one has, the
-   cartridge has its two side ports, DIOPAL has its sloped housing under a well
-   block, the photometer stands on its open square foot. Redraw a glyph if the
-   thing it stands for changes; do not swap in a library icon.
-
-   One stroke voice throughout: round caps and joins, no fills except the parts
-   that are meant to read as live (wells, cells, bands, residues). */
-.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
-.ico {
-  flex: none; fill: none; stroke: var(--leaf-700);
-  stroke-linecap: round; stroke-linejoin: round;
-}
-.ico .f   { fill: var(--leaf-500); stroke: none; }
-.ico .rod { stroke: var(--leaf-500); stroke-width: 2.8; }
-.ico--chip { width: 22px; height: 22px; stroke-width: 1.9; }
-.ico--step { width: 34px; height: 34px; stroke-width: 1.6; }
-
-/* A dashed outline is the whole evidence vocabulary now: it means designed and
-   not yet run. The readout says so in words, so the drawing needs no key. */
-[data-ev="none"] { border-style: dashed; }
-
-/* ----------------------------------------------------------------- grid --- */
-
+section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
+.bigpic h2.band__title { margin-bottom: 0; max-width: 46ch; }
+.bigpic__hint { display: none; margin-top: var(--sp-3); font-size: var(--text-xs); color: var(--gray-500); }
 .bigpic__scroll { margin-top: var(--sp-4); overflow-x: auto; overscroll-behavior-x: contain; }
 
+/* seven columns: the zone labels, four steps a line, the node where the two
+   meet, and the block they go into. Five rows: wet work, wet line, dry line,
+   dry work, and the return along the bottom. */
 .figure {
   display: grid;
-  grid-template-columns: var(--bp-gutter) repeat(6, minmax(120px, 1fr)) var(--bp-term);
-  grid-template-rows: auto auto auto auto;
+  grid-template-columns: var(--bp-gutter) repeat(4, minmax(150px, 1fr)) var(--bp-join) var(--bp-term);
   column-gap: var(--bp-colgap);
   row-gap: var(--bp-rowgap);
-  min-width: 940px;
-  align-items: stretch;
+  min-width: 1000px;
+}
+[data-col="1"] { grid-column: 2; } [data-col="2"] { grid-column: 3; }
+[data-col="3"] { grid-column: 4; } [data-col="4"] { grid-column: 5; }
+
+/* ── the two zones ─────────────────────────────────────────────────────── */
+
+.zoneband { grid-column: 1 / 7; z-index: 0; border-radius: var(--radius); }
+.zoneband--wetwork { grid-row: 1; background: var(--leaf-50); }
+.zoneband--drywork { grid-row: 4; background: var(--slate-100); opacity: .55; }
+/* each line's band deepens toward the node the two of them meet at */
+.zoneband--wet {
+  grid-row: 2; background: linear-gradient(90deg, var(--i-r1) 0%, var(--leaf-50) 26%, var(--leaf-100) 72%, var(--leaf-200) 100%);
+  box-shadow: inset 0 0 0 1px var(--leaf-200);
+}
+.zoneband--dry {
+  grid-row: 3; background: linear-gradient(90deg, var(--slate-100) 0%, var(--i-s2) 100%);
+  box-shadow: inset 0 0 0 1px var(--i-s2);
 }
 
-/* the left gutter carries the three lane names, so the figure reads as a
-   drawing rather than three stacked card rows */
-.lane__name {
-  grid-column: 1; align-self: center; margin: 0;
-  position: relative; z-index: 1;   /* the band below is painted, so sit above it */
-  font-size: .75rem; font-weight: 700; line-height: 1.25;
-  letter-spacing: .01em; color: var(--leaf-900);
+.zone__name {
+  grid-column: 1; margin: 0; align-self: center;
+  position: relative; z-index: 2; padding-left: var(--sp-3);
+  font-size: .875rem; font-weight: 700; line-height: 1.16; color: var(--tone);
 }
-.lane__name small {
+.zone__name small {
   display: block; font-weight: 400; color: var(--gray-500);
-  font-size: .6875rem; line-height: 1.35; letter-spacing: 0; margin-top: 2px;
+  font-size: .6875rem; line-height: 1.36; margin-top: 4px;
 }
-.lane__name--make { grid-row: 1; align-self: end; }
-.lane__name--line { grid-row: 2; }
-.lane__name--know { grid-row: 3; align-self: start; }
+.zone__name::after {
+  content: ""; display: block; height: 3px; width: 34px; margin-top: 8px;
+  border-radius: 2px; background: var(--tone);
+}
+.zone__name--wet { grid-row: 1 / 3; --tone: var(--leaf-700); }
+.zone__name--dry { grid-row: 3 / 5; --tone: var(--i-s7); }
 
-/* ---------------------------------------------------------------- stacks -- */
-/* One stack per column per lane. A column may hold nothing, and the ragged
-   edge that produces is true: no hardware sits at "a field under stress". */
+/* ── the stacks and the connectors into their line ─────────────────────── */
 
-.stack { display: flex; flex-direction: column; gap: 5px; position: relative; }
-.stack--make { grid-row: 1; justify-content: flex-end; }
-.stack--know { grid-row: 3; justify-content: flex-start; }
-
-/* the connector into the line, drawn in the row gap */
+.stack {
+  display: flex; flex-direction: column; gap: 5px;
+  position: relative; z-index: 1; padding: 6px 0;
+}
+.stack--wet { grid-row: 1; justify-content: flex-end; --conn: var(--leaf-700); --wash: var(--leaf-100); }
+.stack--dry { grid-row: 4; justify-content: flex-start; --conn: var(--i-s7);   --wash: var(--slate-100); }
 .stack::after {
-  content: ""; position: absolute; left: 50%; width: 1.5px;
-  background: var(--bp-line); z-index: var(--bp-z-line);
-  transition: background-color var(--bp-dur) var(--bp-ease), width var(--bp-dur) var(--bp-ease);
+  content: ""; position: absolute; left: 50%; width: 2px;
+  background: var(--conn); opacity: .3; border-radius: 1px;
+  transition: opacity var(--bp-dur) var(--bp-ease), width var(--bp-dur) var(--bp-ease);
 }
-.stack--make::after { top: 0; bottom: calc(-1 * var(--bp-rowgap)); }
-.stack--know::after { bottom: 0; top: calc(-1 * var(--bp-rowgap)); }
-.stack[data-lit]::after { background: var(--bp-line-on); width: 2.5px; }
+.stack--wet::after { top: 6px; bottom: calc(-1 * var(--bp-rowgap)); }
+.stack--dry::after { bottom: 6px; top: calc(-1 * var(--bp-rowgap)); }
+.stack[data-lit]::after { opacity: 1; width: 3px; }
 .stack:empty::after { display: none; }
 
-[data-col="1"] { grid-column: 2; }
-[data-col="2"] { grid-column: 3; }
-[data-col="3"] { grid-column: 4; }
-[data-col="4"] { grid-column: 5; }
-[data-col="5"] { grid-column: 6; }
-[data-col="6"] { grid-column: 7; }
+/* ── the icon system ───────────────────────────────────────────────────── */
 
-/* ----------------------------------------------------------------- chip --- */
+.well {
+  display: grid; place-items: center; flex: none;
+  border-radius: var(--radius-sm); background: var(--wash, var(--gray-100));
+}
+.ico { display: block; }
+.chip .well { width: 32px; height: 32px; }
+.chip .ico  { width: 25px; height: 25px; }
+.step .well { width: 46px; height: 46px; border-radius: var(--radius); }
+.step .ico  { width: 37px; height: 37px; }
+.join .well { width: 44px; height: 44px; border-radius: var(--radius); }
+.join .ico  { width: 35px; height: 35px; }
+
+/* ── a card in either lane ─────────────────────────────────────────────── */
 
 .chip {
-  position: relative; z-index: var(--bp-z-node);
+  position: relative; z-index: 2;
   display: flex; align-items: center; gap: 9px;
-  width: 100%; text-align: left; padding: 7px 9px 8px;
-  font: inherit; color: inherit; cursor: default;
-  background: var(--bp-face);
-  border: 1px solid var(--bp-edge);
-  border-radius: var(--radius-sm);
+  width: 100%; text-align: left; padding: 6px 9px 6px 6px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
   transition: border-color var(--bp-dur) var(--bp-ease),
-              background-color var(--bp-dur) var(--bp-ease),
+              box-shadow var(--bp-dur) var(--bp-ease),
               opacity var(--bp-dur) var(--bp-ease);
 }
-/* A card carries an icon and a name and nothing else. The sentence that
-   explains it is written under the drawing when you point at it, which keeps
-   fourteen cards from becoming fourteen paragraphs competing with the line. */
 .chip__name {
   display: block; min-width: 0;
-  font-size: .8125rem; font-weight: 600; line-height: 1.3; color: var(--black);
+  font-size: .8125rem; font-weight: 600; line-height: 1.28; color: var(--black);
 }
-
-.chip:hover, .chip[data-lit] { border-color: var(--bp-edge-on); background: var(--bp-face-on); }
+.chip:hover, .chip[data-lit] { border-color: var(--conn, var(--leaf-500)); box-shadow: var(--shadow-md); }
 .chip:focus-visible { outline: 2px solid var(--leaf-700); outline-offset: 2px; }
 
-/* the keystone is the one run that joins the machine to a plant, so it is the
-   one element allowed a heavier edge */
-.chip--key { border-color: var(--leaf-500); box-shadow: inset 0 0 0 1px var(--leaf-200); }
+/* the keystone is the one run that joins the machine to a plant */
+.chip--key { border-color: var(--leaf-500); }
 .chip--key .chip__name::after {
   content: "closes the line"; display: block;
-  font-size: .625rem; font-weight: 400; letter-spacing: .08em;
+  font-size: .625rem; font-weight: 700; letter-spacing: .08em;
   text-transform: uppercase; color: var(--leaf-700); margin-top: 3px;
 }
 
-/* ----------------------------------------------------------------- line --- */
+/* ── the eight steps ───────────────────────────────────────────────────── */
 
 .step {
-  grid-row: 2; position: relative; z-index: var(--bp-z-node);
-  align-self: center; margin-block: 10px;
-  display: grid; gap: 2px; align-content: center; text-align: left;
-  min-height: 84px; padding: 8px 10px 10px;
-  font: inherit; color: inherit; cursor: default;
-  background: var(--bp-face);
-  border: 1px solid var(--leaf-200);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
+  position: relative; z-index: 2;
+  display: grid; gap: 3px; align-content: start; text-align: left;
+  margin-block: 9px; padding: 9px 11px 10px;
+  background: var(--white);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
   transition: border-color var(--bp-dur) var(--bp-ease),
-              background-color var(--bp-dur) var(--bp-ease),
+              box-shadow var(--bp-dur) var(--bp-ease),
               opacity var(--bp-dur) var(--bp-ease);
 }
-.step__top {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 6px; margin-bottom: 3px;
-}
-.step__n {
-  font-family: var(--font-mono); font-size: .625rem; color: var(--gray-500);
-  font-variant-numeric: tabular-nums; letter-spacing: .04em;
-}
-.step__name {
-  display: block;
-  font-size: .9375rem; font-weight: 700; line-height: 1.22;
-  letter-spacing: -.01em; color: var(--leaf-900);
-}
-.step__note { font-size: .71875rem; line-height: 1.42; color: var(--bp-ink-soft); }
+.step--wet { grid-row: 2; --edge: var(--leaf-200); --wash: var(--leaf-50);   --hi: var(--leaf-500); }
+.step--dry { grid-row: 3; --edge: var(--i-s2);     --wash: var(--slate-100); --hi: var(--i-s7); }
+.step__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
 
-.step:hover, .step[data-lit] { border-color: var(--leaf-700); background: var(--bp-face-on); }
+/* the badge walks light to dark along each line, which is the only thing in
+   the figure that says which way to read it */
+.step__n {
+  display: grid; place-items: center; flex: none;
+  width: 21px; height: 21px; border-radius: 50%;
+  background: var(--rung); color: var(--white);
+  font-family: var(--font-mono); font-size: .625rem; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.step--wet[data-col="1"] { --rung: var(--rung-w1); } .step--wet[data-col="2"] { --rung: var(--rung-w2); }
+.step--wet[data-col="3"] { --rung: var(--rung-w3); } .step--wet[data-col="4"] { --rung: var(--rung-w4); }
+.step--dry[data-col="1"] { --rung: var(--rung-d1); } .step--dry[data-col="2"] { --rung: var(--rung-d2); }
+.step--dry[data-col="3"] { --rung: var(--rung-d3); } .step--dry[data-col="4"] { --rung: var(--rung-d4); }
+
+.step__name {
+  display: block; font-size: .9375rem; font-weight: 700; line-height: 1.2;
+  letter-spacing: -.012em; color: var(--leaf-900);
+}
+.step--dry .step__name { color: var(--ink-dry); }
+.step__note { font-size: .71875rem; line-height: 1.42; color: var(--gray-600); }
+.step:hover, .step[data-lit] { border-color: var(--hi); box-shadow: var(--shadow-lg); }
 .step:focus-visible { outline: 2px solid var(--leaf-700); outline-offset: 2px; }
 
-/* THE LINE IS DRAWN, not implied. An earlier build put a hairline segment in
-   each column gap and nothing else, and at a thirteen pixel gap that reads as
-   six cards in a row rather than as one line. The band below is the fix: the
-   middle row sits on its own tint, a rule runs the whole way across it, and
-   the six cards sit on that rule with white behind them. */
-.railband {
-  grid-column: 1 / 8; grid-row: 2; position: relative; z-index: 0;
-  background: var(--leaf-100); border-block: 1px solid var(--leaf-200);
-  border-radius: var(--radius-sm);
-}
-.railband::before {                                   /* the rule */
-  content: ""; position: absolute; top: 50%; left: var(--sp-2);
-  right: calc(-1 * var(--bp-colgap)); height: 1.5px; margin-top: -.75px;
-  background: var(--leaf-500);
-}
-.railband::after {                                    /* into the dark block */
-  content: ""; position: absolute; top: 50%; right: calc(-1 * var(--bp-colgap));
-  width: 7px; height: 7px; margin-top: -4px;
-  border-top: 1.5px solid var(--leaf-500); border-right: 1.5px solid var(--leaf-500);
-  transform: rotate(45deg);
-}
-
-/* A lit run of the line paints over the rule, gap by gap, so the emphasis
-   follows the actual steps rather than washing the whole rule green. */
+/* a lit run paints the gaps between the tiles it passes through */
 .step::before {
   content: ""; position: absolute; top: 50%; left: 100%;
-  width: var(--bp-colgap); height: 2px; margin-top: -1px;
-  background: transparent; z-index: var(--bp-z-line);
+  width: var(--bp-colgap); height: 3px; margin-top: -1.5px;
+  background: transparent; border-radius: 2px; z-index: 1;
   transition: background-color var(--bp-dur) var(--bp-ease);
 }
-.step[data-flow]::before { background: var(--bp-line-on); }
-.step[data-lit]::after {
-  content: ""; position: absolute; inset: -3px; border-radius: var(--radius-sm);
-  border: 1px solid var(--bp-line-on); pointer-events: none;
-}
+.step[data-flow]::before { background: var(--hi); }
 
-/* ------------------------------------------------------------- terminal --- */
+/* ── the node where the two lines meet ─────────────────────────────────── */
+
+.join {
+  grid-column: 6; grid-row: 2 / 4; margin-left: 62px; position: relative; z-index: 3;
+  display: grid; gap: 4px; align-content: center; justify-items: start;
+  margin-block: 9px; padding: var(--sp-3);
+  background: var(--white);
+  border: 2px solid var(--leaf-500);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow var(--bp-dur) var(--bp-ease), opacity var(--bp-dur) var(--bp-ease);
+}
+.join .well { --wash: var(--leaf-100); }
+.join__tag {
+  font-size: .625rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--leaf-700);
+}
+.join__name {
+  font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700;
+  line-height: 1.16; letter-spacing: -.018em; color: var(--leaf-900);
+}
+.join__note { font-size: .6875rem; line-height: 1.4; color: var(--gray-600); }
+.join:focus-visible { outline: 2px solid var(--leaf-700); outline-offset: 3px; }
+/* THE MERGE. Two curves come in at the height of each line and meet at the
+   left edge of the node, and one rail leaves it for the block. This is the
+   only place in the figure where the drawing does the arguing, so it gets
+   real width: the node is pushed right inside its column to leave room. */
+.merge {
+  grid-column: 6; grid-row: 2 / 4; z-index: 1;
+  margin-left: calc(-1 * var(--bp-colgap));
+  width: calc(100% + var(--bp-colgap)); height: 100%;
+  overflow: visible; pointer-events: none;
+}
+.merge path { fill: none; stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.merge .m-wet { stroke: var(--leaf-500); stroke-opacity: .5; }
+.merge .m-dry { stroke: var(--i-s7); stroke-opacity: .34; }
+.figure[data-focus] .merge path { stroke-opacity: .12; }
+.figure[data-line="wet"]  .m-wet,
+.figure[data-line="both"] .merge path { stroke-opacity: 1; }
+.figure[data-line="dry"]  .m-dry { stroke-opacity: 1; }
+
+/* and one rail out of the node, into the block */
+.join::after {
+  content: ""; position: absolute; left: 100%; top: 50%; margin-top: -1.5px;
+  height: 3px; width: var(--bp-colgap); border-radius: 2px;
+  background: var(--leaf-200); transition: background-color var(--bp-dur) var(--bp-ease);
+}
+.join[data-lit]::after { background: var(--leaf-500); }
+.join[data-lit] { box-shadow: 0 0 0 3px var(--leaf-200), var(--shadow-lg); }
+
+/* ── where the line goes ───────────────────────────────────────────────── */
 
 .term {
-  grid-column: 8; grid-row: 1 / 4; position: relative; z-index: var(--bp-z-node);
+  grid-column: 7; grid-row: 1 / 5; position: relative; z-index: 2;
   display: flex; flex-direction: column; gap: var(--sp-2);
-  padding: var(--sp-4) var(--sp-4) var(--sp-3); border-radius: var(--radius);
+  padding: var(--sp-4) var(--sp-4) var(--sp-3);
+  border-radius: var(--radius); overflow: hidden;
   background: var(--ink); color: var(--leaf-100);
   transition: box-shadow var(--bp-dur) var(--bp-ease);
 }
+.term::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, var(--leaf-700), var(--sig-green));
+}
 .term[data-lit] { box-shadow: 0 0 0 2px var(--leaf-500); }
 .term__label {
-  font-size: .625rem; font-weight: 700; letter-spacing: .12em;
+  margin-top: 2px; font-size: .625rem; font-weight: 700; letter-spacing: .12em;
   text-transform: uppercase; color: var(--sig-green);
 }
 .term__claim {
   margin: 0; font-family: var(--font-display); font-weight: 700;
-  font-size: 1.25rem; line-height: 1.14; letter-spacing: -.02em; color: var(--white);
+  font-size: 1.3125rem; line-height: 1.12; letter-spacing: -.022em; color: var(--white);
 }
 .term__gates { display: grid; gap: 0; margin-top: auto; }
 .term__gate {
-  padding: 6px 0; border-top: 1px solid var(--gray-700);
+  padding: 7px 0; border-top: 1px solid var(--gray-700);
   font-size: .6875rem; line-height: 1.38; color: var(--leaf-200);
 }
 .term__gate b { display: block; font-weight: 600; color: var(--white); }
 
-/* --------------------------------------------------------------- return --- */
+/* ── and back to the start ─────────────────────────────────────────────── */
 
 .back {
-  grid-column: 1 / -1; grid-row: 4;
+  grid-column: 1 / -1; grid-row: 5;
   display: flex; align-items: center; gap: var(--sp-3);
-  padding-top: 9px; border-top: 1px solid var(--bp-edge);
-  font-size: var(--text-xs); color: var(--gray-500);
+  padding-top: 11px; border-top: 2px dashed var(--i-r3);
+  font-size: var(--text-xs); color: var(--gray-600);
 }
 .back__arrow {
-  flex: none; width: 5px; height: 5px; margin-left: 2px;
-  border-left: 1px solid var(--gray-400); border-bottom: 1px solid var(--gray-400);
+  flex: none; width: 6px; height: 6px; margin-left: 3px;
+  border-left: 2px solid var(--i-r7); border-bottom: 2px solid var(--i-r7);
   transform: rotate(45deg);
 }
 .back__text { max-width: none; line-height: 1.45; }
-.back__chips { display: flex; gap: 6px; margin-left: auto; }
-.back .chip { width: auto; min-width: 148px; }
+.back__chips { display: flex; gap: 7px; margin-left: auto; }
+.back .chip { width: auto; min-width: 156px; --wash: var(--i-r1); --conn: var(--i-r7); }
 
-/* -------------------------------------------------------------- readout --- */
+/* ── the readout, and the one thing that changes ───────────────────────── */
 
 .readout {
   margin-top: var(--sp-3); padding-left: var(--sp-4);
-  border-left: 2px solid var(--leaf-200);
-  min-height: 3.4em; max-width: 96ch;
+  border-left: 3px solid var(--leaf-200);
+  min-height: 3.2em; max-width: 96ch;
   font-size: var(--text-sm); line-height: 1.6; color: var(--gray-600);
   transition: border-color var(--bp-dur) var(--bp-ease);
 }
 .readout[data-active] { border-left-color: var(--leaf-500); }
-.readout b { color: var(--black); font-weight: 700; }
+.readout b { color: var(--leaf-900); font-weight: 700; }
 .readout i { font-style: normal; color: var(--gray-500); }
 
-/* --------------------------------------------------------------- states --- */
-/* One highlight primitive: everything not on the path drops to a quarter
-   opacity. Nothing moves, nothing scales, nothing bounces. */
+/* ── states. One highlight primitive: everything off the path recedes.
+      Nothing moves, nothing scales, nothing bounces. ─────────────────────  */
 
 .figure[data-focus] .chip:not([data-lit]),
-.figure[data-focus] .step:not([data-lit]) { opacity: .26; }
-.figure[data-focus] .stack:not([data-lit])::after { opacity: .3; }
+.figure[data-focus] .step:not([data-lit]) { opacity: .3; box-shadow: none; }
+.figure[data-focus] .stack:not([data-lit])::after { opacity: .12; }
+.figure[data-focus] .zoneband { opacity: .45; }
+.figure[data-focus] .join:not([data-lit]) { opacity: .3; box-shadow: none; }
 
-/* ---------------------------------------------------------- entrance ------ */
-/* The one orchestrated entrance, matching .rise on the rest of the homepage.
-   The hidden state is applied by script and never by the stylesheet, so with
-   scripting off the drawing is simply there. A figure that needs JavaScript in
-   order to become visible is a figure that vanishes for the one reader who
-   turned it off. */
+/* a dashed outline is the whole evidence vocabulary: designed, not yet run */
+.chip[data-ev="none"], .step[data-ev="none"] { border-style: dashed; box-shadow: none; }
+.join[data-ev="none"] { border-style: dashed; }
+.step[data-ev="none"] { border-color: var(--gray-400); }
+.chip[data-ev="none"] { border-color: var(--gray-300); }
+
+/* ── the entrance. Applied by script, never by the stylesheet, so with
+      scripting off the drawing is simply there. ──────────────────────────  */
+
 .figure.will-rise { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
 .figure.will-rise.in { opacity: 1; transform: none; }
 
-/* ------------------------------------------------------------ narrower ---- */
+/* ── narrower ──────────────────────────────────────────────────────────── */
 
-@media (max-width: 1180px) {
-  .figure { --bp-gutter: 68px; --bp-term: 176px; min-width: 900px; }
+@media (max-width: 1320px) {
+  .figure { --bp-gutter: 88px; --bp-join: 186px; --bp-term: 184px; }
+  .col { --gut: 14px; }
 }
 
-/* Between about 820 and 1060 the drawing is wider than the column it sits in,
-   so it scrolls sideways inside its own frame and the hint says so. Leaving a
-   reader to guess whether a right-hand end exists is worse than telling them. */
-.bigpic__hint { display: none; margin-top: var(--sp-3); font-size: var(--text-xs); color: var(--gray-500); }
-@media (min-width: 821px) and (max-width: 1060px) {
+@media (min-width: 901px) and (max-width: 1140px) {
   .bigpic__scroll { padding-bottom: var(--sp-3); }
   .bigpic__hint { display: block; }
 }
 
-/* Under 820px a nine-hundred-pixel drawing is a drag gesture, not a figure. The
-   line turns vertical instead: each step, then the work that made it, then the
-   work that checks it. Same markup, same order of argument, no second copy of
-   the content to keep in sync. */
-@media (max-width: 820px) {
+/* Under 900px the drawing is a drag gesture, not a figure. Both lines turn
+   vertical instead: the wet line top to bottom with its work under each step,
+   then the dry line the same way, then the node where they meet. Same markup,
+   same order of argument. */
+@media (max-width: 900px) {
   .figure { grid-template-columns: minmax(0, 1fr); min-width: 0; row-gap: var(--sp-2); }
   .figure > * { grid-column: 1; }
-  .lane__name, .railband { display: none; }
-  .stack::after, .step::before { display: none; }
+  .zoneband, .merge { display: none; }
+  .stack::after, .step::before, .join::before, .join::after { display: none; }
   .stack:empty { display: none; }
-  .stack { flex-direction: row; flex-wrap: wrap; align-items: flex-start; gap: 6px; padding-left: var(--sp-4); }
+  .stack {
+    flex-direction: row; flex-wrap: wrap; align-items: flex-start;
+    gap: 7px; padding: 0 0 0 var(--sp-4);
+  }
   .stack::before {
     flex: 0 0 100%; font-size: .625rem; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--gray-500);
+    text-transform: uppercase; color: var(--conn);
   }
-  .stack--make::before { content: "we made"; }
-  .stack--know::before { content: "we measure"; }
-  .chip { width: auto; min-width: 148px; flex: 1 1 auto; }
-  .step { margin-block: var(--sp-3) 0; min-height: 0; background: var(--leaf-50); border-color: var(--leaf-200); }
-  .step:first-of-type { margin-top: 0; }
+  .stack--wet::before { content: "wet work"; }
+  .stack--dry::before { content: "dry work"; }
+  .chip { width: auto; min-width: 158px; flex: 1 1 auto; }
+  .step { margin-block: var(--sp-4) 0; background: var(--wash); }
   .step__note { max-width: 46ch; }
-
-  .step[data-col="1"] { grid-row: 1; }  .stack--make[data-col="1"] { grid-row: 2; }  .stack--know[data-col="1"] { grid-row: 3; }
-  .step[data-col="2"] { grid-row: 4; }  .stack--make[data-col="2"] { grid-row: 5; }  .stack--know[data-col="2"] { grid-row: 6; }
-  .step[data-col="3"] { grid-row: 7; }  .stack--make[data-col="3"] { grid-row: 8; }  .stack--know[data-col="3"] { grid-row: 9; }
-  .step[data-col="4"] { grid-row: 10; } .stack--make[data-col="4"] { grid-row: 11; } .stack--know[data-col="4"] { grid-row: 12; }
-  .step[data-col="5"] { grid-row: 13; } .stack--make[data-col="5"] { grid-row: 14; } .stack--know[data-col="5"] { grid-row: 15; }
-  .step[data-col="6"] { grid-row: 16; } .stack--make[data-col="6"] { grid-row: 17; } .stack--know[data-col="6"] { grid-row: 18; }
-  .term { grid-row: 19; margin-top: var(--sp-4); }
-  .back { grid-row: 20; flex-wrap: wrap; }
+  .zone__name { padding-left: 0; margin-top: var(--sp-5); }
+  .zone__name--wet { grid-row: 1; }
+  .step--wet[data-col="1"] { grid-row: 2; }  .stack--wet[data-col="1"] { grid-row: 3; }
+  .step--wet[data-col="2"] { grid-row: 4; }  .stack--wet[data-col="2"] { grid-row: 5; }
+  .step--wet[data-col="3"] { grid-row: 6; }  .stack--wet[data-col="3"] { grid-row: 7; }
+  .step--wet[data-col="4"] { grid-row: 8; }  .stack--wet[data-col="4"] { grid-row: 9; }
+  .zone__name--dry { grid-row: 10; }
+  .step--dry[data-col="1"] { grid-row: 11; } .stack--dry[data-col="1"] { grid-row: 12; }
+  .step--dry[data-col="2"] { grid-row: 13; } .stack--dry[data-col="2"] { grid-row: 14; }
+  .step--dry[data-col="3"] { grid-row: 15; } .stack--dry[data-col="3"] { grid-row: 16; }
+  .step--dry[data-col="4"] { grid-row: 17; } .stack--dry[data-col="4"] { grid-row: 18; }
+  .join { grid-row: 19; margin-top: var(--sp-5); }
+  .term { grid-row: 20; margin-top: var(--sp-4); }
+  .back { grid-row: 21; flex-wrap: wrap; }
   .back__chips { margin-left: 0; }
   .back__text { flex: 1 1 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .figure.will-rise { opacity: 1; transform: none; transition: none; }
-  .chip, .step, .stack::after, .step::before, .step::after, .term, .readout { transition: none; }
+  .chip, .step, .stack::after, .step::before, .term, .readout { transition: none; }
 }
+
+/* the sprite is markup, not picture */
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }

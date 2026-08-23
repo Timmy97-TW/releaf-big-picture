@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The big picture &middot; ReLeaf &middot; GEMS Taiwan, iGEM 2026</title>
-  <meta name="description" content="One line from a stressed field to a crop that came through it, with the work that made it above and the work that checks it below." />
+  <meta name="description" content="Two lines, one biological and one built, and the single run where they meet before anything reaches a farm." />
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="assets/css/tokens.css" />
   <link rel="stylesheet" href="assets/css/big-picture.css" />
@@ -38,341 +38,430 @@
 
      Reads assets/css/big-picture.css. Three rules govern every change:
 
-       1. Nothing opens. Every label is on screen before the reader touches
+       1. Two lines, and they meet. The wet line is the biology, the dry line is
+          the machine, and the tandem run is the only experiment that joins a
+          machine to a plant. If a future edit lets either line run past that
+          node on its own, the figure has stopped making its argument.
+       2. Nothing opens. Every label is on screen before the reader touches
           anything. Pointing at a piece changes emphasis and writes one line
-          under the drawing. It never reveals hidden text.
-       2. The icons are drawn from our own hardware and from the system
-          schematic, not from an icon library. The culture bottle has the cap
-          and the stir bar the real one has; the cartridge has its two side
-          ports; DIOPAL has its sloped housing and its well block. If a glyph
-          here stops matching the thing it stands for, redraw it.
-       3. A dashed outline means the work is designed and not yet run, and the
-          readout says so in words. Most of this project is not finished.
+          under the drawing.
+       3. The icons are drawn from our own hardware and from the system
+          schematic. The medium is pink because ours is, the cone is 520 nm,
+          the pot is terracotta. Redraw a glyph rather than substituting one.
      ========================================================================== -->
 
 <section class="band bigpic" id="bigpicture" aria-labelledby="bigpic-title">
   <div class="band__inner">
     <svg class="sprite" aria-hidden="true" focusable="false"><defs>
     
-      <!-- ── the line · six steps ─────────────────────────────────────────────
-           1  a stressed field. The soil pot from the system schematic, one leaf
-              dropped, and the sun that is doing it.                            -->
+      <!-- ═══ the line · six steps ═══════════════════════════════════════════ -->
+    
+      <!-- 1  a stressed field. Terracotta pot, one leaf still green and one
+             going over, under the sun that is doing it.                        -->
       <symbol id="i-field" viewBox="0 0 32 32">
-        <circle cx="25.2" cy="6.6" r="2.8"/>
-        <path d="M25.2 1v2M25.2 10.2v2M31 6.6h-2M21.4 6.6h-2M29.3 2.5l-1.4 1.4M22.5 9.3l-1.4 1.4M29.3 10.7l-1.4-1.4M22.5 3.9l-1.4-1.4"/>
-        <path d="M6.6 19.4h14.8l-1.7 9.4a1.6 1.6 0 0 1-1.6 1.3h-8.2a1.6 1.6 0 0 1-1.6-1.3z"/>
-        <path d="M5.4 19.4h17.2"/>
-        <path d="M14 19.4V10.2"/>
-        <path d="M14 13.4c-3.3 0-5-1.7-5-4.6 3 0 5 1.6 5 4.6z"/>
-        <path d="M14 15.8c2.7-.5 4.8.7 5.8 3.3-2.7.6-4.9-.5-5.8-3.3z"/>
+        <circle cx="24.8" cy="7.2" r="3.5" fill="var(--i-a5)"/>
+        <g stroke="var(--i-a7)" stroke-width="1.9" stroke-linecap="round">
+          <path d="M24.8 1.2v1.6M24.8 11.6v1.6M30.8 7.2h-1.6M20.4 7.2h-1.6M29 3l-1.1 1.1M21.7 10.3l-1.1 1.1M29 11.4l-1.1-1.1M21.7 4.1l-1.1-1.1"/>
+        </g>
+        <path d="M13.4 20.4V9.6" stroke="var(--i-g7)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M13.4 14.4c-3.7 0-5.6-2-5.6-5.2 3.4 0 5.6 1.9 5.6 5.2z" fill="var(--i-g5)"/>
+        <path d="M13.4 17c3-.7 5.4.7 6.5 3.7-3 .8-5.5-.4-6.5-3.7z" fill="var(--i-a7)"/>
+        <path d="M6.6 21.4h13.6l-1.6 8.2a1.6 1.6 0 0 1-1.6 1.3H9.8a1.6 1.6 0 0 1-1.6-1.3z" fill="var(--i-r3)"/>
+        <rect x="4.8" y="18.4" width="17.2" height="3.6" rx="1.4" fill="var(--i-r7)"/>
       </symbol>
     
-      <!-- 2  the call. The AIoT board that reads the sensor and the forecast.  -->
+      <!-- 2  the call. The AIoT board, its chip lit, talking to the forecast.  -->
       <symbol id="i-board" viewBox="0 0 32 32">
-        <rect x="4.6" y="9.4" width="15.4" height="14" rx="1.8"/>
-        <rect x="8.8" y="13.4" width="7" height="6" rx="1"/>
-        <path d="M4.6 12.6H2.4M4.6 16.4H2.4M4.6 20.2H2.4M20 12.6h1.8M20 20.2h1.8"/>
-        <path d="M24.4 12.6a4.6 4.6 0 0 1 0 7.4"/>
-        <path d="M27.4 9.6a8.6 8.6 0 0 1 0 13.4"/>
+        <g stroke="var(--i-s7)" stroke-width="2" stroke-linecap="round">
+          <path d="M4.4 12.6H1.8M4.4 16.4H1.8M4.4 20.2H1.8"/>
+        </g>
+        <rect x="4" y="8.6" width="16.4" height="15.2" rx="2.4" fill="var(--i-s2)"/>
+        <rect x="8.2" y="12.8" width="8" height="6.8" rx="1.4" fill="var(--i-s7)"/>
+        <circle cx="12.2" cy="16.2" r="1.5" fill="var(--i-lt)"/>
+        <g fill="none" stroke="var(--i-g5)" stroke-width="2" stroke-linecap="round">
+          <path d="M23.8 12.6a4.8 4.8 0 0 1 0 7.2"/>
+          <path d="M27.2 9.4a9 9 0 0 1 0 13.6"/>
+        </g>
       </symbol>
     
-      <!-- 3  green light. The LED can and its cone, straight off the schematic. -->
+      <!-- 3  green light. The LED can and its cone, at 520 nm.                 -->
       <symbol id="i-led" viewBox="0 0 32 32">
-        <rect x="3.4" y="11.6" width="7" height="9" rx="1.4"/>
-        <ellipse cx="11.2" cy="16.1" rx="1.6" ry="4.5"/>
-        <path d="M12.6 13 27.4 6.6M12.6 19.2 27.4 25.6"/>
-        <path d="M17.4 16.1h4.2M21.8 12.4h3.4M21.8 19.8h3.4"/>
+        <path d="M12.6 16.2 28.4 6.4v19.6z" fill="var(--i-lt)" opacity=".34"/>
+        <g stroke="var(--i-lt)" stroke-width="2.2" stroke-linecap="round">
+          <path d="M17.6 16.2h3.6M22 11.8h3.4M22 20.6h3.4"/>
+        </g>
+        <rect x="3" y="11.2" width="8.4" height="10" rx="2" fill="var(--i-k)"/>
+        <ellipse cx="12.2" cy="16.2" rx="2.2" ry="4.6" fill="var(--i-lt)"/>
       </symbol>
     
-      <!-- 4  protein made. The culture bottle: ribbed cap, fill line, rods,
-              and the stir bar at the bottom.                                   -->
+      <!-- 4  protein made. The culture carboy: ribbed cap, pink medium, rods
+             and the stir bar on the floor of it.                               -->
       <symbol id="i-culture" viewBox="0 0 32 32">
-        <rect x="11.8" y="3.4" width="8.4" height="3.6" rx="1"/>
-        <path d="M14.2 3.4v3.6M17.8 3.4v3.6"/>
-        <path d="M13 7v2.4c0 1.6-4.4 2.6-4.4 6v11.2a2 2 0 0 0 2 2h10.8a2 2 0 0 0 2-2V15.4c0-3.4-4.4-4.4-4.4-6V7"/>
-        <path d="M8.6 18.4h14.8"/>
-        <path class="rod" d="M11.6 22.6 13.8 21.6M15.4 25 17.8 24.2M18.6 21.6 20.8 22.8"/>
-        <path class="rod" d="M13.6 27.4h4.8"/>
+        <path d="M13 7.4v2.2c0 1.7-4.6 2.7-4.6 6.2v11a2.2 2.2 0 0 0 2.2 2.2h10.8a2.2 2.2 0 0 0 2.2-2.2v-11c0-3.5-4.6-4.5-4.6-6.2V7.4z" fill="var(--i-p)" stroke="var(--i-g7)" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M8.4 18.6h15.2v8.2a2.2 2.2 0 0 1-2.2 2.2H10.6a2.2 2.2 0 0 1-2.2-2.2z" fill="var(--i-r3)"/>
+        <g stroke="var(--i-g7)" stroke-width="2.6" stroke-linecap="round">
+          <path d="M11.6 22.6 13.8 21.6M15.8 25.2 18.2 24.4M18.8 21.4 21 22.6"/>
+        </g>
+        <rect x="13.4" y="26.4" width="5.2" height="1.8" rx=".9" fill="var(--i-k)"/>
+        <rect x="11.6" y="2.6" width="8.8" height="4.8" rx="1.2" fill="var(--i-g9)"/>
+        <g stroke="var(--i-p)" stroke-width="1" stroke-linecap="round" opacity=".65">
+          <path d="M14.2 3.6v2.8M16 3.6v2.8M17.8 3.6v2.8"/>
+        </g>
       </symbol>
     
-      <!-- 5  the handover. The hollow fibre cartridge with its two side ports. -->
+      <!-- 5  the handover. The hollow fibre cartridge, both side ports on.     -->
       <symbol id="i-cartridge" viewBox="0 0 32 32">
-        <rect x="10.4" y="3.4" width="11.2" height="3.4" rx=".8"/>
-        <rect x="10.4" y="25.2" width="11.2" height="3.4" rx=".8"/>
-        <path d="M11.8 6.8h8.4v18.4h-8.4z"/>
-        <path d="M14 6.8v18.4M16 6.8v18.4M18 6.8v18.4"/>
-        <path d="M11.8 10.4H7.6M20.2 21.6h4.2"/>
-        <path d="M7.6 8.8v3.2M24.4 20v3.2"/>
+        <g stroke="var(--i-s7)" stroke-width="2.6" stroke-linecap="round">
+          <path d="M11.4 10.6H7.4M20.6 21.4h4"/>
+        </g>
+        <rect x="11.2" y="6" width="9.6" height="20" fill="var(--i-s2)"/>
+        <g stroke="var(--i-g5)" stroke-width="1.5" stroke-linecap="round">
+          <path d="M13.6 6.6v18.8M16 6.6v18.8M18.4 6.6v18.8"/>
+        </g>
+        <rect x="9.6" y="2.4" width="12.8" height="4" rx="1.2" fill="var(--i-k)"/>
+        <rect x="9.6" y="25.6" width="12.8" height="4" rx="1.2" fill="var(--i-k)"/>
+        <circle cx="6.6" cy="10.6" r="1.8" fill="var(--i-lt)"/>
       </symbol>
     
-      <!-- 6  into the crop. The hydroponic tray: net pots on the rim, roots in
-              the water underneath.                                             -->
+      <!-- 6  into the crop. The hydroponic tray, net pots on the rim and roots
+             in the water underneath.                                           -->
       <symbol id="i-tray" viewBox="0 0 32 32">
-        <path d="M3.4 15.4h25.2v9.8a2.2 2.2 0 0 1-2.2 2.2H5.6a2.2 2.2 0 0 1-2.2-2.2z"/>
-        <path d="M4 19.4c2.4 0 2.4 1.4 4.8 1.4s2.4-1.4 4.8-1.4 2.4 1.4 4.8 1.4 2.4-1.4 4.8-1.4 2.4 1.4 4.8 1.4"/>
-        <path d="M8.8 15.4v-2.2M16 15.4v-2.2M23.2 15.4v-2.2"/>
-        <path d="M8.8 13.2c-2.4 0-3.6-1.2-3.6-3.4 2.2 0 3.6 1.1 3.6 3.4zM8.8 13.2c2.4 0 3.6-1.2 3.6-3.4-2.2 0-3.6 1.1-3.6 3.4z"/>
-        <path d="M16 13.2c-2.4 0-3.6-1.2-3.6-3.4 2.2 0 3.6 1.1 3.6 3.4zM16 13.2c2.4 0 3.6-1.2 3.6-3.4-2.2 0-3.6 1.1-3.6 3.4z"/>
-        <path d="M23.2 13.2c-2.4 0-3.6-1.2-3.6-3.4 2.2 0 3.6 1.1 3.6 3.4zM23.2 13.2c2.4 0 3.6-1.2 3.6-3.4-2.2 0-3.6 1.1-3.6 3.4z"/>
-        <path d="M8.8 21.6v3.4M8.8 22.8l-1.4 1.6M8.8 23.8l1.4 1.4M23.2 21.6v3.4M23.2 22.8l1.4 1.6M23.2 23.8l-1.4 1.4"/>
+        <path d="M2.6 16.6h26.8v9.6a2.4 2.4 0 0 1-2.4 2.4H5a2.4 2.4 0 0 1-2.4-2.4z" fill="var(--i-s2)"/>
+        <g stroke="var(--i-g5)" stroke-width="1.6" stroke-linecap="round">
+          <path d="M8.6 22.4v4M8.6 23.4l-1.8 1.8M8.6 24.6l1.8 1.6M23.4 22.4v4M23.4 23.4l1.8 1.8M23.4 24.6l-1.8 1.6"/>
+        </g>
+        <rect x="2.6" y="15" width="26.8" height="3" rx="1.2" fill="var(--i-s7)"/>
+        <g fill="var(--i-g5)">
+          <path d="M8.6 15c-2.6 0-4-1.4-4-3.8 2.4 0 4 1.3 4 3.8z"/>
+          <path d="M16 15c-2.6 0-4-1.4-4-3.8 2.4 0 4 1.3 4 3.8z"/>
+          <path d="M23.4 15c-2.6 0-4-1.4-4-3.8 2.4 0 4 1.3 4 3.8z"/>
+        </g>
+        <g fill="var(--i-g7)">
+          <path d="M8.6 15c2.6 0 4-1.4 4-3.8-2.4 0-4 1.3-4 3.8z"/>
+          <path d="M16 15c2.6 0 4-1.4 4-3.8-2.4 0-4 1.3-4 3.8z"/>
+          <path d="M23.4 15c2.6 0 4-1.4 4-3.8-2.4 0-4 1.3-4 3.8z"/>
+        </g>
       </symbol>
     
-      <!-- ── what we made ───────────────────────────────────────────────────── -->
+      <!-- ═══ what we made ═══════════════════════════════════════════════════ -->
     
-      <!-- the model: the curve the equations produce                            -->
+      <!-- the model: a swept family of predictions, not one measured curve     -->
       <symbol id="i-model" viewBox="0 0 32 32">
-        <path d="M6 5.4v21.2h21.2"/>
-        <path d="M8.6 22.2C11.8 22.2 11.4 8.4 24.8 7.8"/>
-        <path d="M8.6 23.8C13.6 23.8 13 12.4 24.8 11.6"/>
-        <path d="M8.6 25C15.6 25 15 16.8 24.8 16"/>
+        <path d="M8.4 25.6C15.6 25.6 15 15.6 25.4 15V25.6z" fill="var(--i-g2)"/>
+        <g fill="none" stroke-linecap="round">
+          <path d="M8.4 22C11.8 22 11.4 7.8 25.4 7.2" stroke="var(--i-lt)" stroke-width="2"/>
+          <path d="M8.4 23.8C13.8 23.8 13.2 11.6 25.4 11" stroke="var(--i-g5)" stroke-width="2"/>
+          <path d="M8.4 25.6C15.6 25.6 15 15.6 25.4 15" stroke="var(--i-g7)" stroke-width="2"/>
+          <path d="M6 4.6v22.8h22.8" stroke="var(--i-n)" stroke-width="1.8"/>
+        </g>
       </symbol>
     
-      <!-- the circuit: promoter, then the coding block it drives                -->
+      <!-- the circuit: the promoter, and the coding block it drives            -->
       <symbol id="i-construct" viewBox="0 0 32 32">
-        <path d="M3.4 22.6h25.2"/>
-        <path d="M7.6 22.6v-7.2h4.8"/>
-        <path d="M10.6 13.2 13.4 15.4l-2.8 2.2"/>
-        <path d="M15.4 18.6h7.6l3.4 4-3.4 4h-7.6z"/>
+        <rect x="2.4" y="21.4" width="27.2" height="2.4" rx="1.2" fill="var(--i-n)"/>
+        <path d="M7 21.4v-7.6h5.4" fill="none" stroke="var(--i-lt)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10.4 10.8 14.6 13.8l-4.2 3z" fill="var(--i-lt)"/>
+        <path d="M15.4 17.2h7.4l4 4-4 4h-7.4z" fill="var(--i-g7)"/>
+        <rect x="3.6" y="17.6" width="3.2" height="3.2" rx="1" fill="var(--i-a7)"/>
       </symbol>
     
-      <!-- the light array: the DIOPAL housing with its well block on top        -->
+      <!-- the light array: DIOPAL, sloped housing under its well block         -->
       <symbol id="i-diopal" viewBox="0 0 32 32">
-        <path d="M4.4 27 8.4 17.6h15.2L27.6 27z"/>
-        <rect x="9.4" y="8.4" width="13.2" height="9.2" rx="1"/>
-        <circle class="f" cx="12.6" cy="11.4" r="1"/><circle class="f" cx="16" cy="11.4" r="1"/><circle class="f" cx="19.4" cy="11.4" r="1"/>
-        <circle class="f" cx="12.6" cy="14.6" r="1"/><circle class="f" cx="16" cy="14.6" r="1"/><circle class="f" cx="19.4" cy="14.6" r="1"/>
+        <path d="M2.4 28.4 6.6 21h18.8l4.2 7.4z" fill="var(--i-k)"/>
+        <rect x="4" y="16.8" width="24" height="4.6" rx="1.4" fill="var(--i-s7)"/>
+        <rect x="6.2" y="6.6" width="19.6" height="10.2" rx="1.6" fill="var(--i-p)" stroke="var(--i-s7)" stroke-width="1.6"/>
+        <g fill="var(--i-lt)">
+          <circle cx="9.8" cy="9.8" r="1.35"/><circle cx="14" cy="9.8" r="1.35"/><circle cx="18" cy="9.8" r="1.35"/><circle cx="22.2" cy="9.8" r="1.35"/>
+          <circle cx="9.8" cy="13.8" r="1.35"/><circle cx="14" cy="13.8" r="1.35"/><circle cx="18" cy="13.8" r="1.35"/><circle cx="22.2" cy="13.8" r="1.35"/>
+        </g>
       </symbol>
     
-      <!-- the molecule: a peptide backbone with three residues                  -->
+      <!-- the molecule: the docking pose, ligand at the mouth of the cleft     -->
       <symbol id="i-peptide" viewBox="0 0 32 32">
-        <path d="M14.34 10.34A8 8 0 1 1 14.34 21.66"/>
-        <circle class="f" cx="11.4" cy="16" r="2.1"/>
-        <circle class="f" cx="6.6" cy="12.4" r="1.8"/>
-        <circle class="f" cx="6.6" cy="19.6" r="1.8"/>
-        <path d="M8.2 13.4 9.7 14.6M8.2 18.6 9.7 17.4"/>
+        <path d="M14.4 7.6a9 9 0 1 1 0 16.8v-4.6a4.4 4.4 0 1 0 0-7.6z" fill="var(--i-s2)"/>
+        <path d="M14.4 7.6a9 9 0 1 1 0 16.8" fill="none" stroke="var(--i-s7)" stroke-width="1.8" stroke-linecap="round"/>
+        <g stroke="var(--i-g7)" stroke-width="1.8" stroke-linecap="round">
+          <path d="M7.6 12.6 11 15.4M7.6 19.4 11 16.6"/>
+        </g>
+        <circle cx="12.4" cy="16" r="2.8" fill="var(--i-lt)"/>
+        <circle cx="6.2" cy="11.6" r="2.2" fill="var(--i-g7)"/>
+        <circle cx="6.2" cy="20.4" r="2.2" fill="var(--i-g7)"/>
       </symbol>
     
-      <!-- the reactor: the base plate, the cartridge column, a carboy, the pump
-           head, and the tubing loop that runs over the top                      -->
+      <!-- the reactor: base plate, cartridge column, carboy, pump head, and the
+           tubing loop with its LED strip over the top                          -->
       <symbol id="i-reactor" viewBox="0 0 32 32">
-        <rect x="2" y="23.4" width="28" height="3.8" rx="1.6"/>
-        <rect x="4.8" y="11.6" width="4.4" height="11.8" rx=".9"/>
-        <path d="M12.4 23.4v-5.2c0-1.3 1.2-1.7 1.2-2.6v-1.2h3.2v1.2c0 .9 1.2 1.3 1.2 2.6v5.2z"/>
-        <circle cx="23.6" cy="19.6" r="3.6"/>
-        <circle class="f" cx="23.6" cy="19.6" r="1.1"/>
-        <path d="M7 11.6V7.4h17.8a2.4 2.4 0 0 1 2.4 2.4v6.2"/>
+        <path d="M6.4 12.6V7.2h17.2a2.6 2.6 0 0 1 2.6 2.6v6.4" fill="none" stroke="var(--i-g5)" stroke-width="1.8" stroke-linecap="round"/>
+        <g fill="var(--i-lt)">
+          <circle cx="10.4" cy="7.2" r="1.1"/><circle cx="15" cy="7.2" r="1.1"/><circle cx="19.6" cy="7.2" r="1.1"/>
+        </g>
+        <rect x="4.2" y="12" width="5" height="11.4" rx="1.2" fill="var(--i-s7)"/>
+        <path d="M11.6 23.4v-5.2c0-1.4 1.3-1.8 1.3-2.8v-1.2h3.6v1.2c0 1 1.3 1.4 1.3 2.8v5.2z" fill="var(--i-r3)" stroke="var(--i-r7)" stroke-width="1.4" stroke-linejoin="round"/>
+        <circle cx="23.4" cy="19" r="4.2" fill="var(--i-a5)" stroke="var(--i-a7)" stroke-width="1.6"/>
+        <circle cx="23.4" cy="19" r="1.3" fill="var(--i-a7)"/>
+        <rect x="1.6" y="23.4" width="28.8" height="4.4" rx="1.8" fill="var(--i-k)"/>
       </symbol>
     
-      <!-- ── how we know ────────────────────────────────────────────────────── -->
+      <!-- ═══ how we know ════════════════════════════════════════════════════ -->
     
-      <!-- stress baselines: a plate with a seedling in it                       -->
+      <!-- stress baselines: a plate with a seedling on it                      -->
       <symbol id="i-dish" viewBox="0 0 32 32">
-        <ellipse cx="16" cy="21.4" rx="11.4" ry="4.4"/>
-        <path d="M4.6 21.4v2.4c0 2.4 5.1 4.4 11.4 4.4s11.4-2 11.4-4.4v-2.4"/>
-        <path d="M16 21V14"/>
-        <path d="M16 17.4c-2.9 0-4.4-1.5-4.4-4.2 2.7 0 4.4 1.4 4.4 4.2z"/>
-        <path d="M16 19c2.6 0 4-1.3 4-3.8-2.4 0-4 1.3-4 3.8z"/>
+        <path d="M4.2 20.6h23.6v2.6c0 2.6-5.3 4.6-11.8 4.6S4.2 25.8 4.2 23.2z" fill="var(--i-s7)"/>
+        <ellipse cx="16" cy="20.6" rx="11.8" ry="4.6" fill="var(--i-s2)"/>
+        <path d="M16 20.4v-6.6" stroke="var(--i-g7)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 17c-3.1 0-4.7-1.7-4.7-4.6 2.9 0 4.7 1.6 4.7 4.6z" fill="var(--i-g5)"/>
+        <path d="M16 18.8c2.8 0 4.3-1.5 4.3-4.2-2.6 0-4.3 1.5-4.3 4.2z" fill="var(--i-g7)"/>
       </symbol>
     
-      <!-- dose response: the curve this experiment would produce                -->
+      <!-- dose response: the curve this run would produce, with its points     -->
       <symbol id="i-curve" viewBox="0 0 32 32">
-        <path d="M6 5.4v21.2h21.2"/>
-        <path d="M8.6 24C14.4 24 13.6 11 25 10.4"/>
-        <circle class="f" cx="12" cy="22" r="1.4"/>
-        <circle class="f" cx="14.7" cy="17.4" r="1.4"/>
-        <circle class="f" cx="20.6" cy="11.4" r="1.4"/>
+        <path d="M8.4 25.4C15 25.4 14.2 10.4 26 9.6v15.8z" fill="var(--i-g2)"/>
+        <path d="M8.4 25.4C15 25.4 14.2 10.4 26 9.6" fill="none" stroke="var(--i-g7)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M6 4.6v22.8h22.8" fill="none" stroke="var(--i-n)" stroke-width="1.8" stroke-linecap="round"/>
+        <g fill="var(--i-lt)" stroke="var(--i-g9)" stroke-width="1.2">
+          <circle cx="11.8" cy="24.4" r="2"/><circle cx="15" cy="19" r="2"/><circle cx="20.6" cy="11.6" r="2"/>
+        </g>
       </symbol>
     
-      <!-- the photometer: the tower on its open square foot, sensor box at the
-           base, cuvette slot near the top                                       -->
+      <!-- the photometer: the tower on its open foot, light path lit           -->
       <symbol id="i-photometer" viewBox="0 0 32 32">
-        <rect x="6.6" y="24.4" width="18.8" height="3.6" rx="1.2"/>
-        <path d="M10.4 24.4v-1.6M21.6 24.4v-1.6"/>
-        <rect x="12.6" y="4.4" width="6.8" height="20" rx="1.3"/>
-        <path d="M14.4 9.4h3.2M14.4 12.6h3.2"/>
-        <rect x="7.8" y="17.6" width="6.6" height="6.8" rx="1.2"/>
+        <rect x="11.8" y="2.8" width="8.4" height="21.6" rx="1.6" fill="var(--i-k)"/>
+        <rect x="13.8" y="7.6" width="4.4" height="5.6" rx="1" fill="var(--i-lt)"/>
+        <rect x="6.6" y="16.4" width="8" height="8" rx="1.6" fill="var(--i-s7)"/>
+        <rect x="8.6" y="19" width="3.6" height="2.8" rx=".8" fill="var(--i-s2)"/>
+        <rect x="4.6" y="24.4" width="22.8" height="4" rx="1.6" fill="var(--i-s7)"/>
+        <g stroke="var(--i-p)" stroke-width="1.6" stroke-linecap="round" opacity=".55">
+          <path d="M9.4 26.4h4M18.6 26.4h4"/>
+        </g>
       </symbol>
     
-      <!-- expression: a blot with two bands                                     -->
+      <!-- expression: the blot, three lanes, the bands that would be on it     -->
       <symbol id="i-blot" viewBox="0 0 32 32">
-        <rect x="5.4" y="6" width="21.2" height="20" rx="1.6"/>
-        <path d="M13.4 6v20M21.4 6v20"/>
-        <rect class="f" x="7.4" y="11.4" width="4" height="2.6" rx="1.1"/>
-        <rect class="f" x="15.4" y="15.6" width="4" height="2.6" rx="1.1"/>
-        <rect class="f" x="22.6" y="19.4" width="4" height="2.6" rx="1.1"/>
+        <rect x="3.4" y="4.8" width="25.2" height="22.4" rx="2.2" fill="var(--i-p)" stroke="var(--i-s7)" stroke-width="1.8"/>
+        <g stroke="var(--i-s2)" stroke-width="1.4">
+          <path d="M11.8 5.6v20.8M20.2 5.6v20.8"/>
+        </g>
+        <g fill="var(--i-k)">
+          <rect x="5.4" y="10.2" width="5.4" height="3" rx="1.5"/>
+          <rect x="13.6" y="14.4" width="5.4" height="3" rx="1.5"/>
+        </g>
+        <rect x="21.4" y="10.2" width="5.4" height="3" rx="1.5" fill="var(--i-g7)"/>
+        <g fill="var(--i-s2)">
+          <rect x="5.4" y="19.6" width="5.4" height="2.4" rx="1.2"/>
+          <rect x="13.6" y="21.6" width="5.4" height="2.4" rx="1.2"/>
+          <rect x="21.4" y="19.6" width="5.4" height="2.4" rx="1.2"/>
+        </g>
       </symbol>
     
-      <!-- the harvest: the cartridge again, this time with the pressure gauge   -->
+      <!-- the harvest: the cartridge again, and the pressure it runs at        -->
       <symbol id="i-gauge" viewBox="0 0 32 32">
-        <rect x="4.6" y="6.6" width="8" height="19" rx="1.3"/>
-        <path d="M7.2 6.6v19M10 6.6v19"/>
-        <circle cx="22.4" cy="18.4" r="6.4"/>
-        <path d="M22.4 18.4 25.8 14.6"/>
-        <circle class="f" cx="22.4" cy="18.4" r="1"/>
-        <path d="M22.4 12v-2.2M12.6 16h3.4"/>
+        <rect x="3.4" y="5.4" width="9.2" height="21.2" rx="1.6" fill="var(--i-s2)"/>
+        <g stroke="var(--i-g5)" stroke-width="1.5" stroke-linecap="round">
+          <path d="M6 7.4v17.2M8 7.4v17.2M10 7.4v17.2"/>
+        </g>
+        <circle cx="22" cy="18" r="7.4" fill="var(--i-p)" stroke="var(--i-s7)" stroke-width="1.8"/>
+        <path d="M22 18 26 13.4" stroke="var(--i-a7)" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="22" cy="18" r="1.6" fill="var(--i-a7)"/>
+        <path d="M22 9.4V6.6" stroke="var(--i-s7)" stroke-width="2.2" stroke-linecap="round"/>
       </symbol>
     
-      <!-- rescue assays: one plant that had it, one that did not                -->
+      <!-- rescue assays: the one that got it, and the one that did not         -->
       <symbol id="i-rescue" viewBox="0 0 32 32">
-        <path d="M4.6 28h22.8"/>
-        <path d="M10.6 28v-6.6"/>
-        <path d="M10.6 23.4c-2.9.9-4.6 0-5.2-2.8 2.8-.7 4.6.3 5.2 2.8z"/>
-        <path d="M21.6 28V16.4"/>
-        <path d="M21.6 20.4c-2.9 0-4.4-1.5-4.4-4.4 2.7 0 4.4 1.6 4.4 4.4z"/>
-        <path d="M21.6 22.8c2.6 0 4-1.3 4-3.8-2.4 0-4 1.3-4 3.8z"/>
+        <rect x="2.6" y="26.4" width="26.8" height="3" rx="1.4" fill="var(--i-n)"/>
+        <path d="M9.6 26.4v-6.2" stroke="var(--i-a7)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M9.6 22.4c-3.1 1-5-.1-5.6-3.2 3-.8 5 .3 5.6 3.2z" fill="var(--i-a5)"/>
+        <path d="M22 26.4V13.6" stroke="var(--i-g7)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M22 18.4c-3.2 0-4.9-1.8-4.9-4.9 3 0 4.9 1.7 4.9 4.9z" fill="var(--i-g5)"/>
+        <path d="M22 21c3 0 4.6-1.6 4.6-4.4-2.8 0-4.6 1.6-4.6 4.4z" fill="var(--i-g7)"/>
       </symbol>
     
-      <!-- the tandem run: the reactor piped straight into the tray              -->
+      <!-- the tandem run: the carboy piped straight into the tray              -->
       <symbol id="i-tandem" viewBox="0 0 32 32">
-        <rect x="3" y="14.6" width="7" height="11" rx="1.4"/>
-        <path d="M5.2 14.6v-2h2.6v2"/>
-        <path d="M18.4 18.6h10.6v5.4a1.8 1.8 0 0 1-1.8 1.8h-7A1.8 1.8 0 0 1 18.4 24z"/>
-        <path d="M21.6 18.6v-2.4M25.8 18.6v-3.2"/>
-        <path d="M10 17.6h3.4a2 2 0 0 1 2 2v2.6h1.8"/>
-        <path d="M15.8 20.6 18.2 22.2 15.8 23.8"/>
+        <path d="M11 18.4h3.6a2.2 2.2 0 0 1 2.2 2.2v1.8" fill="none" stroke="var(--i-lt)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13.8 21 17 24.6l3.2-3.6z" fill="var(--i-lt)"/>
+        <rect x="2.6" y="13.4" width="8.4" height="13.2" rx="1.8" fill="var(--i-r3)" stroke="var(--i-r7)" stroke-width="1.6"/>
+        <rect x="4.8" y="10.6" width="4" height="3.2" rx="1" fill="var(--i-k)"/>
+        <path d="M18.6 21.4h11.2v5.2a2 2 0 0 1-2 2h-7.2a2 2 0 0 1-2-2z" fill="var(--i-s2)"/>
+        <rect x="18.6" y="20" width="11.2" height="2.6" rx="1" fill="var(--i-s7)"/>
+        <g fill="var(--i-g7)">
+          <path d="M22 20c-2.2 0-3.4-1.2-3.4-3.2 2 0 3.4 1.1 3.4 3.2z"/>
+          <path d="M26.4 20c-2.2 0-3.4-1.2-3.4-3.2 2 0 3.4 1.1 3.4 3.2z"/>
+        </g>
       </symbol>
     
-      <!-- the map: the QGIS layers themselves, stacked, with one site marked.
-           Two earlier passes drew the island; at twenty pixels a closed asymmetric
-           coastline reads as a leaf, and with contours inside it reads as an ear. -->
+      <!-- the map: the layers themselves, stacked, with one site marked        -->
       <symbol id="i-map" viewBox="0 0 32 32">
-        <path d="M16 4.4 3.6 10.2 16 16 28.4 10.2z"/>
-        <path d="M3.6 16.4 16 22.2 28.4 16.4"/>
-        <path d="M3.6 22.2 16 28 28.4 22.2"/>
-        <circle class="f" cx="16" cy="10.2" r="1.8"/>
+        <path d="M16 19.8 3.4 25.4 16 31l12.6-5.6z" fill="var(--i-s2)"/>
+        <path d="M16 12.6 3.4 18.2 16 23.8l12.6-5.6z" fill="var(--i-a5)"/>
+        <path d="M16 5.4 3.4 11l12.6 5.6L28.6 11z" fill="var(--i-g5)"/>
+        <path d="M16 5.4 3.4 11l12.6 5.6L28.6 11z" fill="none" stroke="var(--i-g9)" stroke-width="1.4" stroke-linejoin="round"/>
+        <circle cx="16" cy="11" r="2.4" fill="var(--i-r7)"/>
       </symbol>
     
-      <!-- the farmers: the change log, not the attendance record                -->
+      <!-- the farmers: the change log, not the attendance record               -->
       <symbol id="i-log" viewBox="0 0 32 32">
-        <rect x="6.6" y="5.6" width="18.8" height="22.4" rx="2.2"/>
-        <path d="M12.4 5.6V4.2a1.5 1.5 0 0 1 1.5-1.5h4.2a1.5 1.5 0 0 1 1.5 1.5v1.4z"/>
-        <path d="m10.8 14 1.9 1.9 3.6-3.8"/>
-        <path d="M18.4 15h3.2M10.8 20.4h10.8M10.8 24h7"/>
+        <rect x="5.6" y="4.6" width="20.8" height="24.4" rx="2.6" fill="var(--i-a2)"/>
+        <rect x="11.4" y="2" width="9.2" height="5.2" rx="1.8" fill="var(--i-k)"/>
+        <path d="m9.8 14.6 2.4 2.4 4.6-4.8" fill="none" stroke="var(--i-g7)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <g stroke="var(--i-a7)" stroke-width="2" stroke-linecap="round">
+          <path d="M18.6 15h3.6M9.8 20.8h12.4M9.8 24.6h8"/>
+        </g>
+      </symbol>
+    
+      <!-- design and docking: the in-silico half, on the screen it happens on   -->
+      <symbol id="i-insilico" viewBox="0 0 32 32">
+        <rect x="2.4" y="4.6" width="27.2" height="19" rx="2.6" fill="var(--i-s7)"/>
+        <rect x="4.8" y="7" width="22.4" height="14.2" rx="1.4" fill="var(--i-k)"/>
+        <path d="M13.2 26.6h5.6l.8 2.4h-7.2z" fill="var(--i-s7)"/>
+        <rect x="9.2" y="28.6" width="13.6" height="2.6" rx="1.3" fill="var(--i-s7)"/>
+        <path d="M19.6 10a4.6 4.6 0 1 1 0 8.4" fill="none" stroke="var(--i-lt)" stroke-width="1.8" stroke-linecap="round"/>
+        <g stroke="var(--i-lt)" stroke-width="1.4" stroke-linecap="round">
+          <path d="M11.4 12.2 13.6 13.6M11.4 16.2 13.6 14.8"/>
+        </g>
+        <g fill="var(--i-lt)">
+          <circle cx="15.2" cy="14.2" r="2.1"/>
+          <circle cx="10.2" cy="11.4" r="1.5"/><circle cx="10.2" cy="17" r="1.5"/>
+        </g>
       </symbol>
     
     </defs></svg>
-    <h2 class="band__title" id="bigpic-title">Everything we did joins one line.</h2>
+    <h2 class="band__title" id="bigpic-title">Two lines, and the one run where they meet.</h2>
 
     <p class="bigpic__hint">The drawing is wider than this screen. Drag it sideways.</p>
 
     <div class="bigpic__scroll">
-      <div class="figure" id="figure" role="group" aria-label="The ReLeaf project as one line, with the work that feeds it">
+      <div class="figure" id="figure" role="group" aria-label="The ReLeaf project as two lines that meet, with the work that feeds each of them">
 
-        <p class="lane__name lane__name--make">What we made<small>design and machines</small></p>
-        <p class="lane__name lane__name--line">The line<small>one dose, end to end</small></p>
-        <p class="lane__name lane__name--know">How we know<small>what we measure</small></p>
+        <div class="zoneband zoneband--wetwork" aria-hidden="true"></div>
+        <div class="zoneband zoneband--wet"     aria-hidden="true"></div>
+        <div class="zoneband zoneband--dry"     aria-hidden="true"></div>
+        <div class="zoneband zoneband--drywork" aria-hidden="true"></div>
 
-        <!-- what we made -->
-        <div class="stack stack--make" data-col="1"></div>
-        <div class="stack stack--make" data-col="2">
-          <div class="chip" tabindex="0" data-feeds="2"
-               data-say="<b>The model</b> is what the second step has to hit. One set of equations carries field stress through green light and secretion to plant response, and asks how much enzyme a stressed plant needs before any of it is worth switching on. <i>The framework runs. It has not been checked against our own numbers.</i>">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-model"/></svg><span class="chip__name">The model</span>
-          </div>
-        </div>
-        <div class="stack stack--make" data-col="3">
-          <div class="chip" tabindex="0" data-feeds="3"
-               data-say="<b>The circuit</b> is what turns brightness into transcription. CcaS and CcaR read the green light and drive the promoter above the payload, so the cell answers a colour with a protein.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-construct"/></svg><span class="chip__name">The circuit</span>
-          </div>
-          <div class="chip" tabindex="0" data-feeds="3"
-               data-say="<b>The light array</b> is a dual-wavelength LED rack we built. It runs many light doses side by side instead of one after another. Without it there is no dose axis to plot anything against.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-diopal"/></svg><span class="chip__name">The light array</span>
-          </div>
-        </div>
-        <div class="stack stack--make" data-col="4">
-          <div class="chip" tabindex="0" data-feeds="4"
-               data-say="<b>The molecule</b> is chosen against a stress, not picked for novelty. ACC deaminase cuts the ethylene signal at its precursor, BoPep4 is a broccoli elicitor peptide, LEA 14 protects against drying. BoPep4 was aligned across 39 mature Peps, docked to PEPR1 and BAK1, simulated, then codon-fitted for the chassis.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-peptide"/></svg><span class="chip__name">The molecule</span>
-          </div>
-        </div>
-        <div class="stack stack--make" data-col="5">
-          <div class="chip" tabindex="0" data-feeds="5"
-               data-say="<b>The reactor</b> is a hollow-fibre perfusion build. Cells grow in the extracapillary chamber, outside the fibres, and the fibre wall is the handover. Three weeks of unbroken logging describe the log, not the culture.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-reactor"/></svg><span class="chip__name">The reactor</span>
-          </div>
-        </div>
-        <div class="stack stack--make" data-col="6"></div>
-        <!-- the line -->
-        <div class="railband" aria-hidden="true"></div>
+        <p class="zone__name zone__name--wet">Wet lab<small>the biology, and what it does to a plant</small></p>
+        <p class="zone__name zone__name--dry">Dry lab<small>the machine we built, and what it makes</small></p>
 
-        <div class="step" data-col="1" data-step="1" tabindex="0"
-             data-say="<b>A field under stress.</b> Salt, heat or a dry spell, in a township the map has already covered. The stress baselines under this step say what that does to a plant when nothing is added, which is what every later result gets scored against.">
-          <span class="step__top"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-field"/></svg><span class="step__n">01</span></span>
+        <!-- the wet work that feeds the wet line -->
+        <div class="stack stack--wet" data-col="1">
+          <div class="chip" tabindex="0" data-feeds="wet" data-at="1"
+               data-say="<b>Stress baselines</b> are Arabidopsis raised on agar, in hydroponics and in soil, then put under salt and under heat. Three systems on purpose: agar is fast, hydroponics is where the reactor can be plumbed in, and soil is the only one a farmer has.">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-dish"/></svg></span><span class="chip__name">Stress baselines</span>
+          </div>
+        </div>
+        <div class="stack stack--wet" data-col="2">
+          <div class="chip" tabindex="0" data-feeds="wet" data-at="2"
+               data-say="<b>Design and docking</b> is the in-silico half. BoPep4 aligned across 39 mature Peps, restraint mapping onto PEPR1 and BAK1, docking in HADDOCK, then molecular dynamics to check the pose survives being simulated.">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-insilico"/></svg></span><span class="chip__name">Design and docking</span>
+          </div>
+        </div>
+        <div class="stack stack--wet" data-col="3">
+          <div class="chip" tabindex="0" data-feeds="wet" data-at="3"
+               data-say="<b>Circuit and cloning.</b> CcaS and CcaR read green light and drive the promoter above the payload. The cassette is assembled by MoClo, transformed into the chassis, and documented for the Registry as it goes.">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-construct"/></svg></span><span class="chip__name">Circuit and cloning</span>
+          </div>
+          <div class="chip" tabindex="0" data-feeds="wet" data-at="3" data-ev="none"
+               data-say="<b>Expression</b> is checked by Western blot and by DNPH on the output. Those turn a band on a gel into a rate, and a rate is the only thing the model can be checked against.">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-blot"/></svg></span><span class="chip__name">Expression</span>
+          </div>
+        </div>
+        <div class="stack stack--wet" data-col="4">
+          <div class="chip" tabindex="0" data-feeds="wet" data-at="4" data-ev="none"
+               data-say="<b>Rescue assays</b> put treated plants against untreated ones, on the baselines at the start of this line. The first result that would let us say the protein does something, rather than that the protein exists.">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-rescue"/></svg></span><span class="chip__name">Rescue assays</span>
+          </div>
+        </div>
+        <!-- the wet line -->
+        <div class="step step--wet" data-col="1" data-line="wet" data-step="1" tabindex="0"
+             data-say="<b>A stressed field.</b> Salt, heat or a dry spell, in a township the map has already covered. The baselines above this step say what that does to a plant when nothing is added, which is what every later result gets scored against.">
+          <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-field"/></svg></span><span class="step__n">01</span></span>
           <span class="step__name">A stressed field</span>
           <span class="step__note">salt or heat, in a field we mapped</span>
         </div>
-        <div class="step" data-col="2" data-step="2" tabindex="0" data-ev="none"
+        <div class="step step--wet" data-col="2" data-line="wet" data-step="2" tabindex="0"
+             data-say="<b>A molecule for it.</b> ACC deaminase cuts the ethylene stress signal at its precursor. BoPep4 is a broccoli elicitor peptide. LEA 14 protects against drying. None of that biology is proprietary, which is the point: what is proprietary is everything between the fermenter and the field.">
+          <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-peptide"/></svg></span><span class="step__n">02</span></span>
+          <span class="step__name">A molecule for it</span>
+          <span class="step__note">ACC deaminase, BoPep4, LEA 14</span>
+        </div>
+        <div class="step step--wet" data-col="3" data-line="wet" data-step="3" tabindex="0"
+             data-say="<b>Cells that make it.</b> Bacillus subtilis carrying the cassette, making the protectant while it grows. <i>The culture and its log are real. The titre is not measured.</i>">
+          <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-culture"/></svg></span><span class="step__n">03</span></span>
+          <span class="step__name">Cells that make it</span>
+          <span class="step__note">B. subtilis, with the cassette in</span>
+        </div>
+        <div class="step step--wet" data-col="4" data-line="wet" data-step="4" tabindex="0" data-ev="none"
+             data-say="<b>A plant that comes through.</b> Treated, and measurably less stressed than it would have been. <i>No plant has received anything yet. The node to the right is what would change that.</i>">
+          <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-tray"/></svg></span><span class="step__n">04</span></span>
+          <span class="step__name">A plant that comes through</span>
+          <span class="step__note">measurably better than it would have</span>
+        </div>
+        <!-- the dry line -->
+        <div class="step step--dry" data-col="1" data-line="dry" data-step="1" tabindex="0" data-ev="none"
              data-say="<b>The call to make some.</b> A soil sensor and a weather forecast decide before the plant shows the stress, which is the difference between answering how much and answering whether. <i>Design intent. Nothing has been built that does this yet.</i>">
-          <span class="step__top"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-board"/></svg><span class="step__n">02</span></span>
+          <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-board"/></svg></span><span class="step__n">01</span></span>
           <span class="step__name">The call</span>
           <span class="step__note">a sensor and a forecast decide</span>
         </div>
-        <div class="step" data-col="3" data-step="3" tabindex="0"
+        <div class="step step--dry" data-col="2" data-line="dry" data-step="2" tabindex="0"
              data-say="<b>Green light, held at a brightness.</b> 520 nm from the rack, and brightness is meant to set the dose rather than switch it. <i>The rack and the circuit are built. The curve that would prove the dose is not ours yet.</i>">
-          <span class="step__top"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-led"/></svg><span class="step__n">03</span></span>
+          <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-led"/></svg></span><span class="step__n">02</span></span>
           <span class="step__name">Green light</span>
           <span class="step__note">520 nm, and brightness sets the dose</span>
         </div>
-        <div class="step" data-col="4" data-step="4" tabindex="0"
-             data-say="<b>Protein, in the chamber.</b> Bacillus subtilis grows continuously and makes the protectant while it grows. <i>The culture and its log are real. The titre is not measured.</i>">
-          <span class="step__top"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-culture"/></svg><span class="step__n">04</span></span>
-          <span class="step__name">Protein made</span>
-          <span class="step__note">B. subtilis makes it while it grows</span>
+        <div class="step step--dry" data-col="3" data-line="dry" data-step="3" tabindex="0"
+             data-say="<b>The reactor.</b> Hollow fibre perfusion. Cells grow in the extracapillary chamber, outside the fibres, and the fibre wall is the handover. Three weeks of unbroken logging describe the log, not the culture.">
+          <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-reactor"/></svg></span><span class="step__n">03</span></span>
+          <span class="step__name">The reactor</span>
+          <span class="step__note">a culture that runs without stopping</span>
         </div>
-        <div class="step" data-col="5" data-step="5" tabindex="0"
-             data-say="<b>Across the membrane.</b> Protein leaves through the fibre wall and the cells stay behind, which is both the harvest and the containment argument. <i>The perfusion loop runs. Retention has not been shown, and the cut-off is still unchosen.</i>">
-          <span class="step__top"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-cartridge"/></svg><span class="step__n">05</span></span>
+        <div class="step step--dry" data-col="4" data-line="dry" data-step="4" tabindex="0"
+             data-say="<b>The handover.</b> Protein leaves through the fibre wall and the cells stay behind, which is both the harvest and the containment argument. <i>The loop runs. Retention has not been shown, and the cut-off is still unchosen.</i>">
+          <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-cartridge"/></svg></span><span class="step__n">04</span></span>
           <span class="step__name">The handover</span>
           <span class="step__note">protein crosses, cells stay behind</span>
         </div>
-        <div class="step" data-col="6" data-step="6" tabindex="0" data-ev="none"
-             data-say="<b>Into the crop.</b> A plant that comes through the stress better than it would have. <i>No plant has received anything yet. The tandem run under this step is what would change that.</i>">
-          <span class="step__top"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-tray"/></svg><span class="step__n">06</span></span>
-          <span class="step__name">Into the crop</span>
-          <span class="step__note">a plant that comes through better</span>
-        </div>
-        <!-- how we know -->
-        <div class="stack stack--know" data-col="1">
-          <div class="chip" tabindex="0" data-feeds="1"
-               data-say="<b>Stress baselines</b> are Arabidopsis raised on agar, in hydroponics and in soil, then put under salt and under heat. Three systems on purpose: agar is fast, hydroponics is where the reactor can be plumbed in, and soil is the only one a farmer has.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-dish"/></svg><span class="chip__name">Stress baselines</span>
+        <!-- the dry work that feeds the dry line -->
+        <div class="stack stack--dry" data-col="1">
+          <div class="chip" tabindex="0" data-feeds="dry" data-at="1"
+               data-say="<b>The model</b> is what the call has to hit. One set of equations carries field stress through green light and secretion to plant response, and asks how much enzyme a stressed plant needs before any of it is worth switching on. <i>The framework runs. It has not been checked against our own numbers.</i>">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-model"/></svg></span><span class="chip__name">The model</span>
           </div>
         </div>
-        <div class="stack stack--know" data-col="2"></div>
-        <div class="stack stack--know" data-col="3">
-          <div class="chip" tabindex="0" data-feeds="3" data-ev="none"
+        <div class="stack stack--dry" data-col="2">
+          <div class="chip" tabindex="0" data-feeds="dry" data-at="2"
+               data-say="<b>The light array</b> is a dual-wavelength LED rack we built. It runs many light doses side by side instead of one after another. Without it there is no dose axis to plot anything against.">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-diopal"/></svg></span><span class="chip__name">The light array</span>
+          </div>
+          <div class="chip" tabindex="0" data-feeds="dry" data-at="2" data-ev="none"
                data-say="<b>Dose response</b> is DNPH activity read at each light intensity, then again at each promoter variant. This is the run that earns the sentence brightness is dose, or takes it away from us.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-curve"/></svg><span class="chip__name">Dose response</span>
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-curve"/></svg></span><span class="chip__name">Dose response</span>
           </div>
         </div>
-        <div class="stack stack--know" data-col="4">
-          <div class="chip" tabindex="0" data-feeds="4"
+        <div class="stack stack--dry" data-col="3">
+          <div class="chip" tabindex="0" data-feeds="dry" data-at="3"
                data-say="<b>The photometer</b> is our own instrument, logging optical density with nobody in the room. It earned its place by catching the cross-flow pump dying before any of us noticed.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-photometer"/></svg><span class="chip__name">The photometer</span>
-          </div>
-          <div class="chip" tabindex="0" data-feeds="4" data-ev="none"
-               data-say="<b>Expression</b> is checked by Western blot and by DNPH on the output. Those turn a band on a gel into a rate, and a rate is the only thing the model can be checked against.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-blot"/></svg><span class="chip__name">Expression</span>
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-photometer"/></svg></span><span class="chip__name">The photometer</span>
           </div>
         </div>
-        <div class="stack stack--know" data-col="5">
-          <div class="chip" tabindex="0" data-feeds="5" data-ev="none"
+        <div class="stack stack--dry" data-col="4">
+          <div class="chip" tabindex="0" data-feeds="dry" data-at="4" data-ev="none"
                data-say="<b>The harvest</b> is how much protein crosses, at what transmembrane pressure, and how long the cartridge lasts before it fouls. It also forces the cut-off decision. A 0.2 micrometre wall and a 50 kilodalton wall are two different machines, and only one of them passes protein alone.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-gauge"/></svg><span class="chip__name">The harvest</span>
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-gauge"/></svg></span><span class="chip__name">The harvest</span>
           </div>
         </div>
-        <div class="stack stack--know" data-col="6">
-          <div class="chip" tabindex="0" data-feeds="6" data-ev="none"
-               data-say="<b>Rescue assays</b> put treated plants against untreated ones, on the baselines at the start of this lane. The first result that would let us say the protein does something, rather than that the protein exists.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-rescue"/></svg><span class="chip__name">Rescue assays</span>
-          </div>
-          <div class="chip chip--key" tabindex="0" data-feeds="6" data-ev="none"
-               data-say="<b>The tandem run</b> plumbs the reactor straight into the hydroponic box, with nobody carrying a tube between them. Every other run on this drawing proves one link. This one proves the line.">
-            <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-tandem"/></svg><span class="chip__name">Tandem run</span>
-          </div>
+        <!-- where the two meet -->
+        <svg class="merge" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path class="m-wet" d="M0 27 C 16 27, 20 50, 32 50"/>
+          <path class="m-dry" d="M0 73 C 16 73, 20 50, 32 50"/>
+        </svg>
+        <div class="join" id="join" tabindex="0" data-ev="none"
+             data-say="<b>The tandem run</b> is where the two lines meet. The reactor is plumbed straight into the hydroponic box, with nobody carrying a tube between them. Every other run on this drawing proves one link. This one proves the line. <i>Designed, not yet run.</i>">
+          <span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-tandem"/></svg></span>
+          <span class="join__tag">Where the two meet</span>
+          <span class="join__name">The tandem run</span>
+          <span class="join__note">the reactor plumbed straight into the hydroponic box</span>
         </div>
-        <!-- where the line goes -->
+
+        <!-- and where it goes -->
         <div class="term" id="term" tabindex="0"
              data-say="<b>The line reaches a farm only if three things hold</b>: a build cost we can put a number on, a classification a Taiwanese regulator accepts, and a cooperative willing to run the thing. <i>None of the three is closed, and the cost one is open on purpose. There is no bill of materials total, so no page of ours quotes a price.</i>">
           <p class="term__label">Where the line goes</p>
@@ -387,15 +476,15 @@
         <!-- and back to the start -->
         <div class="back">
           <i class="back__arrow" aria-hidden="true"></i>
-          <p class="back__text">And back to the start. The line begins in someone else&rsquo;s field, and two pieces of work are how it got there.</p>
+          <p class="back__text">And back to the start. The wet line begins in someone else&rsquo;s field, and two pieces of work are how it got there.</p>
           <div class="back__chips">
-            <div class="chip" tabindex="0" data-feeds="1"
+            <div class="chip" tabindex="0" data-feeds="wet" data-at="1"
                  data-say="<b>The map</b> is QGIS layers for salinity and heat across Taiwan. It turns the question from how much land in the world is salt-affected into which townships, and in which month.">
-              <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-map"/></svg><span class="chip__name">The map</span>
+              <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-map"/></svg></span><span class="chip__name">The map</span>
             </div>
-            <div class="chip" tabindex="0" data-feeds="1"
+            <div class="chip" tabindex="0" data-feeds="wet" data-at="1"
                  data-say="<b>The farmers</b> are a change log, not an attendance record. Nine conversations. Two of them moved the design: dosing came off a wall clock and onto soil moisture, and scaling came off geometric similarity and onto wall shear.">
-              <svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-log"/></svg><span class="chip__name">The farmers</span>
+              <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-log"/></svg></span><span class="chip__name">The farmers</span>
             </div>
           </div>
         </div>
