@@ -8,11 +8,11 @@
  * -----------------------------------------------------------------------------
  * The closing band of the homepage. TWO lines run left to right and meet.
  *
- *   THE WET LINE, on top, is the biology: a field under stress, a molecule
+ *   THE BIOLOGY LINE, on top, is the biology: a field under stress, a molecule
  *   chosen against it, cells that make the molecule, a plant that comes
  *   through. Green.
  *
- *   THE DRY LINE, underneath, is the machine: the call to make some, the
+ *   THE ENGINEERING LINE, underneath, is the machine: the call to make some, the
  *   green light that sets the dose, the reactor that holds the culture, the
  *   membrane that hands the protein over. Slate.
  *
@@ -21,13 +21,16 @@
  *   One rail leaves that node and goes into the dark block, which names what
  *   still has to be true before the line reaches a farm.
  *
- * Above the wet line sits the wet work that feeds it. Below the dry line sits
- * the dry work that feeds it. Nothing floats.
+ * Above the biology line sits the biology work that feeds it. Below the
+ * engineering line sits the engineering work. Between the meeting node and the
+ * block sits the map, which is where one run stops being an experiment and
+ * starts being a quantity, with the deployment work under it. Nothing floats.
  *
  * THREE COLOUR SYSTEMS, AND THEY DO NOT OVERLAP
  *
  *   1  THE ZONE tells you which half of the team a piece of work belongs to.
- *      Green is wet, slate is dry. It colours the wash behind a zone, the well
+ *      Green is biology, slate is engineering, amber is deployment. It colours
+ *      the wash behind a zone, the well
  *      behind its icons and the connector that ties a card to its line, so a
  *      card's home is legible before a word on it is read.
  *
@@ -47,7 +50,8 @@
  *   before the reader touches anything. Pointing at a piece changes emphasis
  *   and writes one line under the drawing.
  * · A DASHED OUTLINE means designed and not yet run. That is the whole evidence
- *   vocabulary, and the readout says it in words, so the figure needs no key.
+ *   vocabulary. Every label is permanent, so the figure needs no key and no
+ *   caption strip under it.
  * · READABLE WITH NO JAVASCRIPT AND NO MOTION. The hidden state of the entrance
  *   is added by script, never by the stylesheet.
  * ========================================================================== */
@@ -79,6 +83,7 @@
   /* mirrored from home.css, which defines these for the dark act. Once this
      section is merged those two lines already exist and these can go. */
   --ink:       #070b09;
+  --ink-2:     #0d1512;
   --sig-green: #35e08a;
 
   /* the two ramps. Each line's badges walk light to dark along its four
@@ -88,10 +93,16 @@
   --rung-d1: #8fa6ba; --rung-d2: #6c8399;        --rung-d3: #55708a; --rung-d4: var(--slate-700);
   --ink-dry: #22384c;              /* slate ink, one step past slate-700 */
 
-  --bp-gutter: 98px;
-  --bp-join:   202px;
-  --bp-term:   198px;
-  --bp-rowgap: 12px;
+  /* the three beds in the block at the end, receding into the dark */
+  --dest-far:  color-mix(in oklab, var(--leaf-900) 62%, var(--ink));
+  --dest-mid:  color-mix(in oklab, var(--leaf-900) 82%, var(--ink));
+  --dest-near: var(--leaf-900);
+
+  --bp-gutter: 36px;
+  --bp-join:   152px;
+  --bp-map:    146px;
+  --bp-term:   204px;
+  --bp-rowgap: 15px;
   --bp-colgap: 14px;
 
   --bp-ease: cubic-bezier(.16, 1, .3, 1);
@@ -106,14 +117,15 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
 .bigpic__scroll { margin-top: var(--sp-4); overflow-x: auto; overscroll-behavior-x: contain; }
 
 /* seven columns: the zone labels, four steps a line, the node where the two
-   meet, and the block they go into. Five rows: wet work, wet line, dry line,
-   dry work, and the return along the bottom. */
+   meet, the map that turns one run into a quantity, and the block they go
+   into. Four rows: biology work, biology line, engineering line, engineering
+   work, with the deployment work sitting under the map. */
 .figure {
   display: grid;
-  grid-template-columns: var(--bp-gutter) repeat(4, minmax(150px, 1fr)) var(--bp-join) var(--bp-term);
+  grid-template-columns: var(--bp-gutter) repeat(4, minmax(132px, 1fr)) var(--bp-join) var(--bp-map) var(--bp-term);
   column-gap: var(--bp-colgap);
   row-gap: var(--bp-rowgap);
-  min-width: 1000px;
+  min-width: 1150px;
 }
 [data-col="1"] { grid-column: 2; } [data-col="2"] { grid-column: 3; }
 [data-col="3"] { grid-column: 4; } [data-col="4"] { grid-column: 5; }
@@ -121,49 +133,51 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
 /* ── the two zones ─────────────────────────────────────────────────────── */
 
 .zoneband { grid-column: 1 / 7; z-index: 0; border-radius: var(--radius); }
-.zoneband--wetwork { grid-row: 1; background: var(--leaf-50); }
-.zoneband--drywork { grid-row: 4; background: var(--slate-100); opacity: .55; }
+.zoneband--biowork { grid-row: 1; background: var(--leaf-50); }
+.zoneband--engwork { grid-row: 4; background: var(--slate-100); opacity: .55; }
+.zoneband--deploy  { grid-column: 7; grid-row: 4; background: var(--i-a1); }
 /* each line's band deepens toward the node the two of them meet at */
-.zoneband--wet {
+.zoneband--bio {
   grid-row: 2; background: linear-gradient(90deg, var(--i-r1) 0%, var(--leaf-50) 26%, var(--leaf-100) 72%, var(--leaf-200) 100%);
   box-shadow: inset 0 0 0 1px var(--leaf-200);
 }
-.zoneband--dry {
+.zoneband--eng {
   grid-row: 3; background: linear-gradient(90deg, var(--slate-100) 0%, var(--i-s2) 100%);
   box-shadow: inset 0 0 0 1px var(--i-s2);
 }
 
 .zone__name {
-  grid-column: 1; margin: 0; align-self: center;
-  position: relative; z-index: 2; padding-left: var(--sp-3);
-  font-size: .875rem; font-weight: 700; line-height: 1.16; color: var(--tone);
+  grid-column: 1; margin: 0; align-self: center; justify-self: center;
+  position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 10px;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-size: .75rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  line-height: 1; color: var(--tone); white-space: nowrap;
 }
-.zone__name small {
-  display: block; font-weight: 400; color: var(--gray-500);
-  font-size: .6875rem; line-height: 1.36; margin-top: 4px;
-}
+/* the rule under a zone name carries that zone's ramp, so the two systems
+   introduce themselves together */
 .zone__name::after {
-  content: ""; display: block; height: 3px; width: 34px; margin-top: 8px;
-  border-radius: 2px; background: var(--tone);
+  content: ""; flex: none; width: 3px; height: 46px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--ramp-b), var(--ramp-a));
 }
-.zone__name--wet { grid-row: 1 / 3; --tone: var(--leaf-700); }
-.zone__name--dry { grid-row: 3 / 5; --tone: var(--i-s7); }
+.zone__name--bio { grid-row: 1 / 3; --tone: var(--leaf-900); --ramp-a: var(--rung-w1); --ramp-b: var(--rung-w4); }
+.zone__name--eng { grid-row: 3 / 5; --tone: var(--ink-dry); --ramp-a: var(--rung-d1); --ramp-b: var(--rung-d4); }
 
 /* ── the stacks and the connectors into their line ─────────────────────── */
 
 .stack {
-  display: flex; flex-direction: column; gap: 5px;
-  position: relative; z-index: 1; padding: 6px 0;
+  display: flex; flex-direction: column; gap: 6px;
+  position: relative; z-index: 1; padding: 8px 0;
 }
-.stack--wet { grid-row: 1; justify-content: flex-end; --conn: var(--leaf-700); --wash: var(--leaf-100); }
-.stack--dry { grid-row: 4; justify-content: flex-start; --conn: var(--i-s7);   --wash: var(--slate-100); }
+.stack--bio { grid-row: 1; justify-content: flex-end; --conn: var(--leaf-700); --wash: var(--leaf-100); }
+.stack--eng { grid-row: 4; justify-content: flex-start; --conn: var(--i-s7);   --wash: var(--slate-100); }
 .stack::after {
   content: ""; position: absolute; left: 50%; width: 2px;
   background: var(--conn); opacity: .3; border-radius: 1px;
   transition: opacity var(--bp-dur) var(--bp-ease), width var(--bp-dur) var(--bp-ease);
 }
-.stack--wet::after { top: 6px; bottom: calc(-1 * var(--bp-rowgap)); }
-.stack--dry::after { bottom: 6px; top: calc(-1 * var(--bp-rowgap)); }
+.stack--bio::after { top: 8px; bottom: calc(-1 * var(--bp-rowgap)); }
+.stack--eng::after { bottom: 8px; top: calc(-1 * var(--bp-rowgap)); }
 .stack[data-lit]::after { opacity: 1; width: 3px; }
 .stack:empty::after { display: none; }
 
@@ -176,10 +190,10 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
 .ico { display: block; }
 .chip .well { width: 32px; height: 32px; }
 .chip .ico  { width: 25px; height: 25px; }
-.step .well { width: 46px; height: 46px; border-radius: var(--radius); }
-.step .ico  { width: 37px; height: 37px; }
-.join .well { width: 44px; height: 44px; border-radius: var(--radius); }
-.join .ico  { width: 35px; height: 35px; }
+.step .well { width: 52px; height: 52px; border-radius: var(--radius); }
+.step .ico  { width: 42px; height: 42px; }
+.join .well { width: 48px; height: 48px; border-radius: var(--radius); }
+.join .ico  { width: 39px; height: 39px; }
 
 /* ── a card in either lane ─────────────────────────────────────────────── */
 
@@ -215,7 +229,7 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
 .step {
   position: relative; z-index: 2;
   display: grid; gap: 3px; align-content: start; text-align: left;
-  margin-block: 9px; padding: 9px 11px 10px;
+  margin-block: 10px; padding: 11px 13px 12px;
   background: var(--white);
   border: 1px solid var(--edge);
   border-radius: var(--radius);
@@ -224,8 +238,10 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
               box-shadow var(--bp-dur) var(--bp-ease),
               opacity var(--bp-dur) var(--bp-ease);
 }
-.step--wet { grid-row: 2; --edge: var(--leaf-200); --wash: var(--leaf-50);   --hi: var(--leaf-500); }
-.step--dry { grid-row: 3; --edge: var(--i-s2);     --wash: var(--slate-100); --hi: var(--i-s7); }
+/* the wells walk the ramp too, so a line is not four identical grey squares */
+.step--bio { grid-row: 2; --edge: var(--leaf-200); --hi: var(--leaf-500); }
+.step--eng { grid-row: 3; --edge: var(--i-s2);     --hi: var(--i-s7); }
+.step .well { --wash: color-mix(in oklab, var(--rung) 15%, var(--white)); }
 .step__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
 
 /* the badge walks light to dark along each line, which is the only thing in
@@ -234,19 +250,20 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
   display: grid; place-items: center; flex: none;
   width: 21px; height: 21px; border-radius: 50%;
   background: var(--rung); color: var(--white);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--rung) 16%, transparent);
   font-family: var(--font-mono); font-size: .625rem; font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
-.step--wet[data-col="1"] { --rung: var(--rung-w1); } .step--wet[data-col="2"] { --rung: var(--rung-w2); }
-.step--wet[data-col="3"] { --rung: var(--rung-w3); } .step--wet[data-col="4"] { --rung: var(--rung-w4); }
-.step--dry[data-col="1"] { --rung: var(--rung-d1); } .step--dry[data-col="2"] { --rung: var(--rung-d2); }
-.step--dry[data-col="3"] { --rung: var(--rung-d3); } .step--dry[data-col="4"] { --rung: var(--rung-d4); }
+.step--bio[data-col="1"] { --rung: var(--rung-w1); } .step--bio[data-col="2"] { --rung: var(--rung-w2); }
+.step--bio[data-col="3"] { --rung: var(--rung-w3); } .step--bio[data-col="4"] { --rung: var(--rung-w4); }
+.step--eng[data-col="1"] { --rung: var(--rung-d1); } .step--eng[data-col="2"] { --rung: var(--rung-d2); }
+.step--eng[data-col="3"] { --rung: var(--rung-d3); } .step--eng[data-col="4"] { --rung: var(--rung-d4); }
 
 .step__name {
   display: block; font-size: .9375rem; font-weight: 700; line-height: 1.2;
   letter-spacing: -.012em; color: var(--leaf-900);
 }
-.step--dry .step__name { color: var(--ink-dry); }
+.step--eng .step__name { color: var(--ink-dry); }
 .step__note { font-size: .71875rem; line-height: 1.42; color: var(--gray-600); }
 .step:hover, .step[data-lit] { border-color: var(--hi); box-shadow: var(--shadow-lg); }
 .step:focus-visible { outline: 2px solid var(--leaf-700); outline-offset: 2px; }
@@ -263,10 +280,10 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
 /* ── the node where the two lines meet ─────────────────────────────────── */
 
 .join {
-  grid-column: 6; grid-row: 2 / 4; margin-left: 62px; position: relative; z-index: 3;
+  grid-column: 6; grid-row: 2 / 4; margin-left: 30px; position: relative; z-index: 3;
   display: grid; gap: 4px; align-content: center; justify-items: start;
   margin-block: 9px; padding: var(--sp-3);
-  background: var(--white);
+  background: linear-gradient(160deg, var(--white) 0%, var(--leaf-50) 100%);
   border: 2px solid var(--leaf-500);
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
@@ -278,7 +295,7 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
   text-transform: uppercase; color: var(--leaf-700);
 }
 .join__name {
-  font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700;
+  font-family: var(--font-display); font-size: 1.125rem; font-weight: 700;
   line-height: 1.16; letter-spacing: -.018em; color: var(--leaf-900);
 }
 .join__note { font-size: .6875rem; line-height: 1.4; color: var(--gray-600); }
@@ -293,13 +310,14 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
   width: calc(100% + var(--bp-colgap)); height: 100%;
   overflow: visible; pointer-events: none;
 }
-.merge path { fill: none; stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.merge .m-wet { stroke: var(--leaf-500); stroke-opacity: .5; }
-.merge .m-dry { stroke: var(--i-s7); stroke-opacity: .34; }
+.merge path  { fill: none; stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.merge circle { fill: var(--leaf-500); }
+.merge .m-bio { stroke: var(--leaf-500); stroke-opacity: .5; }
+.merge .m-eng { stroke: var(--i-s7); stroke-opacity: .34; }
 .figure[data-focus] .merge path { stroke-opacity: .12; }
-.figure[data-line="wet"]  .m-wet,
+.figure[data-line="bio"]  .m-bio,
 .figure[data-line="both"] .merge path { stroke-opacity: 1; }
-.figure[data-line="dry"]  .m-dry { stroke-opacity: 1; }
+.figure[data-line="eng"]  .m-eng { stroke-opacity: 1; }
 
 /* and one rail out of the node, into the block */
 .join::after {
@@ -308,67 +326,98 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
   background: var(--leaf-200); transition: background-color var(--bp-dur) var(--bp-ease);
 }
 .join[data-lit]::after { background: var(--leaf-500); }
+.join::after { width: var(--bp-colgap); }
 .join[data-lit] { box-shadow: 0 0 0 3px var(--leaf-200), var(--shadow-lg); }
 
-/* ── where the line goes ───────────────────────────────────────────────── */
+/* ── the map, between the meeting and the block ──────────────────────────
+   One tandem run says the line works once. This says how much land is under
+   the stress, where, and in which month, which is the step that turns a
+   result into a claim about a country. ────────────────────────────────────  */
+
+.gis {
+  grid-column: 7; grid-row: 2 / 4; position: relative; z-index: 3;
+  display: grid; gap: 4px; align-content: center; justify-items: start;
+  margin-block: 10px; padding: var(--sp-3);
+  background: linear-gradient(160deg, var(--white) 0%, var(--i-a1) 100%);
+  border: 2px solid var(--i-a5); border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow var(--bp-dur) var(--bp-ease), opacity var(--bp-dur) var(--bp-ease);
+}
+.gis .well { --wash: var(--i-a1); width: 48px; height: 48px; border-radius: var(--radius); }
+.gis .ico  { width: 40px; height: 40px; }
+.gis__tag {
+  font-size: .625rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--i-a7);
+}
+.gis__name {
+  font-family: var(--font-display); font-size: 1.125rem; font-weight: 700;
+  line-height: 1.14; letter-spacing: -.018em; color: var(--leaf-900);
+}
+.gis__note { font-size: .6875rem; line-height: 1.4; color: var(--gray-600); }
+.gis:focus-visible { outline: 2px solid var(--i-a7); outline-offset: 3px; }
+.gis[data-lit] { box-shadow: 0 0 0 3px var(--i-a2), var(--shadow-lg); }
+/* and the rail on out of it */
+.gis::after {
+  content: ""; position: absolute; left: 100%; top: 50%; margin-top: -1.5px;
+  height: 3px; width: var(--bp-colgap); border-radius: 2px;
+  background: var(--i-a2); transition: background-color var(--bp-dur) var(--bp-ease);
+}
+.gis[data-lit]::after { background: var(--i-a5); }
+.stack--dep { grid-column: 7; grid-row: 4; justify-content: flex-start; --conn: var(--i-a7); --wash: var(--i-a1); }
+.stack--dep::after { bottom: 8px; top: calc(-1 * var(--bp-rowgap)); }
+
+/* ── where it ends up ─────────────────────────────────────────────────────
+   The old version of this block was a label over a claim over three caveats
+   set as a list, which reads as small print. It is the end of the line and it
+   should feel like arrival: the field the whole thing is for, drawn; the claim,
+   large; the sentence that stops it being a slogan; and the honest part as one
+   line rather than three headed blocks. ───────────────────────────────────── */
 
 .term {
-  grid-column: 7; grid-row: 1 / 5; position: relative; z-index: 2;
-  display: flex; flex-direction: column; gap: var(--sp-2);
-  padding: var(--sp-4) var(--sp-4) var(--sp-3);
+  grid-column: 8; grid-row: 1 / 5; position: relative; z-index: 2; isolation: isolate;
+  display: flex; flex-direction: column;
+  padding: var(--sp-4);
   border-radius: var(--radius); overflow: hidden;
-  background: var(--ink); color: var(--leaf-100);
+  background: linear-gradient(168deg, var(--ink-2) 0%, var(--ink) 60%);
+  color: var(--leaf-100);
   transition: box-shadow var(--bp-dur) var(--bp-ease);
 }
+/* the rail arrives on the left edge, and the block lights where it lands */
 .term::before {
-  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
-  background: linear-gradient(90deg, var(--leaf-700), var(--sig-green));
+  content: ""; position: absolute; z-index: -1; left: -38%; top: 30%;
+  width: 96%; aspect-ratio: 1;
+  background: radial-gradient(circle, color-mix(in oklab, var(--sig-green) 24%, transparent) 0%, transparent 70%);
+  transition: opacity var(--bp-dur) var(--bp-ease); opacity: .5;
 }
+.term[data-lit]::before { opacity: 1; }
 .term[data-lit] { box-shadow: 0 0 0 2px var(--leaf-500); }
-.term__label {
-  margin-top: 2px; font-size: .625rem; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--sig-green);
-}
+
+.dest { display: block; width: 100%; height: auto; margin-bottom: var(--sp-5); }
+
 .term__claim {
   margin: 0; font-family: var(--font-display); font-weight: 700;
-  font-size: 1.3125rem; line-height: 1.12; letter-spacing: -.022em; color: var(--white);
+  font-size: 1.375rem; line-height: 1.08; overflow-wrap: anywhere;
+  letter-spacing: -.03em; color: var(--white);
 }
-.term__gates { display: grid; gap: 0; margin-top: auto; }
-.term__gate {
-  padding: 7px 0; border-top: 1px solid var(--gray-700);
-  font-size: .6875rem; line-height: 1.38; color: var(--leaf-200);
+.term__claim::after {
+  content: ""; display: block; height: 3px; width: 42px; margin-top: var(--sp-3);
+  border-radius: 2px; background: linear-gradient(90deg, var(--sig-green), var(--leaf-700));
 }
-.term__gate b { display: block; font-weight: 600; color: var(--white); }
-
-/* ── and back to the start ─────────────────────────────────────────────── */
-
-.back {
-  grid-column: 1 / -1; grid-row: 5;
-  display: flex; align-items: center; gap: var(--sp-3);
-  padding-top: 11px; border-top: 2px dashed var(--i-r3);
-  font-size: var(--text-xs); color: var(--gray-600);
+.term__sub {
+  margin: var(--sp-3) 0 0; font-size: .75rem; line-height: 1.5;
+  color: color-mix(in oklab, var(--leaf-100) 84%, transparent);
 }
-.back__arrow {
-  flex: none; width: 6px; height: 6px; margin-left: 3px;
-  border-left: 2px solid var(--i-r7); border-bottom: 2px solid var(--i-r7);
-  transform: rotate(45deg);
+.term__open {
+  margin: auto 0 0; padding-top: var(--sp-3);
+  border-top: 1px solid color-mix(in oklab, var(--leaf-100) 22%, transparent);
+  font-size: .6875rem; line-height: 1.5;
+  color: color-mix(in oklab, var(--leaf-100) 64%, transparent);
 }
-.back__text { max-width: none; line-height: 1.45; }
-.back__chips { display: flex; gap: 7px; margin-left: auto; }
-.back .chip { width: auto; min-width: 156px; --wash: var(--i-r1); --conn: var(--i-r7); }
-
-/* ── the readout, and the one thing that changes ───────────────────────── */
-
-.readout {
-  margin-top: var(--sp-3); padding-left: var(--sp-4);
-  border-left: 3px solid var(--leaf-200);
-  min-height: 3.2em; max-width: 96ch;
-  font-size: var(--text-sm); line-height: 1.6; color: var(--gray-600);
-  transition: border-color var(--bp-dur) var(--bp-ease);
+.term__open b {
+  display: block; margin-bottom: 3px; font-weight: 700;
+  font-size: .625rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--sig-green);
 }
-.readout[data-active] { border-left-color: var(--leaf-500); }
-.readout b { color: var(--leaf-900); font-weight: 700; }
-.readout i { font-style: normal; color: var(--gray-500); }
 
 /* ── states. One highlight primitive: everything off the path recedes.
       Nothing moves, nothing scales, nothing bounces. ─────────────────────  */
@@ -377,7 +426,17 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
 .figure[data-focus] .step:not([data-lit]) { opacity: .3; box-shadow: none; }
 .figure[data-focus] .stack:not([data-lit])::after { opacity: .12; }
 .figure[data-focus] .zoneband { opacity: .45; }
-.figure[data-focus] .join:not([data-lit]) { opacity: .3; box-shadow: none; }
+.figure[data-focus] .join:not([data-lit]),
+.figure[data-focus] .gis:not([data-lit]) { opacity: .3; box-shadow: none; }
+
+/* A related card is marked, not lit: the run through the pipeline stays the
+   loud thing, and the quieter web of who-talks-to-whom shows underneath it. */
+.figure[data-focus] .chip[data-rel],
+.figure[data-focus] .gis[data-rel] {
+  opacity: 1; border-color: var(--i-a7); border-style: solid; border-width: 1.5px;
+  box-shadow: 0 0 0 3px var(--i-a1), var(--shadow-sm);
+}
+.figure[data-focus] .chip[data-rel] .well { --wash: var(--i-a2); }
 
 /* a dashed outline is the whole evidence vocabulary: designed, not yet run */
 .chip[data-ev="none"], .step[data-ev="none"] { border-style: dashed; box-shadow: none; }
@@ -394,7 +453,7 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
 /* ── narrower ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 1320px) {
-  .figure { --bp-gutter: 88px; --bp-join: 186px; --bp-term: 184px; }
+  .figure { --bp-gutter: 32px; --bp-join: 146px; --bp-map: 138px; --bp-term: 194px; }
   .col { --gut: 14px; }
 }
 
@@ -404,8 +463,9 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
 }
 
 /* Under 900px the drawing is a drag gesture, not a figure. Both lines turn
-   vertical instead: the wet line top to bottom with its work under each step,
-   then the dry line the same way, then the node where they meet. Same markup,
+   vertical instead: the biology line top to bottom with its work under each
+   step, then the engineering line, then the node, the map, and the deployment
+   work under it. Same markup,
    same order of argument. */
 @media (max-width: 900px) {
   .figure { grid-template-columns: minmax(0, 1fr); min-width: 0; row-gap: var(--sp-2); }
@@ -421,32 +481,34 @@ section.bigpic { padding: var(--sp-5) 0 var(--sp-6); }
     flex: 0 0 100%; font-size: .625rem; font-weight: 700; letter-spacing: .1em;
     text-transform: uppercase; color: var(--conn);
   }
-  .stack--wet::before { content: "wet work"; }
-  .stack--dry::before { content: "dry work"; }
+  .stack--bio::before { content: "biology"; }
+  .stack--eng::before { content: "engineering"; }
   .chip { width: auto; min-width: 158px; flex: 1 1 auto; }
   .step { margin-block: var(--sp-4) 0; background: var(--wash); }
   .step__note { max-width: 46ch; }
-  .zone__name { padding-left: 0; margin-top: var(--sp-5); }
-  .zone__name--wet { grid-row: 1; }
-  .step--wet[data-col="1"] { grid-row: 2; }  .stack--wet[data-col="1"] { grid-row: 3; }
-  .step--wet[data-col="2"] { grid-row: 4; }  .stack--wet[data-col="2"] { grid-row: 5; }
-  .step--wet[data-col="3"] { grid-row: 6; }  .stack--wet[data-col="3"] { grid-row: 7; }
-  .step--wet[data-col="4"] { grid-row: 8; }  .stack--wet[data-col="4"] { grid-row: 9; }
-  .zone__name--dry { grid-row: 10; }
-  .step--dry[data-col="1"] { grid-row: 11; } .stack--dry[data-col="1"] { grid-row: 12; }
-  .step--dry[data-col="2"] { grid-row: 13; } .stack--dry[data-col="2"] { grid-row: 14; }
-  .step--dry[data-col="3"] { grid-row: 15; } .stack--dry[data-col="3"] { grid-row: 16; }
-  .step--dry[data-col="4"] { grid-row: 17; } .stack--dry[data-col="4"] { grid-row: 18; }
-  .join { grid-row: 19; margin-top: var(--sp-5); }
-  .term { grid-row: 20; margin-top: var(--sp-4); }
-  .back { grid-row: 21; flex-wrap: wrap; }
-  .back__chips { margin-left: 0; }
-  .back__text { flex: 1 1 100%; }
+  .zone__name { writing-mode: horizontal-tb; transform: none; justify-self: start; margin-top: var(--sp-5); }
+  .zone__name::after { width: 34px; height: 3px; background: linear-gradient(90deg, var(--ramp-a), var(--ramp-b)); }
+  .zone__name--bio { grid-row: 1; }
+  .step--bio[data-col="1"] { grid-row: 2; }  .stack--bio[data-col="1"] { grid-row: 3; }
+  .step--bio[data-col="2"] { grid-row: 4; }  .stack--bio[data-col="2"] { grid-row: 5; }
+  .step--bio[data-col="3"] { grid-row: 6; }  .stack--bio[data-col="3"] { grid-row: 7; }
+  .step--bio[data-col="4"] { grid-row: 8; }  .stack--bio[data-col="4"] { grid-row: 9; }
+  .zone__name--eng { grid-row: 10; }
+  .step--eng[data-col="1"] { grid-row: 11; } .stack--eng[data-col="1"] { grid-row: 12; }
+  .step--eng[data-col="2"] { grid-row: 13; } .stack--eng[data-col="2"] { grid-row: 14; }
+  .step--eng[data-col="3"] { grid-row: 15; } .stack--eng[data-col="3"] { grid-row: 16; }
+  .step--eng[data-col="4"] { grid-row: 17; } .stack--eng[data-col="4"] { grid-row: 18; }
+  .join { grid-row: 19; margin-top: var(--sp-5); margin-left: 0; }
+  .gis  { grid-row: 20; margin-top: var(--sp-4); }
+  .stack--dep { grid-row: 21; grid-column: 1; }
+  .term { grid-row: 22; margin-top: var(--sp-4); }
+  .gis::after { display: none; }
+  .stack--dep::before { content: "deployment"; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .figure.will-rise { opacity: 1; transform: none; transition: none; }
-  .chip, .step, .stack::after, .step::before, .term, .readout { transition: none; }
+  .chip, .step, .stack::after, .step::before, .term, .join { transition: none; }
 }
 
 /* the sprite is markup, not picture */

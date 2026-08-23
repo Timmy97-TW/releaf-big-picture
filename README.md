@@ -12,17 +12,20 @@ same self-hosted Inter. Nothing in this repo forks the palette.
 
 Two lines run left to right, and they meet.
 
-**The wet line** is the biology: a field under stress, a molecule chosen against it, cells that make
-the molecule, a plant that comes through. **The dry line** is the machine: the call to make some,
-the green light that sets the dose, the reactor that holds the culture, the membrane that hands the
-protein over.
+**Biology**, on top: a field under stress, a molecule chosen against it, cells that make the
+molecule, a plant that comes through. **Engineering**, underneath: the call to make some, the green
+light that sets the dose, the bioreactor that holds the culture, the hollow fibre membrane that
+hands the protein over and keeps the cells in.
 
-They meet at **the tandem run**, which is the only experiment on the board that joins a machine to a
-plant with nobody carrying a tube between them. One rail leaves that node for the dark block, which
-names what still has to be true before any of it reaches a farm.
+They meet at **the tandem run**, the only experiment on the board that joins a machine to a plant
+with nobody carrying a tube between them. Past it sits **the map**, because one tandem run says the
+line works once, and the map says how much land is under the stress, where, and in which month.
+That is the step that turns a result into a claim about a country. Then the dark block, which is
+where it ends up.
 
-Above the wet line sits the wet work that feeds it. Below the dry line sits the dry work that feeds
-it. Nothing floats.
+Above the biology line sits the biology work that feeds it. Below the engineering line sits the
+engineering work. Under the map sits the deployment work, the business plan and the regulation it
+has to fit inside. Nothing floats.
 
 ## Reading it
 
@@ -33,16 +36,23 @@ it. Nothing floats.
   same line, the node where the two lines meet, and the block after it. That is the answer to the
   only question worth asking of a figure like this: how does my work reach a farm.
 - **Point at the node** and both lines light end to end, because that is what it joins.
-- One readout line under the drawing names the relationship in words. It is the only thing that
-  changes, and it changes in place.
+- **Point at anything and its cross-links are marked in amber.** That is the quiet half of the
+  interaction. Dose response marks Expression, the model and the light array. Outreach marks the
+  farmers, the map and the business plan. The run through the pipeline stays the loud thing, and
+  the web of who-talks-to-whom sits underneath it rather than being drawn as permanent lines that
+  would turn the figure into a hairball. Cross-links live in `data-with` on each card.
+
+Nothing is written under the drawing. There is no caption strip and no key: every label is in the
+markup before the script runs.
 
 Keyboard reaches all of it: every card is focusable and focus runs the same code path as hover.
 
 ## Three colour systems, and they do not overlap
 
-**The zone** tells you which half of the team a piece of work belongs to. Green is wet, slate is
-dry. It colours the wash behind a zone, the well behind its icons, and the connector that ties a
-card to its line, so a card's home is legible before a word on it is read.
+**The zone** tells you which part of the team a piece of work belongs to. Green is biology, slate is
+engineering, amber is deployment. It colours the wash behind a zone, the well behind its icons, the
+connector that ties a card to its line, and the cross-link marks, so a card's home is legible before
+a word on it is read.
 
 **The ramp** tells you direction. Each line's four badges walk light to dark, and each band deepens
 toward the right, where the two meet. The wet band also warms at its left edge, where the stress is.
@@ -66,6 +76,7 @@ pink medium, its rod cells and its stir bar says *this bottle*.
 | A plant that comes through | the hydroponic tray, net pots on the rim, roots in the water |
 | The call | the AIoT board, its chip lit |
 | A molecule for it | the docking pose: the peptide at the mouth of the cleft |
+| The map | Taiwan, with the salinity and heat layers laid over it |
 
 Sources live in the wiki at `hardware/img/card-*.png` and
 `assets/img/home/system-schematic-1600.png`. If a piece of hardware changes, redraw the glyph rather
@@ -82,17 +93,17 @@ readout says it in words, so the drawing needs no key.
 
 Most of this project is not finished, and drawing it as finished would be the one thing on the
 homepage that lies. Two of the eight steps are dashed, the node where the lines meet is dashed, and
-four more steps carry a sentence saying where the evidence stops, at the same size as the claim it
-limits. The end block names the three conditions the line still depends on, and says plainly that
-none of them is closed.
+five of the fifteen cards are dashed. The block at the end carries a **Still open** line naming the
+three conditions the whole thing still depends on: a build cost we can put a number on, a
+classification a Taiwanese regulator accepts, and a cooperative willing to run the thing.
 
 ## Behaviour worth keeping
 
 - **Readable with no JavaScript and no motion.** The hidden state of the entrance is added by
   script, never by the stylesheet, so with scripting off the drawing is simply there.
-- **Under 900px both lines turn vertical**: the wet line top to bottom with its work under each
-  step, then the dry line the same way, then the node where they meet. Same markup, no second copy
-  of the content to keep in sync.
+- **Under 900px both lines turn vertical**: the biology line top to bottom with its work under each
+  step, then the engineering line, then the node, the map, and the deployment work. Same markup, no
+  second copy of the content to keep in sync.
 - **Two motion primitives only**: one entrance on first sight, one highlight on point. Nothing
   scales, nothing bounces, and the focus ring is never transitioned.
 
@@ -119,11 +130,12 @@ over is an edit to two variables. If that swap happens, this section follows it 
 
 ## Editing the content
 
-Everything readable is in `index.html`. A card is a `.chip` with `data-feeds="wet|dry"`,
-`data-at="<step number>"`, a `data-say="..."` sentence and an `<svg class="ico ico--chip">` pointing
-at a symbol in the sprite. A step is a `.step` with `data-line`, `data-step` and `data-say`. Add
-`data-ev="none"` to draw the outline dashed. The script reads those attributes and holds no content
-of its own, so adding a piece of work is one element, one symbol, and no JavaScript.
+Everything readable is in `index.html`. A card is a `.chip` with an `id`, `data-feeds="bio|eng|dep"`,
+`data-at="<step number>"`, an optional `data-with="<space separated ids>"` and an
+`<svg class="ico ico--chip">` pointing at a symbol in the sprite. A step is a `.step` with
+`data-line` and `data-step`. Add `data-ev="none"` to draw the outline dashed. The script reads those
+attributes and holds no content of its own, so adding a piece of work is one element, one symbol,
+and no JavaScript.
 
 Related pages: the [judging session board](https://timmy97-tw.github.io/judging-session-prep/) and
 the [iGEM bioreactor landscape](https://timmy97-tw.github.io/igem-bioreactor-landscape/).

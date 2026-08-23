@@ -17,7 +17,6 @@
            -webkit-font-smoothing: antialiased; }
     *, *::before, *::after { box-sizing: border-box; }
     a { color: var(--leaf-700); }
-    .band { padding: var(--sp-8) 0; }
     .band__inner { max-width: var(--max); margin: 0 auto; padding: 0 var(--sp-5); }
     @media (min-width: 640px) { .band__inner { padding: 0 var(--sp-6); } }
     h2.band__title { margin: 0 0 var(--sp-5); font-family: var(--font-display);
@@ -38,13 +37,15 @@
 
      Reads assets/css/big-picture.css. Three rules govern every change:
 
-       1. Two lines, and they meet. The wet line is the biology, the dry line is
-          the machine, and the tandem run is the only experiment that joins a
-          machine to a plant. If a future edit lets either line run past that
-          node on its own, the figure has stopped making its argument.
-       2. Nothing opens. Every label is on screen before the reader touches
-          anything. Pointing at a piece changes emphasis and writes one line
-          under the drawing.
+       1. Two lines, and they meet. Biology on top, engineering underneath, and
+          the tandem run is the only experiment that joins a machine to a plant.
+          Past that node the map turns one run into a quantity and the block
+          says what is still shut. If a future edit lets either line run past
+          the node on its own, the figure has stopped making its argument.
+       2. Nothing opens, and nothing is written under the drawing. Every label
+          is in the markup before the script runs. Pointing at a piece lights
+          the run it belongs to and marks, in amber, the pieces it talks to
+          elsewhere. That quieter web is what data-with is for.
        3. The icons are drawn from our own hardware and from the system
           schematic. The medium is pink because ours is, the cone is 520 nm,
           the pot is terracotta. Redraw a glyph rather than substituting one.
@@ -324,6 +325,58 @@
         </g>
       </symbol>
     
+      <!-- containment: the membrane read as the safety layer it also is         -->
+      <symbol id="i-shield" viewBox="0 0 32 32">
+        <path d="M16 2.4 27.4 6.6v9.2c0 6.8-4.7 11.8-11.4 13.8C9.3 27.6 4.6 22.6 4.6 15.8V6.6z" fill="var(--i-s2)"/>
+        <path d="M16 2.4 27.4 6.6v9.2c0 6.8-4.7 11.8-11.4 13.8C9.3 27.6 4.6 22.6 4.6 15.8V6.6z" fill="none" stroke="var(--i-s7)" stroke-width="1.8" stroke-linejoin="round"/>
+        <g stroke="var(--i-g7)" stroke-width="1.7" stroke-linecap="round">
+          <path d="M12.2 10.4v10.4M16 9.6v12M19.8 10.4v10.4"/>
+        </g>
+      </symbol>
+    
+      <!-- the map: Taiwan, with the layers that matter laid over it. An earlier
+           pass drew this as an abstract layer stack because a coastline at twenty
+           pixels reads as a leaf. At the size the transition node gives it, the
+           island itself is the better glyph.                                     -->
+      <symbol id="i-taiwan" viewBox="0 0 32 32">
+        <path d="M19.4 2.8c2.5 2.3 4 6 4.5 10.1.6 5-.1 9.8-2.1 13.1-1.3 2.3-3.1 3.3-4.8 2.7-2-.7-3.4-3.5-4.2-7.5-.9-4.8-.6-10.2.9-14.3 1.2-3.2 3.7-5.9 5.7-4.1z" fill="var(--i-g5)"/>
+        <path d="M17.4 7.6c2.3-.6 4 .8 4.6 3.6-2.3.7-4-.6-4.6-3.6z" fill="var(--i-a5)"/>
+        <path d="M15.2 17c2.7-.8 4.8.8 5.6 4-2.8.9-4.9-.5-5.6-4z" fill="var(--i-r7)"/>
+        <path d="M19.4 2.8c2.5 2.3 4 6 4.5 10.1.6 5-.1 9.8-2.1 13.1-1.3 2.3-3.1 3.3-4.8 2.7-2-.7-3.4-3.5-4.2-7.5-.9-4.8-.6-10.2.9-14.3 1.2-3.2 3.7-5.9 5.7-4.1z" fill="none" stroke="var(--i-g9)" stroke-width="1.4" stroke-linejoin="round"/>
+        <g stroke="var(--i-s7)" stroke-width="1.2" stroke-linecap="round" opacity=".5">
+          <path d="M4.6 11.6h5.2M4.6 20.4h6.4M26.6 11.6h2.8M27.4 20.4h2"/>
+        </g>
+      </symbol>
+    
+      <!-- outreach: what leaves the room, and who it reaches                     -->
+      <symbol id="i-outreach" viewBox="0 0 32 32">
+        <path d="M4 7.6h18a2.4 2.4 0 0 1 2.4 2.4v8.6a2.4 2.4 0 0 1-2.4 2.4h-8.8L8 25.4v-4.4H4a2.4 2.4 0 0 1-2.4-2.4V10A2.4 2.4 0 0 1 4 7.6z" fill="var(--i-a2)"/>
+        <g stroke="var(--i-a7)" stroke-width="2" stroke-linecap="round">
+          <path d="M6 12.4h14M6 16.4h9"/>
+        </g>
+        <circle cx="25.4" cy="8.6" r="4.6" fill="var(--i-g5)"/>
+        <path d="m23.4 8.6 1.4 1.4 2.6-2.8" fill="none" stroke="var(--i-p)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    
+      <!-- the business plan: what a cooperative would actually pay              -->
+      <symbol id="i-plan" viewBox="0 0 32 32">
+        <rect x="4.4" y="3.6" width="23.2" height="24.8" rx="2.6" fill="var(--i-a2)"/>
+        <rect x="7.6" y="18.6" width="4" height="6.4" rx="1.2" fill="var(--i-a7)"/>
+        <rect x="14" y="14.4" width="4" height="10.6" rx="1.2" fill="var(--i-a7)"/>
+        <rect x="20.4" y="9.6" width="4" height="15.4" rx="1.2" fill="var(--i-g7)"/>
+        <path d="M7.6 12.4 12 9.2l4.4 2.4 6.6-4.8" fill="none" stroke="var(--i-r7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    
+      <!-- regulation: the envelope the business has to fit inside              -->
+      <symbol id="i-law" viewBox="0 0 32 32">
+        <rect x="14.4" y="4.6" width="3.2" height="22.6" rx="1.4" fill="var(--i-s7)"/>
+        <rect x="6.6" y="26" width="18.8" height="3.4" rx="1.6" fill="var(--i-s7)"/>
+        <path d="M5.4 8.6h21.2" stroke="var(--i-s7)" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M8.6 9.6 4 19.4h9.2z" fill="var(--i-a5)"/>
+        <path d="M23.4 9.6 18.8 19.4H28z" fill="var(--i-a5)"/>
+        <circle cx="16" cy="4.6" r="2.4" fill="var(--i-g5)"/>
+      </symbol>
+    
     </defs></svg>
     <h2 class="band__title" id="bigpic-title">Two lines, and the one run where they meet.</h2>
 
@@ -332,169 +385,192 @@
     <div class="bigpic__scroll">
       <div class="figure" id="figure" role="group" aria-label="The ReLeaf project as two lines that meet, with the work that feeds each of them">
 
-        <div class="zoneband zoneband--wetwork" aria-hidden="true"></div>
-        <div class="zoneband zoneband--wet"     aria-hidden="true"></div>
-        <div class="zoneband zoneband--dry"     aria-hidden="true"></div>
-        <div class="zoneband zoneband--drywork" aria-hidden="true"></div>
+        <div class="zoneband zoneband--biowork" aria-hidden="true"></div>
+        <div class="zoneband zoneband--bio"     aria-hidden="true"></div>
+        <div class="zoneband zoneband--eng"     aria-hidden="true"></div>
+        <div class="zoneband zoneband--engwork" aria-hidden="true"></div>
+        <div class="zoneband zoneband--deploy"  aria-hidden="true"></div>
 
-        <p class="zone__name zone__name--wet">Wet lab<small>the biology, and what it does to a plant</small></p>
-        <p class="zone__name zone__name--dry">Dry lab<small>the machine we built, and what it makes</small></p>
+        <p class="zone__name zone__name--bio">Biology</p>
+        <p class="zone__name zone__name--eng">Engineering</p>
 
-        <!-- the wet work that feeds the wet line -->
-        <div class="stack stack--wet" data-col="1">
-          <div class="chip" tabindex="0" data-feeds="wet" data-at="1"
-               data-say="<b>Stress baselines</b> are Arabidopsis raised on agar, in hydroponics and in soil, then put under salt and under heat. Three systems on purpose: agar is fast, hydroponics is where the reactor can be plumbed in, and soil is the only one a farmer has.">
+        <!-- the biology work that feeds the biology line -->
+        <div class="stack stack--bio" data-col="1">
+          <div class="chip" id="c-baselines" tabindex="0" data-feeds="bio" data-at="1" data-with="c-model c-rescue">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-dish"/></svg></span><span class="chip__name">Stress baselines</span>
           </div>
+          <div class="chip" id="c-farmers" tabindex="0" data-feeds="bio" data-at="1" data-with="c-outreach c-plan">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-log"/></svg></span><span class="chip__name">The farmers</span>
+          </div>
+          <div class="chip" id="c-outreach" tabindex="0" data-feeds="bio" data-at="1" data-with="c-farmers c-plan gis">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-outreach"/></svg></span><span class="chip__name">Outreach</span>
+          </div>
         </div>
-        <div class="stack stack--wet" data-col="2">
-          <div class="chip" tabindex="0" data-feeds="wet" data-at="2"
-               data-say="<b>Design and docking</b> is the in-silico half. BoPep4 aligned across 39 mature Peps, restraint mapping onto PEPR1 and BAK1, docking in HADDOCK, then molecular dynamics to check the pose survives being simulated.">
+        <div class="stack stack--bio" data-col="2">
+          <div class="chip" id="c-docking" tabindex="0" data-feeds="bio" data-at="2" data-with="c-circuit c-model">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-insilico"/></svg></span><span class="chip__name">Design and docking</span>
           </div>
         </div>
-        <div class="stack stack--wet" data-col="3">
-          <div class="chip" tabindex="0" data-feeds="wet" data-at="3"
-               data-say="<b>Circuit and cloning.</b> CcaS and CcaR read green light and drive the promoter above the payload. The cassette is assembled by MoClo, transformed into the chassis, and documented for the Registry as it goes.">
+        <div class="stack stack--bio" data-col="3">
+          <div class="chip" id="c-circuit" tabindex="0" data-feeds="bio" data-at="3" data-with="c-docking c-array">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-construct"/></svg></span><span class="chip__name">Circuit and cloning</span>
           </div>
-          <div class="chip" tabindex="0" data-feeds="wet" data-at="3" data-ev="none"
-               data-say="<b>Expression</b> is checked by Western blot and by DNPH on the output. Those turn a band on a gel into a rate, and a rate is the only thing the model can be checked against.">
+          <div class="chip" id="c-blot" tabindex="0" data-feeds="bio" data-at="3" data-ev="none" data-with="c-dose c-photometer">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-blot"/></svg></span><span class="chip__name">Expression</span>
           </div>
         </div>
-        <div class="stack stack--wet" data-col="4">
-          <div class="chip" tabindex="0" data-feeds="wet" data-at="4" data-ev="none"
-               data-say="<b>Rescue assays</b> put treated plants against untreated ones, on the baselines at the start of this line. The first result that would let us say the protein does something, rather than that the protein exists.">
+        <div class="stack stack--bio" data-col="4">
+          <div class="chip" id="c-rescue" tabindex="0" data-feeds="bio" data-at="4" data-ev="none" data-with="c-baselines">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-rescue"/></svg></span><span class="chip__name">Rescue assays</span>
           </div>
         </div>
-        <!-- the wet line -->
-        <div class="step step--wet" data-col="1" data-line="wet" data-step="1" tabindex="0"
-             data-say="<b>A stressed field.</b> Salt, heat or a dry spell, in a township the map has already covered. The baselines above this step say what that does to a plant when nothing is added, which is what every later result gets scored against.">
+        <!-- the biology line -->
+        <div class="step step--bio" data-col="1" data-line="bio" data-step="1" tabindex="0">
           <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-field"/></svg></span><span class="step__n">01</span></span>
           <span class="step__name">A stressed field</span>
           <span class="step__note">salt or heat, in a field we mapped</span>
         </div>
-        <div class="step step--wet" data-col="2" data-line="wet" data-step="2" tabindex="0"
-             data-say="<b>A molecule for it.</b> ACC deaminase cuts the ethylene stress signal at its precursor. BoPep4 is a broccoli elicitor peptide. LEA 14 protects against drying. None of that biology is proprietary, which is the point: what is proprietary is everything between the fermenter and the field.">
+        <div class="step step--bio" data-col="2" data-line="bio" data-step="2" tabindex="0">
           <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-peptide"/></svg></span><span class="step__n">02</span></span>
           <span class="step__name">A molecule for it</span>
           <span class="step__note">ACC deaminase, BoPep4, LEA 14</span>
         </div>
-        <div class="step step--wet" data-col="3" data-line="wet" data-step="3" tabindex="0"
-             data-say="<b>Cells that make it.</b> Bacillus subtilis carrying the cassette, making the protectant while it grows. <i>The culture and its log are real. The titre is not measured.</i>">
+        <div class="step step--bio" data-col="3" data-line="bio" data-step="3" tabindex="0">
           <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-culture"/></svg></span><span class="step__n">03</span></span>
           <span class="step__name">Cells that make it</span>
           <span class="step__note">B. subtilis, with the cassette in</span>
         </div>
-        <div class="step step--wet" data-col="4" data-line="wet" data-step="4" tabindex="0" data-ev="none"
-             data-say="<b>A plant that comes through.</b> Treated, and measurably less stressed than it would have been. <i>No plant has received anything yet. The node to the right is what would change that.</i>">
+        <div class="step step--bio" data-col="4" data-line="bio" data-step="4" tabindex="0" data-ev="none">
           <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-tray"/></svg></span><span class="step__n">04</span></span>
           <span class="step__name">A plant that comes through</span>
           <span class="step__note">measurably better than it would have</span>
         </div>
-        <!-- the dry line -->
-        <div class="step step--dry" data-col="1" data-line="dry" data-step="1" tabindex="0" data-ev="none"
-             data-say="<b>The call to make some.</b> A soil sensor and a weather forecast decide before the plant shows the stress, which is the difference between answering how much and answering whether. <i>Design intent. Nothing has been built that does this yet.</i>">
+        <!-- the engineering line -->
+        <div class="step step--eng" data-col="1" data-line="eng" data-step="1" tabindex="0" data-ev="none">
           <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-board"/></svg></span><span class="step__n">01</span></span>
           <span class="step__name">The call</span>
           <span class="step__note">a sensor and a forecast decide</span>
         </div>
-        <div class="step step--dry" data-col="2" data-line="dry" data-step="2" tabindex="0"
-             data-say="<b>Green light, held at a brightness.</b> 520 nm from the rack, and brightness is meant to set the dose rather than switch it. <i>The rack and the circuit are built. The curve that would prove the dose is not ours yet.</i>">
+        <div class="step step--eng" data-col="2" data-line="eng" data-step="2" tabindex="0">
           <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-led"/></svg></span><span class="step__n">02</span></span>
           <span class="step__name">Green light</span>
           <span class="step__note">520 nm, and brightness sets the dose</span>
         </div>
-        <div class="step step--dry" data-col="3" data-line="dry" data-step="3" tabindex="0"
-             data-say="<b>The reactor.</b> Hollow fibre perfusion. Cells grow in the extracapillary chamber, outside the fibres, and the fibre wall is the handover. Three weeks of unbroken logging describe the log, not the culture.">
+        <div class="step step--eng" data-col="3" data-line="eng" data-step="3" tabindex="0">
           <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-reactor"/></svg></span><span class="step__n">03</span></span>
-          <span class="step__name">The reactor</span>
+          <span class="step__name">The bioreactor</span>
           <span class="step__note">a culture that runs without stopping</span>
         </div>
-        <div class="step step--dry" data-col="4" data-line="dry" data-step="4" tabindex="0"
-             data-say="<b>The handover.</b> Protein leaves through the fibre wall and the cells stay behind, which is both the harvest and the containment argument. <i>The loop runs. Retention has not been shown, and the cut-off is still unchosen.</i>">
+        <div class="step step--eng" data-col="4" data-line="eng" data-step="4" tabindex="0">
           <span class="step__top"><span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-cartridge"/></svg></span><span class="step__n">04</span></span>
           <span class="step__name">The handover</span>
-          <span class="step__note">protein crosses, cells stay behind</span>
+          <span class="step__note">a hollow fibre membrane keeps the cells in</span>
         </div>
-        <!-- the dry work that feeds the dry line -->
-        <div class="stack stack--dry" data-col="1">
-          <div class="chip" tabindex="0" data-feeds="dry" data-at="1"
-               data-say="<b>The model</b> is what the call has to hit. One set of equations carries field stress through green light and secretion to plant response, and asks how much enzyme a stressed plant needs before any of it is worth switching on. <i>The framework runs. It has not been checked against our own numbers.</i>">
+        <!-- the engineering work that feeds the engineering line -->
+        <div class="stack stack--eng" data-col="1">
+          <div class="chip" id="c-model" tabindex="0" data-feeds="eng" data-at="1" data-with="c-baselines c-dose gis">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-model"/></svg></span><span class="chip__name">The model</span>
           </div>
         </div>
-        <div class="stack stack--dry" data-col="2">
-          <div class="chip" tabindex="0" data-feeds="dry" data-at="2"
-               data-say="<b>The light array</b> is a dual-wavelength LED rack we built. It runs many light doses side by side instead of one after another. Without it there is no dose axis to plot anything against.">
+        <div class="stack stack--eng" data-col="2">
+          <div class="chip" id="c-array" tabindex="0" data-feeds="eng" data-at="2" data-with="c-circuit c-dose">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-diopal"/></svg></span><span class="chip__name">The light array</span>
           </div>
-          <div class="chip" tabindex="0" data-feeds="dry" data-at="2" data-ev="none"
-               data-say="<b>Dose response</b> is DNPH activity read at each light intensity, then again at each promoter variant. This is the run that earns the sentence brightness is dose, or takes it away from us.">
+          <div class="chip" id="c-dose" tabindex="0" data-feeds="eng" data-at="2" data-ev="none" data-with="c-blot c-model c-array">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-curve"/></svg></span><span class="chip__name">Dose response</span>
           </div>
         </div>
-        <div class="stack stack--dry" data-col="3">
-          <div class="chip" tabindex="0" data-feeds="dry" data-at="3"
-               data-say="<b>The photometer</b> is our own instrument, logging optical density with nobody in the room. It earned its place by catching the cross-flow pump dying before any of us noticed.">
+        <div class="stack stack--eng" data-col="3">
+          <div class="chip" id="c-photometer" tabindex="0" data-feeds="eng" data-at="3" data-with="c-blot">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-photometer"/></svg></span><span class="chip__name">The photometer</span>
           </div>
         </div>
-        <div class="stack stack--dry" data-col="4">
-          <div class="chip" tabindex="0" data-feeds="dry" data-at="4" data-ev="none"
-               data-say="<b>The harvest</b> is how much protein crosses, at what transmembrane pressure, and how long the cartridge lasts before it fouls. It also forces the cut-off decision. A 0.2 micrometre wall and a 50 kilodalton wall are two different machines, and only one of them passes protein alone.">
+        <div class="stack stack--eng" data-col="4">
+          <div class="chip" id="c-harvest" tabindex="0" data-feeds="eng" data-at="4" data-ev="none" data-with="c-law">
             <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-gauge"/></svg></span><span class="chip__name">The harvest</span>
+          </div>
+          <div class="chip" id="c-shield" tabindex="0" data-feeds="eng" data-at="4" data-ev="none" data-with="c-law c-harvest">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-shield"/></svg></span><span class="chip__name">Containment</span>
           </div>
         </div>
         <!-- where the two meet -->
         <svg class="merge" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <path class="m-wet" d="M0 27 C 16 27, 20 50, 32 50"/>
-          <path class="m-dry" d="M0 73 C 16 73, 20 50, 32 50"/>
+          <path class="m-bio" d="M0 27 C 16 27, 20 50, 32 50"/>
+          <path class="m-eng" d="M0 73 C 16 73, 20 50, 32 50"/>
+          <circle cx="32" cy="50" r="2.6" vector-effect="non-scaling-stroke"/>
         </svg>
-        <div class="join" id="join" tabindex="0" data-ev="none"
-             data-say="<b>The tandem run</b> is where the two lines meet. The reactor is plumbed straight into the hydroponic box, with nobody carrying a tube between them. Every other run on this drawing proves one link. This one proves the line. <i>Designed, not yet run.</i>">
+        <div class="join" id="join" tabindex="0" data-ev="none">
           <span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-tandem"/></svg></span>
           <span class="join__tag">Where the two meet</span>
           <span class="join__name">The tandem run</span>
-          <span class="join__note">the reactor plumbed straight into the hydroponic box</span>
+          <span class="join__note">the bioreactor plumbed straight into the hydroponic box</span>
         </div>
 
-        <!-- and where it goes -->
-        <div class="term" id="term" tabindex="0"
-             data-say="<b>The line reaches a farm only if three things hold</b>: a build cost we can put a number on, a classification a Taiwanese regulator accepts, and a cooperative willing to run the thing. <i>None of the three is closed, and the cost one is open on purpose. There is no bill of materials total, so no page of ours quotes a price.</i>">
-          <p class="term__label">Where the line goes</p>
+        <!-- one run says the line works once. This says how much land needs it -->
+        <div class="gis" id="gis" tabindex="0" data-with="c-plan c-outreach c-model">
+          <span class="well"><svg class="ico ico--step" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-taiwan"/></svg></span>
+          <span class="gis__tag">How much land</span>
+          <span class="gis__name">The map</span>
+          <span class="gis__note">which townships carry the stress, and in which month</span>
+        </div>
+
+        <div class="stack stack--dep">
+          <div class="chip" id="c-plan" tabindex="0" data-feeds="dep" data-at="1" data-with="gis c-outreach c-law c-farmers">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-plan"/></svg></span><span class="chip__name">The business plan</span>
+          </div>
+          <div class="chip" id="c-law" tabindex="0" data-feeds="dep" data-at="1" data-with="c-shield c-plan">
+            <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-law"/></svg></span><span class="chip__name">Regulation</span>
+          </div>
+        </div>
+        <!-- and where it ends up -->
+        <div class="term" id="term" tabindex="0">
+          <svg class="dest" viewBox="0 0 168 112" role="img"
+               aria-label="The bioreactor standing at the head of an irrigation line, feeding three rows of crop.">
+            <rect x="30" y="40" width="112" height="10" rx="5" fill="var(--dest-far)"/>
+            <rect x="14" y="59" width="140" height="12" rx="6" fill="var(--dest-mid)"/>
+            <rect x="0" y="82" width="168" height="15" rx="7.5" fill="var(--dest-near)"/>
+            <g fill="none" stroke="var(--sig-green)" stroke-linecap="round">
+              <g stroke-width="1.4" opacity=".55">
+            <path d="M42 40 v-5 M42 37 l-2.4 -2.2 M42 37 l2.4 -2.2"/>
+            <path d="M62 40 v-5 M62 37 l-2.4 -2.2 M62 37 l2.4 -2.2"/>
+            <path d="M82 40 v-5 M82 37 l-2.4 -2.2 M82 37 l2.4 -2.2"/>
+            <path d="M102 40 v-5 M102 37 l-2.4 -2.2 M102 37 l2.4 -2.2"/>
+            <path d="M122 40 v-5 M122 37 l-2.4 -2.2 M122 37 l2.4 -2.2"/>
+            <path d="M137 40 v-5 M137 37 l-2.4 -2.2 M137 37 l2.4 -2.2"/>
+              </g>
+              <g stroke-width="1.7" opacity=".74">
+            <path d="M26 59 v-7 M26 54 l-3.0 -2.7 M26 54 l3.0 -2.7"/>
+            <path d="M50 59 v-7 M50 54 l-3.0 -2.7 M50 54 l3.0 -2.7"/>
+            <path d="M74 59 v-7 M74 54 l-3.0 -2.7 M74 54 l3.0 -2.7"/>
+            <path d="M98 59 v-7 M98 54 l-3.0 -2.7 M98 54 l3.0 -2.7"/>
+            <path d="M122 59 v-7 M122 54 l-3.0 -2.7 M122 54 l3.0 -2.7"/>
+            <path d="M146 59 v-7 M146 54 l-3.0 -2.7 M146 54 l3.0 -2.7"/>
+              </g>
+              <g stroke-width="2" opacity=".92">
+            <path d="M62 82 v-9 M62 75 l-3.8 -3.4 M62 75 l3.8 -3.4"/>
+            <path d="M92 82 v-9 M92 75 l-3.8 -3.4 M92 75 l3.8 -3.4"/>
+            <path d="M122 82 v-9 M122 75 l-3.8 -3.4 M122 75 l3.8 -3.4"/>
+            <path d="M150 82 v-9 M150 75 l-3.8 -3.4 M150 75 l3.8 -3.4"/>
+              </g>
+            </g>
+            <path d="M14 89H158" stroke="var(--i-s2)" stroke-width="1.5" stroke-opacity=".26" fill="none"/>
+            <path d="M46 72C62 72 64 64 80 64" fill="none" stroke="var(--i-s2)" stroke-width="2" stroke-opacity=".42" stroke-linecap="round"/>
+            <rect x="12" y="58" width="32" height="32" rx="4" fill="var(--ink-2)" stroke="var(--leaf-700)" stroke-width="1.4"/>
+            <rect x="18" y="64" width="20" height="12" rx="2" fill="var(--sig-green)" opacity=".82"/>
+            <rect x="18" y="81" width="11" height="3" rx="1.5" fill="var(--i-s2)" opacity=".38"/>
+            <circle cx="36.5" cy="82.5" r="2.2" fill="var(--sig-green)"/>
+          </svg>
           <p class="term__claim">Every farmer a biomanufacturer.</p>
-          <div class="term__gates">
-            <p class="term__gate"><b>What it costs</b>No bill of materials total yet, so no price claim.</p>
-            <p class="term__gate"><b>Whether it is allowed</b>Contained use, pursued and not yet held.</p>
-            <p class="term__gate"><b>Who runs it</b>The cooperative that owns the irrigation line.</p>
-          </div>
-        </div>
-
-        <!-- and back to the start -->
-        <div class="back">
-          <i class="back__arrow" aria-hidden="true"></i>
-          <p class="back__text">And back to the start. The wet line begins in someone else&rsquo;s field, and two pieces of work are how it got there.</p>
-          <div class="back__chips">
-            <div class="chip" tabindex="0" data-feeds="wet" data-at="1"
-                 data-say="<b>The map</b> is QGIS layers for salinity and heat across Taiwan. It turns the question from how much land in the world is salt-affected into which townships, and in which month.">
-              <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-map"/></svg></span><span class="chip__name">The map</span>
-            </div>
-            <div class="chip" tabindex="0" data-feeds="wet" data-at="1"
-                 data-say="<b>The farmers</b> are a change log, not an attendance record. Nine conversations. Two of them moved the design: dosing came off a wall clock and onto soil moisture, and scaling came off geometric similarity and onto wall shear.">
-              <span class="well"><svg class="ico ico--chip" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-log"/></svg></span><span class="chip__name">The farmers</span>
-            </div>
-          </div>
+          <p class="term__sub">Not a farmer who owns a machine. A farmer whose cooperative
+          owns the irrigation line, and for whom no outside licence-holder decides what
+          gets made.</p>
+          <p class="term__open"><b>Still open</b>A build cost we can put a number on.
+          A classification a Taiwanese regulator accepts. A cooperative willing to run
+          the thing.</p>
         </div>
 
       </div>
     </div>
-
-    <p class="readout" id="readout" aria-live="polite">Point at any piece to see where
-    it joins. A dashed outline is work that is designed and not yet run.</p>
-
   </div>
 </section>
 
