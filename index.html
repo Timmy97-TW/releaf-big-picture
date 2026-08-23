@@ -1,931 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Project big picture · ReLeaf · GEMS-Taiwan iGEM 2026</title>
-<meta name="description" content="Twenty-three pieces of work on one chain, from a field in Taiwan through a molecule and a machine we built, and back to that field. One screen.">
-<meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════════════════════════════════════════
-   ReLeaf · PROJECT BIG PICTURE · one screen
-   The terminal section of the homepage. It occupies exactly one viewport and
-   never scrolls the page, because the argument is that the project is one
-   object, and an object you have to scroll is not one object.
-
-   HOW THE SCREEN IS DIVIDED, AND WHY
-     left    WHAT THE THING IS      the loop, and the one step drawn open
-     centre  WHAT WE DID            all 23 workstreams, in two arrangements
-     right   WHAT IT IS FOR         the arithmetic that has to close
-     foot    HOW IT HANGS TOGETHER  six threads, a readout, the honest counts
-
-   Each of the three columns filters the other two. Hover a loop station and
-   the board shows only the work serving that step. Pick a thread and the
-   route lights across the board. Click an arithmetic row and it takes you to
-   the workstream that owes that number. Nothing opens in a new place.
-
-   THE RULE
-     Filled marks are data in hand. Outline marks are designed and not run.
-     The three counts at the foot are computed from the board at load, so
-     they cannot be rounded up by hand.
-
-   Tokens are lifted from the wiki homepage (Studio theme, Source superfamily,
-   forest green anchor). At merge time: delete .devshell, swap the Google
-   Fonts link for the wiki's self-hosted subset, keep everything else.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-:root{
-  --color-paper:      oklch(97.2% 0.008 95);
-  --color-paper-2:    oklch(94.0% 0.011 95);
-  --color-paper-3:    oklch(90.5% 0.013 95);
-  --color-ink:        oklch(21.5% 0.014 62);
-  --color-ink-2:      oklch(45.0% 0.012 62);
-  --color-ink-3:      oklch(58.0% 0.010 62);
-  --color-rule:       oklch(87.5% 0.010 95);
-  --color-rule-2:     oklch(79.0% 0.010 95);
-  --color-inverse:    oklch(97.2% 0.008 95);
-  --color-accent:     oklch(44.0% 0.098 150);
-  --color-accent-2:   oklch(62.0% 0.155 145);
-  --color-open:       oklch(52.0% 0.130 55);
-
-  --t-molecule:   oklch(50% 0.130 25);
-  --t-dose:       oklch(53% 0.140 75);
-  --t-instrument: oklch(48% 0.110 255);
-  --t-map:        oklch(46% 0.095 205);
-  --t-cost:       oklch(45% 0.100 325);
-  --t-people:     oklch(43% 0.095 135);
-
-  --font-display: "Source Serif 4","Source Serif Pro","Source Han Serif TC","Noto Serif TC","Songti TC",Georgia,serif;
-  --font-body:    "Source Sans 3","Source Sans Pro","Source Han Sans TC","Noto Sans TC","PingFang TC",-apple-system,"Helvetica Neue",Arial,sans-serif;
-  --font-util:    "Source Code Pro",ui-monospace,"SF Mono","Courier New",monospace;
-
-  --rule-hair: 1px;
-  --ease-out:  cubic-bezier(.16,1,.3,1);
-  --dur:       200ms;
-  --morph:     620ms;
-}
-
-*,*::before,*::after{ box-sizing:border-box; }
-html,body{ margin:0; }
-body{
-  background:var(--color-paper); color:var(--color-ink);
-  font-family:var(--font-body); font-size:15px; line-height:1.5;
-  -webkit-font-smoothing:antialiased;
-}
-h1,h2,h3,h4{ font-family:var(--font-display); font-weight:600; line-height:1.1; letter-spacing:-.018em; margin:0; }
-p{ margin:0; }
-a{ color:var(--color-accent); text-underline-offset:.16em; }
-button{ font:inherit; color:inherit; background:none; border:0; }
-:focus-visible{ outline:2px solid var(--color-accent); outline-offset:2px; }
-.sr{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-
-.label{ font-family:var(--font-util); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--color-ink-3); }
-.mk{ display:inline-block; width:9px; height:9px; flex:none; border:1.5px solid var(--color-accent); }
-.mk--done{ background:var(--color-accent); }
-.mk--running{ background:linear-gradient(135deg,var(--color-accent) 0 50%,transparent 50%); }
-.mk--planned{ background:transparent; border-style:dashed; border-color:var(--color-ink-3); }
-
-/* ═══ dev shell · delete at merge ══════════════════════════════════════ */
-.devshell{ display:flex; gap:16px; align-items:baseline; padding:7px 18px; border-bottom:var(--rule-hair) solid var(--color-rule); background:var(--color-paper-2); }
-.devshell b{ font-family:var(--font-display); font-size:13px; font-weight:600; }
-
-/* ═══ the one screen ═══════════════════════════════════════════════════ */
-.bp{
-  --gut:18px;
-  display:grid; grid-template-rows:auto minmax(0,1fr) auto;
-  background:var(--color-paper);
-}
-/* the one screen, claimed only where there is room to honour it. Below either
-   threshold the same markup falls back to ordinary flow and scrolls. */
-@media (min-width:821px) and (min-height:620px){
-  body{ height:100svh; overflow:hidden; display:grid; grid-template-rows:auto minmax(0,1fr); }
-  .bp{ min-height:0; }
-}
-
-/* ── masthead ── */
-.top{ display:flex; align-items:flex-end; gap:var(--gut); padding:10px var(--gut) 9px; border-bottom:2px solid var(--color-ink); }
-.top .id{ display:grid; gap:2px; }
-.top h1{ font-size:clamp(19px,1.55vw,25px); letter-spacing:-.024em; }
-.top .sub{ font-size:12.5px; color:var(--color-ink-2); max-width:88ch; line-height:1.4; margin-top:1px; }
-.top .spacer{ flex:1 1 auto; }
-.lens{ display:flex; border:var(--rule-hair) solid var(--color-rule-2); flex:none; }
-.lens button{ padding:6px 13px; font-size:11.5px; font-family:var(--font-util); letter-spacing:.09em; text-transform:uppercase; cursor:pointer; color:var(--color-ink-2); border-right:var(--rule-hair) solid var(--color-rule-2); transition:background var(--dur) var(--ease-out); }
-.lens button:last-child{ border-right:0; }
-.lens button:hover{ background:var(--color-paper-2); }
-.lens button[aria-pressed="true"]{ background:var(--color-ink); color:var(--color-inverse); }
-.legend{ display:flex; flex-direction:column; gap:3px; flex:none; font-size:10.5px; color:var(--color-ink-2); }
-.legend span{ display:flex; align-items:center; gap:6px; white-space:nowrap; }
-
-/* ── three columns ── */
-.mid{ display:grid; grid-template-columns:214px minmax(0,1fr) 320px; min-height:0; }
-.col{ min-height:0; display:flex; flex-direction:column; padding:12px var(--gut); }
-.col + .col{ border-left:var(--rule-hair) solid var(--color-rule); }
-.col h2{ font-size:14px; margin-bottom:2px; }
-.col > .label{ display:block; margin-bottom:6px; }
-
-/* ═══ LEFT · the loop ══════════════════════════════════════════════════ */
-.loopwrap{ display:flex; flex-direction:column; min-height:0; gap:8px; }
-/* the loop as a vertical spine. A ring at 178px hides the station names,
-   which are the only part of it a judge can act on. */
-.spine{ display:grid; gap:0; margin:2px 0 8px; }
-.stn{ position:relative; display:grid; grid-template-columns:19px minmax(0,1fr) auto;
-      gap:8px; align-items:center; width:100%; text-align:left; padding:3px 2px;
-      cursor:pointer; transition:background var(--dur) var(--ease-out); }
-.stn:hover,.stn[aria-current="true"]{ background:var(--color-paper-2); }
-.stn .dot{ width:19px; height:19px; border-radius:50%; display:grid; place-items:center;
-      font-family:var(--font-util); font-size:9.5px; background:var(--color-paper);
-      border:1.6px solid var(--color-accent); color:var(--color-ink); position:relative; z-index:2; }
-.stn[data-s="done"] .dot{ background:var(--color-accent); color:var(--color-paper); }
-.stn[data-s="running"] .dot{ background:linear-gradient(135deg,var(--color-accent) 0 50%,var(--color-paper) 50%); }
-.stn[data-s="planned"] .dot{ border:1.4px dashed var(--color-ink-3); color:var(--color-ink-3); }
-.stn .lbl{ font-size:11.5px; line-height:1.25; }
-.stn .mk{ opacity:.9; }
-/* the connector above each station carries the state of the edge into it */
-.stn::before{ content:""; position:absolute; left:9.2px; top:-6px; width:1.6px; height:12px; z-index:1; }
-.stn[data-e="running"]::before,.stn[data-e="done"]::before{ background:var(--color-accent); }
-.stn[data-e="planned"]::before{ background:repeating-linear-gradient(var(--color-ink-3) 0 3px,transparent 3px 6px); }
-.stn[data-e="none"]::before{ display:none; }
-.gaprow{ display:grid; grid-template-columns:19px minmax(0,1fr); gap:8px; align-items:center; padding:3px 2px; }
-.gaprow .bar{ height:22px; width:1.6px; margin-inline:auto; background:repeating-linear-gradient(var(--color-open) 0 2px,transparent 2px 6px); }
-.gaprow .txt{ font-size:9.5px; font-family:var(--font-util); letter-spacing:.08em; text-transform:uppercase; color:var(--color-open); line-height:1.35; }
-.retrow{ display:grid; grid-template-columns:19px minmax(0,1fr); gap:8px; align-items:center; padding:2px 2px 0; }
-.retrow .arc{ width:19px; height:18px; overflow:visible; }
-.retrow .txt{ font-size:9.5px; line-height:1.35; color:var(--color-ink-3); }
-.loopwrap[data-focus] .stn:not([aria-current="true"]){ opacity:.34; }
-.loopnote{ font-size:11.5px; line-height:1.45; color:var(--color-ink-2); border-left:2px solid var(--color-open); padding-left:8px; }
-.loopnote b{ color:var(--color-ink); font-weight:600; }
-.outside{ margin-top:auto; font-size:11px; line-height:1.45; color:var(--color-ink-3); border-top:var(--rule-hair) solid var(--color-rule); padding-top:7px; }
-.outside b{ display:block; font-family:var(--font-util); font-size:10px; letter-spacing:.13em; text-transform:uppercase; color:var(--color-ink-3); margin-bottom:3px; }
-
-/* ═══ CENTRE · the board ═══════════════════════════════════════════════ */
-.centre{ position:relative; padding-inline:14px; }
-.boardhead{ display:flex; align-items:baseline; gap:10px; margin-bottom:7px; flex:none; }
-.boardhead .why{ font-size:11.5px; color:var(--color-ink-2); }
-.canvas{ position:relative; flex:1 1 auto; min-height:0; overflow:auto; display:flex; flex-direction:column; justify-content:center; padding-bottom:2px; }
-#threadlayer{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; overflow:visible; }
-
-.board{ position:relative; display:grid; gap:8px; align-content:start; flex:none; }
-.board[data-lens="chain"]{ grid-template-columns:repeat(6,minmax(0,1fr)); }
-.board[data-lens="evidence"]{ grid-template-columns:1fr; gap:9px; }
-
-.group{ display:grid; gap:8px; align-content:start; min-width:0; }
-.board[data-lens="evidence"] .group{ grid-template-columns:repeat(auto-fill,minmax(132px,1fr)); grid-auto-rows:min-content; }
-.ghead{ position:relative; z-index:2; background:var(--color-paper); border-bottom:2px solid var(--color-ink); padding-bottom:2px; display:grid; gap:1px; cursor:default; }
-.board[data-lens="evidence"] .ghead{ grid-column:1/-1; display:flex; align-items:baseline; gap:8px; }
-.ghead .k{ font-family:var(--font-util); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--color-ink-3); }
-.ghead .h{ font-family:var(--font-display); font-weight:600; font-size:14px; letter-spacing:-.012em; }
-.ghead .n{ font-family:var(--font-util); font-size:10px; color:var(--color-ink-3); margin-left:auto; }
-
-.node{
-  position:relative; z-index:2; display:grid; gap:2px; align-content:start;
-  text-align:left; cursor:pointer; padding:7px 9px 8px;
-  background:var(--color-paper);
-  border:var(--rule-hair) solid var(--color-rule);
-  border-left:3px solid var(--color-rule-2);
-  transition:border-color var(--dur) var(--ease-out), background var(--dur) var(--ease-out), opacity var(--dur) var(--ease-out);
-}
-.node:hover{ border-color:var(--color-ink-3); border-left-color:var(--color-ink); background:var(--color-paper-2); }
-.node .nt{ display:flex; gap:6px; align-items:flex-start; font-weight:600; font-size:13px; line-height:1.3; }
-.node .mk{ margin-top:2px; }
-.node .nk{ font-size:10px; font-family:var(--font-util); color:var(--color-ink-3); line-height:1.4; letter-spacing:.01em; }
-.board[data-lens="evidence"] .node .nk{ display:none; }
-.node[aria-pressed="true"]{ background:var(--color-paper-3); border-color:var(--color-ink); border-left-color:var(--color-ink); }
-.node[data-key="1"]{ border-left-color:var(--color-accent); box-shadow:inset 0 0 0 1px var(--color-accent-2); }
-.node .keytag{ position:absolute; top:-1px; right:-1px; font-family:var(--font-util); font-size:8.5px; letter-spacing:.09em; text-transform:uppercase; background:var(--color-accent); color:var(--color-inverse); padding:0 4px; }
-
-.board[data-thread] .node{ opacity:.22; }
-.board[data-thread] .node[data-on]{ opacity:1; border-color:var(--c); border-left-color:var(--c); }
-.board[data-station] .node{ opacity:.2; }
-.board[data-station] .node[data-lit]{ opacity:1; border-left-color:var(--color-accent); }
-
-/* the morph: cards are FLIPped, so no layout maths is duplicated in JS */
-.node.flip{ transition:transform var(--morph) var(--ease-out), border-color var(--dur) var(--ease-out), background var(--dur) var(--ease-out), opacity var(--dur) var(--ease-out); }
-
-/* ── detail, over the canvas, never a new page ── */
-.detail{ position:absolute; inset:0; z-index:6; background:color-mix(in oklab, var(--color-paper) 96%, transparent); display:none; padding:14px; overflow:auto; }
-.detail[data-open="1"]{ display:block; animation:fade 180ms var(--ease-out); }
-@keyframes fade{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:none; } }
-.detail .card{ border:var(--rule-hair) solid var(--color-rule-2); border-top:3px solid var(--color-ink); background:var(--color-paper); padding:13px 15px 15px; }
-.dhead{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
-.dhead h3{ font-size:19px; }
-.dhead .st{ font-family:var(--font-util); font-size:10px; letter-spacing:.11em; text-transform:uppercase; color:var(--color-ink-3); display:inline-flex; align-items:center; gap:5px; }
-.dclose{ margin-left:auto; font-family:var(--font-util); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--color-ink-3); cursor:pointer; padding:3px 7px; border:var(--rule-hair) solid var(--color-rule-2); }
-.dclose:hover{ background:var(--color-paper-2); }
-.dgrid{ display:grid; gap:14px; }
-@media (min-width:1000px){ .dgrid{ grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:22px; } }
-.dbody{ font-size:13px; line-height:1.6; color:var(--color-ink-2); }
-.dbody p + p{ margin-top:.55em; }
-.dsub{ list-style:none; margin:9px 0 0; padding:0; display:grid; gap:1px; background:var(--color-rule); border-block:var(--rule-hair) solid var(--color-rule); }
-.dsub li{ background:var(--color-paper); padding:4px 6px; display:grid; grid-template-columns:auto 1fr auto; gap:7px; align-items:baseline; font-size:11.5px; }
-.dsub .s{ font-family:var(--font-util); font-size:9.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--color-ink-3); white-space:nowrap; }
-.dside{ display:grid; gap:10px; align-content:start; }
-.dfact{ display:grid; gap:2px; font-size:12.5px; line-height:1.5; }
-.chiprow{ display:flex; flex-wrap:wrap; gap:4px; }
-.chip{ display:inline-flex; align-items:center; gap:4px; padding:1px 6px; border:var(--rule-hair) solid var(--c,var(--color-rule-2)); color:var(--c,var(--color-ink-2)); font-size:10px; font-family:var(--font-util); letter-spacing:.04em; cursor:pointer; text-decoration:none; }
-.chip:hover{ background:var(--color-paper-2); }
-
-/* ═══ RIGHT · the arithmetic ═══════════════════════════════════════════ */
-.rail{ display:flex; flex-direction:column; min-height:0; }
-.conv{ display:grid; gap:1px; background:var(--color-rule); border-block:var(--rule-hair) solid var(--color-rule); flex:0 1 auto; overflow:auto; }
-.step{ display:grid; grid-template-columns:14px minmax(0,1fr); gap:7px; align-items:start; padding:4px 3px; background:var(--color-paper); text-align:left; width:100%; cursor:pointer; transition:background var(--dur) var(--ease-out); }
-.step:hover{ background:var(--color-paper-2); }
-.step .op{ font-family:var(--font-util); font-size:10px; color:var(--color-ink-3); text-align:center; line-height:1.6; border:1px solid var(--color-rule-2); border-radius:50%; width:14px; height:14px; margin-top:1px; }
-.step .q{ font-size:11.5px; line-height:1.28; font-weight:600; }
-.step .slot{ display:block; font-family:var(--font-util); font-size:9.5px; line-height:1.28; margin-top:2px; color:var(--color-ink-3); }
-.step .slot::before{ content:""; display:inline-block; width:14px; height:1px; background:var(--color-ink-3); vertical-align:middle; margin-right:5px; }
-.step--have .slot{ color:var(--color-ink); }
-.step--have .slot b{ font-family:var(--font-display); font-size:13.5px; font-weight:600; letter-spacing:-.01em; }
-.step--have .slot::before{ background:var(--color-accent); height:2px; }
-.step .slot i{ font-style:normal; color:var(--color-ink-3); opacity:.85; }
-.step .slot i::before{ content:" · "; }
-.ground{ font-size:10.5px; line-height:1.4; color:var(--color-ink-3); margin:5px 0 7px; }
-.ground b{ font-family:var(--font-display); font-size:12.5px; color:var(--color-ink); font-weight:600; letter-spacing:-.01em; }
-.claim{ margin-top:auto; background:var(--color-ink); color:var(--color-inverse); padding:11px 13px 12px; flex:none; }
-.claim .arrow{ font-family:var(--font-util); font-size:12px; color:var(--color-accent-2); }
-.claim h2{ font-size:clamp(17px,1.5vw,22px); letter-spacing:-.025em; margin:2px 0 6px; }
-.claim p{ font-size:11.5px; line-height:1.45; color:oklch(81% .012 95); }
-
-/* ═══ FOOT · threads, readout, counts ══════════════════════════════════ */
-.foot{ display:grid; grid-template-columns:minmax(0,1fr) 320px; border-top:2px solid var(--color-ink); }
-.foot > div{ padding:9px var(--gut) 11px; min-width:0; }
-.foot .counts{ border-left:var(--rule-hair) solid var(--color-rule); display:flex; gap:14px; align-items:center; }
-.threadbar{ display:flex; flex-wrap:wrap; gap:5px; margin-bottom:6px; }
-.tbtn{ display:inline-flex; align-items:center; gap:6px; padding:3px 9px; border:var(--rule-hair) solid var(--color-rule-2); cursor:pointer; font-size:11.5px; line-height:1.3; transition:background var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out); }
-.tbtn:hover{ border-color:var(--color-ink-3); }
-.tbtn .sw{ width:12px; height:3px; flex:none; background:var(--c); }
-.tbtn[aria-pressed="true"]{ background:var(--c); border-color:var(--c); color:var(--color-inverse); }
-.tbtn[aria-pressed="true"] .sw{ background:var(--color-inverse); }
-.tbtn--clear{ border-style:dashed; }
-.readout{ font-size:12px; line-height:1.45; color:var(--color-ink-2); min-height:2.9em; }
-.readout strong{ color:var(--color-ink); font-family:var(--font-display); font-weight:600; }
-.readout em{ font-style:normal; color:var(--color-ink-3); }
-.count{ display:grid; gap:0; }
-.count .n{ font-family:var(--font-display); font-size:26px; font-weight:600; line-height:1; letter-spacing:-.03em; }
-.count .n span{ font-size:11px; color:var(--color-ink-3); letter-spacing:0; }
-.count .l{ font-family:var(--font-util); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--color-ink-3); display:flex; align-items:center; gap:4px; margin-top:3px; }
-
-/* ═══ short screens · the same screen, compressed rather than scrolled ════
-   A 1366 x 768 laptop is the commonest machine a judge will open this on, and
-   at that height the generous tier overflows in three places at once. Rather
-   than let any pane grow its own scrollbar, everything steps down one notch.
-   ═════════════════════════════════════════════════════════════════════════ */
-@media (min-width:821px) and (max-height:860px){
-  .top{ padding:8px var(--gut) 7px; }
-  .top h1{ font-size:clamp(17px,1.35vw,21px); }
-  .top .sub{ font-size:11.5px; line-height:1.38; }
-  .legend{ font-size:9.5px; }
-  .lens button{ padding:5px 11px; font-size:10.5px; }
-  .col{ padding:9px var(--gut); }
-  .col h2{ font-size:13px; }
-  #ring{ max-width:clamp(104px,21vh,178px); }
-  .loopnote{ font-size:10.5px; line-height:1.4; }
-  .outside{ font-size:9.5px; line-height:1.4; padding-top:6px; }
-  .ground{ font-size:9.5px; line-height:1.38; margin:4px 0 6px; }
-  .step{ padding:3px 3px; }
-  .step .q{ font-size:11px; }
-  .step .slot{ font-size:9px; margin-top:1px; }
-  .claim{ padding:9px 12px 10px; }
-  .claim h2{ font-size:clamp(15px,1.3vw,18px); margin:1px 0 4px; }
-  .claim p{ font-size:10.5px; line-height:1.4; }
-  .board,.group{ gap:6px; }
-  .node{ padding:5px 8px 6px; }
-  .node .nt{ font-size:12px; }
-  .node .nk{ font-size:9.5px; line-height:1.35; }
-  .ghead .h{ font-size:13px; }
-  .stn{ padding:2px 2px; }
-  .stn .lbl{ font-size:11px; }
-  .stn::before{ top:-5px; height:10px; }
-  .gaprow{ padding:2px 2px; }
-  .gaprow .bar{ height:17px; }
-  .retrow .txt{ font-size:9px; }
-  .foot > div{ padding:7px var(--gut) 8px; }
-  .tbtn{ padding:2px 8px; font-size:11px; }
-  .readout{ font-size:11px; min-height:2.8em; }
-  .count .n{ font-size:22px; }
-}
-@media (min-width:821px) and (max-height:730px){
-  .top .sub{ display:none; }
-  .node .nk{ display:none; }
-  .ground{ display:none; }
-}
-
-/* ═══ small screens · the one screen becomes one column, and scrolls ═══ */
-@media (max-width:1320px){
-  .mid{ grid-template-columns:190px minmax(0,1fr) 272px; }
-  .foot{ grid-template-columns:minmax(0,1fr) 272px; }
-  .col{ --gut:14px; }
-}
-@media (max-width:1080px){
-  .board[data-lens="chain"]{ grid-template-columns:repeat(3,minmax(0,1fr)); }
-}
-@media (max-width:820px){
-  .bp{ height:auto; min-height:0; }
-  .top{ flex-wrap:wrap; align-items:flex-start; gap:10px; }
-  .top .id{ flex:1 1 100%; }
-  .top h1{ font-size:26px; }
-  .top .spacer{ display:none; }
-  .legend{ flex-direction:row; gap:12px; flex-wrap:wrap; }
-  .mid{ grid-template-columns:1fr; }
-  .col{ padding:14px var(--gut); }
-  .col + .col{ border-left:0; border-top:var(--rule-hair) solid var(--color-rule); }
-  .canvas{ overflow:visible; display:block; }
-  .rail .conv{ overflow:visible; }
-  .foot{ grid-template-columns:1fr; }
-  .foot .counts{ border-left:0; border-top:var(--rule-hair) solid var(--color-rule); flex-wrap:wrap; padding-top:10px; }
-  .detail{ position:fixed; }
-  .spine{ max-width:420px; }
-}
-@media (max-width:520px){
-  .board[data-lens="chain"]{ grid-template-columns:1fr; }
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{ transition-duration:1ms !important; animation-duration:1ms !important; }
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The big picture &middot; ReLeaf &middot; GEMS Taiwan, iGEM 2026</title>
+  <meta name="description" content="Fourteen pieces of work and the one path they all feed, from a field under stress to a farm that makes what its crop needs on the day it needs it." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/big-picture.css" />
+  <style>
+    /* Standalone shell only. The wiki supplies all of this through page.css and
+       home.css, so everything in this block is deleted at merge. */
+    html, body { overflow-x: clip; }
+    body { margin: 0; font-family: var(--font-body); font-size: var(--text-base);
+           line-height: 1.68; color: var(--black); background: var(--white);
+           -webkit-font-smoothing: antialiased; }
+    *, *::before, *::after { box-sizing: border-box; }
+    a { color: var(--leaf-700); }
+    .band { padding: var(--sp-8) 0; }
+    .band__inner { max-width: var(--max); margin: 0 auto; padding: 0 var(--sp-5); }
+    @media (min-width: 640px) { .band__inner { padding: 0 var(--sp-6); } }
+    .kicker { margin: 0 0 var(--sp-4); font-size: .6875rem; font-weight: 700;
+              letter-spacing: .12em; text-transform: uppercase; color: var(--leaf-700); }
+    h2.band__title { margin: 0 0 var(--sp-5); font-family: var(--font-display);
+                     font-size: var(--text-h2); font-weight: 700; line-height: 1.14;
+                     letter-spacing: -.018em; color: var(--leaf-900); max-width: 26ch; }
+    .lede { max-width: 62ch; font-size: var(--text-lede); line-height: 1.55; color: var(--gray-600); }
+    .shell { border-bottom: 1px solid var(--gray-200); background: var(--gray-50);
+             padding: 8px var(--sp-5); font-size: var(--text-xs); color: var(--gray-500); }
+    .shell b { color: var(--black); }
+  </style>
 </head>
 <body>
 
-<!-- ═══ DEV SHELL · delete this element when merging into the homepage ═══ -->
-<div class="devshell">
-  <b>ReLeaf · project big picture</b>
-  <span class="label">standalone build · this bar is the development shell</span>
-</div>
+<!-- Standalone development shell. Delete this element when merging. -->
+<div class="shell"><b>ReLeaf &middot; the big picture</b> &nbsp;standalone build, drawn on the wiki&rsquo;s own tokens</div>
 
-<section class="bp" id="bp" aria-labelledby="bp-title">
+<!-- =============================================================================
+     THE BIG PICTURE.
 
-  <!-- ── masthead ───────────────────────────────────────────────────── -->
-  <header class="top">
-    <div class="id">
-      <span class="label">The whole project, on one screen</span>
-      <h1 id="bp-title">Twenty-three pieces of work. One chain.</h1>
-      <p class="sub">A field tells us which stress to solve. A molecule is chosen for it. A machine we
-        built makes the molecule. An assay says whether it did anything. Then it has to reach the
-        field, at a cost somebody will pay, under a law that exists.</p>
-    </div>
-    <span class="spacer"></span>
-    <div class="legend" aria-hidden="true">
-      <span><span class="mk mk--done"></span> data in hand</span>
-      <span><span class="mk mk--running"></span> under way</span>
-      <span><span class="mk mk--planned"></span> not yet run</span>
-    </div>
-    <div class="lens" role="group" aria-label="Arrange the work">
-      <button type="button" data-lens="chain"    aria-pressed="true">By stage</button>
-      <button type="button" data-lens="evidence" aria-pressed="false">By evidence</button>
-    </div>
-  </header>
+     Reads assets/css/big-picture.css. Two rules govern every change:
 
-  <!-- ── three columns ──────────────────────────────────────────────── -->
-  <div class="mid">
+       1. Nothing opens. Every label and every subtitle is on screen before the
+          reader touches anything. Pointing at a piece changes emphasis and
+          writes one line under the figure. It never reveals hidden text.
+       2. The marks say how far the evidence goes, and they are allowed to say
+          that most of it has not been run.
+     ========================================================================== -->
 
-    <!-- LEFT · what the thing is -->
-    <div class="col loopwrap">
-      <div>
-        <span class="label">What the thing is</span>
-        <h2>The loop, and the step drawn open.</h2>
+<section class="band bigpic" id="bigpicture" aria-labelledby="bigpic-title">
+  <div class="band__inner">
+
+    <div class="bigpic__head">
+      <p class="kicker">How the work fits together</p>
+      <h2 class="band__title" id="bigpic-title">Everything we did joins one line.</h2>
+      <p class="lede">Fourteen pieces of work, and one path between them. Above the
+      line is what we made. Below it is how we know. The marks say how far the
+      evidence goes.</p>
+
+      <div class="bigpic__legend">
+        <span><i class="mark" aria-hidden="true"></i> data in hand</span>
+        <span><i class="mark mark--part" aria-hidden="true"></i> running, result still open</span>
+        <span><i class="mark mark--none" aria-hidden="true"></i> designed, not run</span>
       </div>
-      <div class="spine" id="spine" role="list" aria-label="The eight steps of the loop"></div>
-      <p class="loopnote" id="loopnote"><b>Hover a station</b> to see only the work that serves it.
-        Step 7 to 8 is a gap: the permeate pump is unspecified and the root-zone interface deferred,
-        so delivery stops at a reservoir.</p>
-      <p class="outside" id="outside"></p>
     </div>
+    <p class="bigpic__hint">The drawing is wider than this screen. Drag it sideways.</p>
 
-    <!-- CENTRE · what we did -->
-    <div class="col centre">
-      <div class="boardhead">
-        <span class="label">What we did</span>
-        <span class="why" id="lenswhy">Six stages, left to right, in the order the work has to happen.</span>
-      </div>
-      <div class="canvas" id="canvas">
-        <div class="board" id="board" data-lens="chain">
-          <svg id="threadlayer" aria-hidden="true"></svg>
+
+    <div class="bigpic__scroll">
+      <div class="figure" id="figure" role="group" aria-label="The ReLeaf project as one line, with the work that feeds it">
+
+        <p class="lane__name lane__name--make">What we made<small>design and machines</small></p>
+        <p class="lane__name lane__name--line">The line<small>one dose, end to end</small></p>
+        <p class="lane__name lane__name--know">How we know<small>what we measure</small></p>
+
+        <!-- ── what we made ─────────────────────────────────────────────── -->
+        <div class="stack stack--make" data-col="1"></div>
+
+        <div class="stack stack--make" data-col="2">
+          <div class="chip" tabindex="0" data-feeds="2"
+               data-say="<b>The model</b> is what the second step has to hit. One set of equations carries field stress through green light and secretion to plant response, and asks how much enzyme a stressed plant needs before any of it is worth switching on. <i>The framework runs. It has not been checked against our own numbers.</i>">
+            <span class="chip__name"><i class="mark mark--part" aria-hidden="true"></i>The model</span>
+          </div>
         </div>
-        <div class="detail" id="detail" data-open="0" role="dialog" aria-modal="false" aria-label="Workstream detail"></div>
+
+        <div class="stack stack--make" data-col="3">
+          <div class="chip" tabindex="0" data-feeds="3"
+               data-say="<b>The circuit</b> is what turns brightness into transcription. CcaS and CcaR read the green light and drive the promoter above the payload, so the cell answers a colour with a protein.">
+            <span class="chip__name"><i class="mark" aria-hidden="true"></i>The circuit</span>
+          </div>
+          <div class="chip" tabindex="0" data-feeds="3"
+               data-say="<b>The light array</b> is a dual-wavelength LED rack we built. It runs many light doses side by side instead of one after another. Without it there is no dose axis to plot anything against.">
+            <span class="chip__name"><i class="mark" aria-hidden="true"></i>The light array</span>
+          </div>
+        </div>
+
+        <div class="stack stack--make" data-col="4">
+          <div class="chip" tabindex="0" data-feeds="4"
+               data-say="<b>The molecule</b> is chosen against a stress, not picked for novelty. ACC deaminase cuts the ethylene signal at its precursor, BoPep4 is a broccoli elicitor peptide, LEA 14 protects against drying. BoPep4 was aligned across 39 mature Peps, docked to PEPR1 and BAK1, simulated, then codon-fitted for the chassis.">
+            <span class="chip__name"><i class="mark" aria-hidden="true"></i>The molecule</span>
+          </div>
+        </div>
+
+        <div class="stack stack--make" data-col="5">
+          <div class="chip" tabindex="0" data-feeds="5"
+               data-say="<b>The reactor</b> is a hollow-fibre perfusion build. Cells grow in the extracapillary chamber, outside the fibres, and the fibre wall is the handover. Three weeks of unbroken logging describe the log, not the culture.">
+            <span class="chip__name"><i class="mark mark--part" aria-hidden="true"></i>The reactor</span>
+          </div>
+        </div>
+
+        <div class="stack stack--make" data-col="6"></div>
+
+        <!-- ── the line ─────────────────────────────────────────────────── -->
+        <div class="railband" aria-hidden="true"></div>
+
+        <div class="step" data-col="1" data-step="1" tabindex="0"
+             data-say="<b>A field under stress.</b> Salt, heat or a dry spell, in a township the map has already covered. The stress baselines under this step say what that does to a plant when nothing is added, which is what every later result gets scored against.">
+          <span class="step__n">01</span>
+          <span class="step__name"><i class="mark mark--part" aria-hidden="true"></i>A stressed field</span>
+          <span class="step__note">salt or heat, in a field we mapped</span>
+        </div>
+
+        <div class="step" data-col="2" data-step="2" tabindex="0"
+             data-say="<b>The call to make some.</b> A soil sensor and a weather forecast decide before the plant shows the stress, which is the difference between answering how much and answering whether. <i>Design intent. Nothing has been built that does this yet.</i>">
+          <span class="step__n">02</span>
+          <span class="step__name"><i class="mark mark--none" aria-hidden="true"></i>The call</span>
+          <span class="step__note">a sensor and a forecast decide</span>
+        </div>
+
+        <div class="step" data-col="3" data-step="3" tabindex="0"
+             data-say="<b>Green light, held at a brightness.</b> 520 nm from the rack, and brightness is meant to set the dose rather than switch it. <i>The rack and the circuit are built. The curve that would prove the dose is not ours yet.</i>">
+          <span class="step__n">03</span>
+          <span class="step__name"><i class="mark mark--part" aria-hidden="true"></i>Green light</span>
+          <span class="step__note">520 nm, and brightness sets the dose</span>
+        </div>
+
+        <div class="step" data-col="4" data-step="4" tabindex="0"
+             data-say="<b>Protein, in the chamber.</b> Bacillus subtilis grows continuously and makes the protectant while it grows. <i>The culture and its log are real. The titre is not measured.</i>">
+          <span class="step__n">04</span>
+          <span class="step__name"><i class="mark mark--part" aria-hidden="true"></i>Protein made</span>
+          <span class="step__note">B. subtilis makes it while it grows</span>
+        </div>
+
+        <div class="step" data-col="5" data-step="5" tabindex="0"
+             data-say="<b>Across the membrane.</b> Protein leaves through the fibre wall and the cells stay behind, which is both the harvest and the containment argument. <i>The perfusion loop runs. Retention has not been shown, and the cut-off is still unchosen.</i>">
+          <span class="step__n">05</span>
+          <span class="step__name"><i class="mark mark--part" aria-hidden="true"></i>The handover</span>
+          <span class="step__note">protein crosses, cells stay behind</span>
+        </div>
+
+        <div class="step" data-col="6" data-step="6" tabindex="0"
+             data-say="<b>Into the crop.</b> A plant that comes through the stress better than it would have. <i>No plant has received anything yet. The tandem run under this step is what would change that.</i>">
+          <span class="step__n">06</span>
+          <span class="step__name"><i class="mark mark--none" aria-hidden="true"></i>Into the crop</span>
+          <span class="step__note">a plant that comes through better</span>
+        </div>
+
+        <!-- ── how we know ──────────────────────────────────────────────── -->
+        <div class="stack stack--know" data-col="1">
+          <div class="chip" tabindex="0" data-feeds="1"
+               data-say="<b>Stress baselines</b> are Arabidopsis raised on agar, in hydroponics and in soil, then put under salt and under heat. Three systems on purpose: agar is fast, hydroponics is where the reactor can be plumbed in, and soil is the only one a farmer has.">
+            <span class="chip__name"><i class="mark mark--part" aria-hidden="true"></i>Stress baselines</span>
+          </div>
+        </div>
+
+        <div class="stack stack--know" data-col="2"></div>
+
+        <div class="stack stack--know" data-col="3">
+          <div class="chip" tabindex="0" data-feeds="3"
+               data-say="<b>Dose response</b> is DNPH activity read at each light intensity, then again at each promoter variant. This is the run that earns the sentence brightness is dose, or takes it away from us.">
+            <span class="chip__name"><i class="mark mark--none" aria-hidden="true"></i>Dose response</span>
+          </div>
+        </div>
+
+        <div class="stack stack--know" data-col="4">
+          <div class="chip" tabindex="0" data-feeds="4"
+               data-say="<b>The photometer</b> is our own instrument, logging optical density with nobody in the room. It earned its place by catching the cross-flow pump dying before any of us noticed.">
+            <span class="chip__name"><i class="mark" aria-hidden="true"></i>The photometer</span>
+          </div>
+          <div class="chip" tabindex="0" data-feeds="4"
+               data-say="<b>Expression</b> is checked by Western blot and by DNPH on the output. Those turn a band on a gel into a rate, and a rate is the only thing the model can be checked against.">
+            <span class="chip__name"><i class="mark mark--none" aria-hidden="true"></i>Expression</span>
+          </div>
+        </div>
+
+        <div class="stack stack--know" data-col="5">
+          <div class="chip" tabindex="0" data-feeds="5"
+               data-say="<b>The harvest</b> is how much protein crosses, at what transmembrane pressure, and how long the cartridge lasts before it fouls. It also forces the cut-off decision. A 0.2 micrometre wall and a 50 kilodalton wall are two different machines, and only one of them passes protein alone.">
+            <span class="chip__name"><i class="mark mark--none" aria-hidden="true"></i>The harvest</span>
+          </div>
+        </div>
+
+        <div class="stack stack--know" data-col="6">
+          <div class="chip" tabindex="0" data-feeds="6"
+               data-say="<b>Rescue assays</b> put treated plants against untreated ones, on the baselines at the start of this lane. The first result that would let us say the protein does something, rather than that the protein exists.">
+            <span class="chip__name"><i class="mark mark--none" aria-hidden="true"></i>Rescue assays</span>
+          </div>
+          <div class="chip chip--key" tabindex="0" data-feeds="6"
+               data-say="<b>The tandem run</b> plumbs the reactor straight into the hydroponic box, with nobody carrying a tube between them. Every other run on this drawing proves one link. This one proves the line.">
+            <span class="chip__name"><i class="mark mark--none" aria-hidden="true"></i>The tandem run</span>
+          </div>
+        </div>
+
+        <!-- ── where the line goes ──────────────────────────────────────── -->
+        <div class="term" id="term" tabindex="0"
+             data-say="<b>The line reaches a farm only if three things hold</b>: a build cost we can put a number on, a classification a Taiwanese regulator accepts, and a cooperative willing to run the thing. <i>None of the three is closed, and the cost one is open on purpose. There is no bill of materials total, so no page of ours quotes a price.</i>">
+          <p class="term__label">Where the line goes</p>
+          <p class="term__claim">Every farmer a biomanufacturer.</p>
+          <div class="term__gates">
+            <p class="term__gate"><b>What it costs</b>No bill of materials total yet, so no price claim.</p>
+            <p class="term__gate"><b>Whether it is allowed</b>Contained use, pursued and not yet held.</p>
+            <p class="term__gate"><b>Who runs it</b>The cooperative that owns the irrigation line.</p>
+          </div>
+        </div>
+
+        <!-- ── and back to the start ────────────────────────────────────── -->
+        <div class="back">
+          <i class="back__arrow" aria-hidden="true"></i>
+          <p class="back__text">And back to the start. The line begins in someone else&rsquo;s field, and two pieces of work are how it got there.</p>
+          <div class="back__chips">
+            <div class="chip" tabindex="0" data-feeds="1"
+                 data-say="<b>The map</b> is QGIS layers for salinity and heat across Taiwan. It turns the question from how much land in the world is salt-affected into which townships, and in which month.">
+              <span class="chip__name"><i class="mark mark--part" aria-hidden="true"></i>The map</span>
+            </div>
+            <div class="chip" tabindex="0" data-feeds="1"
+                 data-say="<b>The farmers</b> are a change log, not an attendance record. Nine conversations. Two of them moved the design: dosing came off a wall clock and onto soil moisture, and scaling came off geometric similarity and onto wall shear.">
+              <span class="chip__name"><i class="mark" aria-hidden="true"></i>The farmers</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- RIGHT · what it is for -->
-    <div class="col rail">
-      <div>
-        <span class="label">What it is for</span>
-        <h2>One arithmetic. It closes or it does not.</h2>
-      </div>
-      <p class="ground">Sourced context, not our claim. <b>1.38bn ha</b> of land carries salt stress,
-        10.7% of the land surface, and <b>84%</b> of the world's 570 million farms are under two
-        hectares. Both FAO.</p>
-      <div class="conv" id="conv"></div>
-      <div class="claim">
-        <span class="arrow">⇒</span>
-        <h2 id="claimtext"></h2>
-        <p id="claimsub"></p>
-      </div>
-    </div>
-  </div>
+    <p class="readout" id="readout" aria-live="polite">Point at any piece to see where
+    it joins. A filled mark has data behind it, a dashed one does not.</p>
 
-  <!-- ── foot ───────────────────────────────────────────────────────── -->
-  <div class="foot">
-    <div>
-      <div class="threadbar" id="threadbar" role="group" aria-label="Trace a thread across the board"></div>
-      <p class="readout" id="readout" aria-live="polite"></p>
-    </div>
-    <div class="counts" id="counts"></div>
   </div>
 </section>
 
-<script>
-"use strict";
-/* ═══════════════════════════════════════════════════════════════════════════
-   DATA
-   Every string here comes from the project brief, the wet-lab instructor's
-   assay list, or the team's own logs. Where a number is not on record the
-   text says so rather than guessing. Editing this block is how the page is
-   maintained; nothing below it needs to change.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-const STAGES = [
-  { id:"field",  k:"Stage 1", h:"The field",      note:"Where and when the stress actually is." },
-  { id:"design", k:"Stage 2", h:"The design",     note:"What to make, and what turns it on." },
-  { id:"build",  k:"Stage 3", h:"The build",      note:"Parts and machines, made by us." },
-  { id:"run",    k:"Stage 4", h:"The run",        note:"Operate it, and control the dose." },
-  { id:"prove",  k:"Stage 5", h:"The proof",      note:"Did the protein do anything." },
-  { id:"deploy", k:"Stage 6", h:"The handover",   note:"Who gets it, at what cost, under what law." }
-];
-
-const THREADS = [
-  { id:"molecule",  name:"The molecule",        c:"var(--t-molecule)",
-    say:"<strong>From a literature search to a plant that survives.</strong> ACC deaminase and BoPep4 were chosen against a stress, designed in silico, codon-optimised for the chassis, cloned, expressed, then scored by an activity assay and a rescue experiment. Every link exists as a protocol. <em>The last three links have not been run.</em>",
-    path:["protectant","peptide","codon","cloning","growth","accd","rescue_ab"] },
-  { id:"dose",      name:"The dose",            c:"var(--t-dose)",
-    say:"<strong>Brightness is dose, and the model has to be checked against a plant.</strong> The ODE framework asks what minimum enzyme activity a stressed plant needs, the circuit and the LED array set the light that should deliver it, and the DNPH series across intensities and promoter variants is what says whether the model was right. <em>Design intent. No induction curve exists in our hands.</em>",
-    path:["circuit","model","lpa","lightdose","accd","rescue_ab"] },
-  { id:"instrument",name:"The instrument",      c:"var(--t-instrument)",
-    say:"<strong>Every number we quote came off something we built or wrote.</strong> The photometer logs OD600 in line and caught the cross-flow pump dying before we did. The LED array sets light. The reactor holds the culture. DNPH and Western blot are the readouts that turn all of that into a figure. <em>This is the Measurement nomination, drawn as a route rather than claimed as a virtue.</em>",
-    path:["reactor","photometer","lpa","growth","harvest","accd"] },
-  { id:"map",       name:"Map into numbers",    c:"var(--t-map)",
-    say:"<strong>A surface becomes a device count.</strong> The QGIS layer says how much land in Taiwan carries salinity and heat stress and when. The model turns a stressed hectare into a required dose. The reactor's output rate turns a dose into a number of devices, and that is the number the business case is built on. <em>All four figures in that chain are still open, and the arithmetic on the right names each one.</em>",
-    path:["gis","model","harvest","tandem","business"] },
-  { id:"cost",      name:"Device and cartridge",c:"var(--t-cost)",
-    say:"<strong>What a farmer would actually pay, capital and recurring.</strong> The reactor's build cost is one half. The membrane cartridge replacement interval, set by fouling under transmembrane pressure, is the other half, along with feed medium and power. Regulation decides whether any of it may be sold. <em>There is no bill-of-materials total, so no price claim is available to us.</em>",
-    path:["reactor","harvest","business","regulation"] },
-  { id:"people",    name:"The people",          c:"var(--t-people)",
-    say:"<strong>Human practices is a change log, not an attendance record.</strong> A farmer moved our dosing off a wall clock and onto soil-moisture state. A dean moved our scaling argument onto wall shear and sub-critical flux. Education and the physicalised map are how the same evidence leaves the room. <em>Most of the nine engagement entries changed no design and are therefore not publishable.</em>",
-    path:["farmers","plants","model","education","physical","business"] }
-];
-
-/* status: "done" data in hand · "running" built or under way · "planned" designed, not run */
-const NODES = [
-
-/* ── Stage 1 · the field ─────────────────────────────────────────────── */
-{ id:"gis", r:1, stage:"field", s:"running", t:"Geospatial analysis", k:"QGIS · where the stress is",
-  body:["Salinity and heat stress mapped over Taiwan at field resolution, so that the question stops being how much land in the world is salt-affected and becomes which hectares, in which township, in which month."],
-  produces:"A stressed-hectare surface with a season attached to it.",
-  feeds:"Feeds the model, which turns a hectare into a dose. Feeds the business case, which turns a dose into a device count. Feeds the physicalised map, which is how a person who reads no maps still gets the number.",
-  sub:[{t:"Salinity layer, Taiwan",s:"running"},{t:"Heat and drought-onset layer",s:"running"},{t:"Cross-walk to cropping calendar",s:"planned"}] },
-
-{ id:"plants", r:1, stage:"field", s:"running", t:"Plant growing and stress assays", k:"agar, hydroponics, soil",
-  body:["Plants raised across three systems on purpose. Agar is controlled and fast, hydroponics is where the reactor can actually be plumbed in, and soil is the only one a farmer has. A result that only appears on agar is not a result about farming.","Salinity and heat series establish the stress dose-response first, so that every rescue experiment later has a baseline to be scored against rather than a story to be told about."],
-  produces:"Stress dose-response curves and the readouts every rescue experiment is scored against.",
-  feeds:"Feeds the proof stage. Nothing in stage 5 means anything without these baselines.",
-  sub:[{t:"Agar plate system",s:"running"},{t:"Hydroponic box",s:"running"},{t:"Soil pots",s:"running"},{t:"Salinity series",s:"running"},{t:"Heat stress series",s:"running"}] },
-
-{ id:"farmers", r:1, stage:"field", s:"done", t:"Farmers and stakeholders", k:"nine conversations, two design changes",
-  body:["Human practices here is a change log. An entry with no design change attached is a photograph of a meeting, and by that rule most of the nine entries are not publishable yet.","陳惠雯, a dew-mulch farmer, moved our dosing off a wall clock and onto soil-moisture state. Dr. Pak K. Yuet moved our scaling argument off geometric similarity and onto wall shear with flux held below critical, and told us to say out loud which similarity group we were sacrificing."],
-  produces:"Design changes, dated, with the person who caused them named.",
-  feeds:"Feeds the controller logic, the reactor scaling argument, and the Integrated Human Practices nomination.",
-  sub:[{t:"陳惠雯, dew-mulch farmer, 21 July 2026",s:"done"},{t:"Dr. Pak K. Yuet, 18 Apr and 16 Jul 2026",s:"done"},{t:"Remaining entries, no design change on record",s:"planned"}] },
-
-/* ── Stage 2 · the design ────────────────────────────────────────────── */
-{ id:"protectant", r:5, stage:"design", s:"done", t:"Protectant research", k:"which molecule, and why that one",
-  body:["The survey that ends in three candidates: ACC deaminase, LEA14 and BoPep4. ACC deaminase cuts the ethylene stress signal at its precursor and has been in the open literature since the 1990s, which is the point. Nothing about the biology is proprietary. What is proprietary is everything between the fermenter and the field."],
-  produces:"A shortlist with a stated reason per candidate, and a stated stress each one answers.",
-  feeds:"Feeds peptide design and the expression cassette. Also sets what the assays in stage 5 have to measure.",
-  sub:[{t:"ACC deaminase, abiotic stress via ethylene",s:"done"},{t:"BoPep4, salinity and defence signalling",s:"done"},{t:"LEA14, desiccation protection",s:"done"}] },
-
-{ id:"peptide", r:5, stage:"design", s:"done", t:"Peptide design", k:"MSA · docking · MD",
-  body:["BoPep4 aligned against all 38 other mature Pep peptides, grouped by family, on the conserved C-terminal core. Dicot rows carry the SSG motif, Poaceae rows the EGG core. That alignment is what justifies treating a broccoli peptide as a general dicot signal rather than a species curiosity.","From there: restraint mapping onto PEPR1 and its co-receptor BAK1, structural analysis in PyMOL, information-driven docking in HADDOCK, and molecular dynamics in OpenMM to check whether the pose survives being simulated."],
-  produces:"Ranked poses against PEPR1 and BAK1, with the contacts that hold them, and truncation and point-mutation panels built off those contacts.",
-  feeds:"Feeds codon optimisation and the cloning order. Feeds the biotic-stress assay, which is the experiment that would say the docking meant anything.",
-  links:[{t:"BoPep4 against 38 Peps",u:"https://claude.ai/public/artifacts/dc4af49d-410d-4182-a158-60f9a0ba28de"}],
-  sub:[{t:"Multiple sequence alignment, 39 peptides",s:"done"},{t:"Restraint mapping, PEPR1 and BAK1",s:"done"},{t:"Structural analysis, PyMOL",s:"done"},{t:"Docking, HADDOCK",s:"done"},{t:"Molecular dynamics, OpenMM",s:"done"},{t:"Truncation and point-mutation panels",s:"running"}] },
-
-{ id:"codon", r:4, stage:"design", s:"done", t:"Codon and RNA optimisation", k:"ViennaRNA · Castillo 2019",
-  body:["Codon choice optimised for the chassis, then the coding sequence re-checked against its own predicted secondary structure in ViennaRNA following the Castillo 2019 method, because a sequence that folds hard at the ribosome binding site expresses badly no matter how good its codon adaptation index looks."],
-  produces:"Synthesis-ready sequences with folding energy reported alongside codon usage.",
-  feeds:"Feeds the cloning order directly. This is the last dry-lab step before money is spent on DNA.",
-  sub:[{t:"Codon adaptation for the chassis",s:"done"},{t:"Secondary-structure check, ViennaRNA",s:"done"},{t:"Synthesis orders placed",s:"done"}] },
-
-{ id:"circuit", r:4, stage:"design", s:"done", t:"Gene circuit design", k:"CcaS/CcaR → P_cpcG2",
-  body:["A green-light two-component system drives the promoter that drives the protectant. Light intensity is intended to set transcription rate, which is what makes the response graded rather than switched, and which is the whole reason the device can answer how much rather than only whether.","Latency is roughly 105 minutes to half-maximum. That figure is borrowed from published work in a different organism at a different wavelength. It is not ours, and it has to be said in the same sentence at the same size every time it appears."],
-  produces:"The cassette design, the promoter variants to be compared, and the secretion route out of the cell.",
-  feeds:"Feeds cloning, and feeds the light dose-response series that would turn design intent into a curve.",
-  sub:[{t:"CcaS/CcaR sensor pair",s:"done"},{t:"P_cpcG2 output promoter, variant set",s:"done"},{t:"Secretion signal selection",s:"running"}] },
-
-{ id:"model", r:2, stage:"design", s:"running", t:"Mathematical model", k:"ODE · stress to light to plant",
-  body:["One ODE framework carried end to end: environmental stress, green-light induction, CcaS/CcaR-driven expression and secretion of the protectant, and the difference that makes to a plant under stress.","It is built to answer a design question rather than to decorate a page. Given a stressed plant, what is the minimum enzyme activity and concentration the system has to deliver, and does the reactor plus the light schedule reach it. If the answer is no, the device is the wrong size and we would rather know that from an equation than from a season."],
-  produces:"A required activity and concentration at the plant, and the light schedule that would deliver it.",
-  feeds:"Feeds the light dose-response, which tests it. Feeds the map-to-numbers thread, which is where it becomes a device count. The model was dropped as a special-award nomination, so this work now has to score inside project question 4.",
-  sub:[{t:"Stress to induction block",s:"running"},{t:"Expression and secretion block",s:"running"},{t:"Plant response block",s:"running"},{t:"Bioreactor invariant explorer",s:"done"},{t:"Validation against our own data",s:"planned"}] },
-
-/* ── Stage 3 · the build ─────────────────────────────────────────────── */
-{ id:"cloning", r:4, stage:"build", s:"running", t:"Molecular cloning", k:"MoClo · electroporation · Registry",
-  body:["Assembly of the designed cassettes and transformation into the chassis, with the parts documented for the Registry as they go rather than reconstructed afterwards."],
-  produces:"Verified constructs, sequencing records, and Registry part entries.",
-  feeds:"Feeds everything in stages 4 and 5. Nothing runs until a construct exists.",
-  sub:[{t:"MoClo assembly",s:"running"},{t:"Electroporation into the chassis",s:"running"},{t:"Sequencing verification",s:"running"},{t:"Registry part documentation",s:"running"}] },
-
-{ id:"reactor", r:5, stage:"build", s:"running", t:"Bioreactor", k:"hardware 1 · hollow-fibre perfusion",
-  body:["Cells grow continuously in the extracapillary chamber, outside the fibres. The lumen is the bore of the fibre. Keeping those two words apart is what stops three weeks of unbroken OD600 logging and cells do not grow in the lumen from reading as a contradiction. They are statements about different compartments.","Three weeks of unbroken OD600 logging is real and it is ours. Unbroken describes the log, not the culture. It is not a claim that a culture survived three weeks."],
-  produces:"A continuous culture with an in-line optical density record, and a scaling argument based on wall shear with flux held below critical.",
-  feeds:"Feeds every run and harvest experiment, and feeds the capital-cost half of the business case.",
-  links:[{t:"How it ranks against 17 iGEM reactors",u:"https://timmy97-tw.github.io/igem-bioreactor-landscape/"}],
-  sub:[{t:"Perfusion loop built and run",s:"done"},{t:"3 weeks unbroken OD600 logging",s:"done"},{t:"Scale-up transform published",s:"done"},{t:"Membrane cut-off chosen",s:"planned"},{t:"Second containment layer",s:"planned"}] },
-
-{ id:"photometer", r:5, stage:"build", s:"done", t:"In-line photometer", k:"hardware 2 · OD600, built from nothing",
-  body:["An optical density instrument built by the team and plumbed into the loop, logging continuously instead of at whatever hour somebody happened to be in the lab.","It earned its place by catching a failure we had not seen: the cross-flow pump was dying and the photometer said so before any of us noticed."],
-  produces:"The continuous OD600 record that every growth claim on this page rests on.",
-  feeds:"Feeds the growth and expression run, and is the strongest single piece of evidence behind the Measurement nomination.",
-  sub:[{t:"Optics and firmware built",s:"done"},{t:"Plumbed in line",s:"done"},{t:"Caught cross-flow pump failure",s:"done"},{t:"Calibration against a reference instrument",s:"running"}] },
-
-{ id:"lpa", r:3, stage:"build", s:"done", t:"Light apparatus array", k:"hardware 3 · dual wavelength",
-  body:["A programmable LED array in the open-hardware optogenetics lineage, built so that many light conditions can be run at once rather than one at a time. This is the instrument that makes brightness is dose a testable sentence instead of a slogan, because without a per-well intensity series there is no dose axis to plot against."],
-  produces:"Per-well light intensity schedules, and the hardware for the whole dose-response series.",
-  feeds:"Feeds the light dose-response directly, and calibrates the induction term in the model.",
-  sub:[{t:"Array built, dual wavelength",s:"done"},{t:"Per-well intensity calibration",s:"running"},{t:"Dose-response protocol schematic",s:"done"}] },
-
-/* ── Stage 4 · the run ───────────────────────────────────────────────── */
-{ id:"growth", r:5, stage:"run", s:"running", t:"Growth and expression", k:"growth curve · ACCD level",
-  body:["The reactor run that produces both halves of the same figure: how the culture grows, and how much protectant it is actually making while it does. Expression read by Western blot or by DNPH activity, so that a band and a rate can be compared rather than argued about."],
-  produces:"A paired growth and expression record for a continuous culture.",
-  feeds:"Feeds the harvest work and the model's expression block.",
-  sub:[{t:"Growth curve in the chamber",s:"running"},{t:"ACCD expression level, Western blot",s:"planned"},{t:"ACCD expression level, DNPH",s:"planned"}] },
-
-{ id:"lightdose", r:3, stage:"run", s:"planned", t:"Light dose-response", k:"intensity series · promoter series",
-  body:["The experiment that either earns the sentence brightness is dose or takes it away from us. DNPH activity measured across a light-intensity series, then again across CcaS/CcaR promoter variants, so that the transfer function is measured in our own hands rather than borrowed.","We have not measured our own transfer function. Until this runs, the graded-response claim is design intent."],
-  produces:"Our own induction curve, and the promoter variant that gives the usable dynamic range.",
-  feeds:"Feeds the model's induction block and settles the controller's dosing policy.",
-  sub:[{t:"DNPH across light intensities",s:"planned"},{t:"DNPH across CcaS/R promoter variants",s:"planned"}] },
-
-{ id:"harvest", r:6, stage:"run", s:"planned", t:"Harvest across transmembrane pressure", k:"TMP sweep · what actually crosses",
-  body:["How much protein comes through the membrane, and at what pressure, for both payloads. This is also where the central unmade design decision sits. A 0.2 micrometre membrane and a 50 kilodalton membrane are not two candidate values of one parameter. They are two different devices with opposite consequences, and only one of them makes passes only protein a true sentence.","The membrane is intended to retain every cell and pass only protein. Intended, not demonstrated."],
-  produces:"Yield against transmembrane pressure, a working operating point, and the fouling behaviour that sets cartridge life.",
-  feeds:"Feeds the tandem experiment, the recurring-cost half of the business case, and the containment argument.",
-  sub:[{t:"TMP sweep, ACCD, Western blot or DNPH",s:"planned"},{t:"TMP sweep, BoPep4, Western blot",s:"planned"},{t:"Critical-flux sweep for J_crit",s:"planned"},{t:"Membrane cut-off decision",s:"planned"}] },
-
-/* ── Stage 5 · the proof ─────────────────────────────────────────────── */
-{ id:"accd", r:8, stage:"prove", s:"planned", t:"ACC deaminase activity", k:"DNPH assay",
-  body:["The enzymatic readout. DNPH quantifies the product of ACC deaminase activity, which is what converts a band on a gel into a rate, and a rate is the only thing the model can be checked against."],
-  produces:"Specific activity, in units the model uses.",
-  feeds:"Feeds the model's validation, the light dose-response, and every claim about how much the device makes.",
-  sub:[{t:"Assay established on purified or crude extract",s:"planned"},{t:"Applied to reactor permeate",s:"planned"}] },
-
-{ id:"rescue_ab", r:8, stage:"prove", s:"planned", t:"Abiotic stress rescue", k:"生物活性分析 · Arabidopsis",
-  body:["Arabidopsis put under salinity or heat, then given the protectant, and scored against the untreated stress baseline from stage 1. This is the experiment that turns an enzyme activity into a biological effect. Run for ACC deaminase and for BoPep4, since they answer the stress by different routes."],
-  produces:"An effect size at a stated dose, against a baseline we measured ourselves.",
-  feeds:"Feeds the model's plant-response block, and is the first result that would let us say the protein does something rather than the protein exists.",
-  sub:[{t:"ACCD, Arabidopsis stress rescue",s:"planned"},{t:"BoPep4, Arabidopsis stress rescue",s:"planned"}] },
-
-{ id:"rescue_bio", r:8, stage:"prove", s:"planned", t:"Defence response", k:"biotic · WB or qPCR on markers",
-  body:["BoPep4 is an elicitor peptide, so the honest test of the docking work is not only whether a stressed plant does better but whether the plant's own defence programme actually turns on. Western blot or qPCR on defence response markers in Arabidopsis is what would show the receptor was engaged."],
-  produces:"Marker induction, which is the closest thing to direct evidence that the PEPR1 and BAK1 modelling was about something real.",
-  feeds:"Feeds back into peptide design, since a null result points at the truncation and point-mutation panels rather than at the peptide.",
-  sub:[{t:"Defence marker panel selected",s:"planned"},{t:"qPCR on markers",s:"planned"},{t:"Western blot on markers",s:"planned"}] },
-
-{ id:"tandem", r:7, stage:"prove", s:"planned", key:1, t:"Reactor to hydroponics tandem", k:"串聯bioreactor與水耕箱",
-  body:["The reactor plumbed straight into the hydroponic box, so that protein made by the machine reaches a plant without a human carrying a tube between them. Run for both payloads.","This is the one experiment on the board that closes the chain end to end. Everything else proves a link. This proves the line. It is also where the open gap in the ring above would be closed, because it forces the reservoir-to-root-zone interface to exist rather than be deferred.","Delivery currently stops at a reservoir. Until this runs, the last third of the loop is an argument about architecture."],
-  produces:"An end-to-end effect: light in at one end, a measurably less stressed plant at the other.",
-  feeds:"Feeds everything downstream. The device count, the cost per hectare and the pitch all become arguable the day this produces a number.",
-  sub:[{t:"ACCD tandem run",s:"planned"},{t:"BoPep4 tandem run",s:"planned"},{t:"Permeate pump and root-zone interface specified",s:"planned"}] },
-
-/* ── Stage 6 · the handover ──────────────────────────────────────────── */
-{ id:"business", r:0, stage:"deploy", s:"running", t:"Entrepreneurship", k:"cost model · who owns the line",
-  body:["The economic unit is the irrigation line and the owner is the cooperative, not the individual. A farmer in a 產銷班 that owns a reactor is a biomanufacturer in the only sense that matters, which is that no outside licence-holder decides what gets made.","Cost is a design target here, not a result. There is no bill-of-materials total, so no page, headline or spoken pitch of ours may use cheap, low-cost or affordable, or quote a per-unit price."],
-  produces:"A model that takes hectares under stress to devices needed to what a cooperative would pay, capital and recurring.",
-  feeds:"This is the terminus. Every thread arrives here.",
-  sub:[{t:"Ownership and unit-of-sale model",s:"done"},{t:"Capital cost, bill of materials total",s:"planned"},{t:"Recurring cost: medium, cartridges, power",s:"planned"},{t:"Market size from the geospatial surface",s:"running"}] },
-
-{ id:"regulation", r:0, stage:"deploy", s:"running", t:"Regulation research", k:"Taiwan · EU · US",
-  body:["What a biostimulant is allowed to be in the three jurisdictions that matter to this device, and what a live engineered organism in a field-side reactor is classified as in Taiwan.","Contained use is the classification we are pursuing, not one we hold, and it has not been confirmed by a Taiwan regulator. For scale on what the alternative costs: EU biopesticide registration runs roughly five to ten years and three to five million pounds, and the US figure is roughly three to four hundred thousand dollars."],
-  produces:"The legal envelope the business model has to fit inside, per jurisdiction.",
-  feeds:"Feeds the business case directly. A route that is not legal is not a route.",
-  sub:[{t:"Taiwan biostimulant framework",s:"running"},{t:"EU framework and cost",s:"done"},{t:"US framework and cost",s:"done"},{t:"Contained-use classification confirmed",s:"planned"}] },
-
-{ id:"education", r:0, stage:"deploy", s:"running", t:"Education", k:"elementary · middle · high",
-  body:["Three age bands, three different asks. Younger students get the idea that a living thing can be told what to make. Older students get the actual trade-off: who is permitted to manufacture, and what it costs to be permitted."],
-  produces:"Sessions run, materials, and what changed in them after each round.",
-  feeds:"Feeds the Integrated Human Practices nomination, and feeds the physicalised map, which is the artefact these sessions are built around.",
-  sub:[{t:"Elementary programme",s:"running"},{t:"Middle school programme",s:"running"},{t:"High school programme",s:"running"}] },
-
-{ id:"physical", r:0, stage:"deploy", s:"running", t:"Data physicalisation", k:"the map, made touchable",
-  body:["The geospatial surface turned into something a person can hold, so that the finding survives contact with an audience that does not read choropleths. This is the bridge between the dry-lab layer and everyone who is not in a lab, and it is the reason the GIS work is not only an input to a spreadsheet."],
-  produces:"A physical artefact carrying real layer data, and a record of what people understood from it.",
-  feeds:"Feeds outreach and education. Closes the loop back to the farmers whose fields the layer describes.",
-  sub:[{t:"Layer selection and simplification",s:"running"},{t:"Fabrication",s:"planned"},{t:"Public sessions and what changed",s:"planned"}] }
-];
-
-/* ── the loop · eight stations and the eight arcs between them ─────────── */
-const RING = [
-  { n:1, t:"Field stress", s:"running",
-    d:"Salinity, heat or drought onset arrives at a field we have mapped." },
-  { n:2, t:"The controller sees it", s:"planned",
-    d:"A soil sensor plus a weather forecast, calling the event before the plant shows it. The prediction model is unvalidated against a field season, and we have not checked whether the forecast lead time exceeds our own end-to-end latency." },
-  { n:3, t:"520 nm goes on", s:"running",
-    d:"The LED array is built and programmable. Brightness is intended to set dose. That is design intent, not a curve in our hands." },
-  { n:4, t:"The switch turns up", s:"planned",
-    d:"CcaS and CcaR raise transcription from P_cpcG2. Latency around 105 minutes to half-maximum is borrowed from another organism at another wavelength." },
-  { n:5, t:"Cells make the protein", s:"done",
-    d:"B. subtilis grows continuously in the extracapillary chamber. Three weeks of unbroken OD600 logging, by an instrument we built. Unbroken describes the log, not the culture. No titre has been measured." },
-  { n:6, t:"The membrane hands it over", s:"running",
-    d:"The perfusion loop runs. Cells are intended to stay and protein to pass, which is intended and not demonstrated, and the cut-off has not been chosen." },
-  { n:7, t:"The reservoir fills", s:"running",
-    d:"Permeate collects. This is as far as delivery currently goes." },
-  { n:8, t:"The root zone", s:"planned",
-    d:"The plant receives the protectant and is less stressed than it would have been. The permeate pump is unspecified and the root-zone interface is deferred, so nothing crosses this step yet." }
-];
-/* edge i connects station i+1 to station i+2, wrapping. "open" is a drawn gap. */
-const EDGES = ["planned","planned","planned","planned","running","running","open","planned"];
-
-/* ── the arithmetic that has to close ─────────────────────────────────── */
-const CONV = [
-  { op:"1", q:"Hectares in Taiwan, and when", owner:"gis", v:"not on record", have:0 },
-  { op:"2", q:"Dose one stressed hectare needs", owner:"model", v:"not on record", have:0 },
-  { op:"3", q:"What one reactor makes in a day", owner:"tandem", v:"not on record", have:0 },
-  { op:"4", q:"Reactors a 產銷班 would need", owner:"business", v:"not on record", have:0 },
-  { op:"5", q:"What one reactor costs to build", owner:"reactor", v:"no BOM total", cite:"open on purpose", have:0 },
-  { op:"6", q:"Legal beside a field in Taiwan", owner:"regulation", v:"contained use: pursued, not held", cite:"unconfirmed by a regulator", have:0 }
-];
-
-const END = {
-  claim:"Every farmer a biomanufacturer.",
-  sub:"Not a farmer who owns a machine. A farmer whose cooperative owns the irrigation line, and for whom no outside licence-holder decides what gets made. A dried spore sachet answers only whether. This answers how much, on the Tuesday you find out that Thursday looks hot."
-};
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   RENDER
-   ═══════════════════════════════════════════════════════════════════════════ */
-const $  = (q,r)=>(r||document).querySelector(q);
-const $$ = (q,r)=>[...(r||document).querySelectorAll(q)];
-const byId = Object.fromEntries(NODES.map(n=>[n.id,n]));
-const SLABEL = { done:"data in hand", running:"under way", planned:"not yet run" };
-const SHEAD  = { done:"Data in hand", running:"Under way, output pending", planned:"Designed, not yet run" };
-const el = (t,c,h)=>{ const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e; };
-const mk = s=>`<span class="mk mk--${s}" aria-hidden="true"></span>`;
-const NS = "http://www.w3.org/2000/svg";
-const sv = (t,a)=>{ const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e; };
-const noMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-let lens="chain", activeThread=null, activeNode=null, pinnedStation=null, hoverStation=null;
-const nodeEl = {};
-
-/* ── the loop, as a spine ─────────────────────────────────────────────── */
-/* EDGES[i] is the step from station i+1 to station i+2, wrapping at the end.
-   Each row therefore carries the state of the edge that arrives at it. */
-function buildSpine(){
-  const sp=$("#spine");
-  RING.forEach((st,i)=>{
-    if(st.n===8){
-      const g=el("div","gaprow");
-      g.innerHTML=`<span class="bar"></span><span class="txt">gap &middot; delivery stops here</span>`;
-      sp.appendChild(g);
-    }
-    const b=el("button","stn");
-    b.type="button"; b.setAttribute("role","listitem"); b.dataset.n=st.n; b.dataset.s=st.s;
-    b.dataset.e = i===0 ? "none" : (st.n===8 ? "none" : EDGES[i-1]);
-    b.innerHTML=`<span class="dot">${st.n}</span><span class="lbl">${st.t}</span>${mk(st.s)}`;
-    const enter=()=>{ hoverStation=st.n; applyStation(); };
-    const leave=()=>{ hoverStation=null; applyStation(); };
-    b.addEventListener("mouseenter",enter); b.addEventListener("mouseleave",leave);
-    b.addEventListener("focus",enter);      b.addEventListener("blur",leave);
-    b.addEventListener("click",()=>{ pinnedStation = pinnedStation===st.n ? null : st.n; applyStation(); });
-    sp.appendChild(b);
-  });
-  const r=el("div","retrow");
-  r.innerHTML=`<svg class="arc" viewBox="0 0 19 18" aria-hidden="true">
-      <path d="M9.5,0 L9.5,11 Q9.5,15 5,15 L2.4,15" fill="none" stroke="var(--color-ink-3)"
-            stroke-width="1.4" stroke-dasharray="3 3"/>
-      <path d="M5.4,11.6 L2,15 L5.4,17.6" fill="none" stroke="var(--color-ink-3)" stroke-width="1.4" stroke-linejoin="round"/>
-    </svg><span class="txt">back to step 1. The plant's own state is what the controller reads next.</span>`;
-  sp.appendChild(r);
-}
-
-function applyStation(){
-  const n = hoverStation ?? pinnedStation;
-  const board=$("#board"), wrap=$(".loopwrap");
-  if(n==null){ delete wrap.dataset.focus; delete board.dataset.station; setReadout(); }
-  else{
-    wrap.dataset.focus="1"; board.dataset.station=n;
-    const st=RING.find(s=>s.n===n);
-    const serving=NODES.filter(x=>x.r===n);
-    setReadout(`<strong>${st.n}. ${st.t}</strong> ${mk(st.s)} <em>${SLABEL[st.s]}.</em> ${st.d}
-      <em>Serving this step: ${serving.length ? serving.map(x=>x.t).join(", ") : "nothing on the board"}.</em>`);
-  }
-  $$(".stn").forEach(b=>b.setAttribute("aria-current", n!=null && +b.dataset.n===n ? "true":"false"));
-  Object.entries(nodeEl).forEach(([id,e])=>{ if(n!=null && byId[id].r===n) e.setAttribute("data-lit",""); else e.removeAttribute("data-lit"); });
-}
-
-/* ── the board · two arrangements of the same cards ───────────────────── */
-function makeNode(n){
-  const b=el("button","node");
-  b.type="button"; b.id="n-"+n.id; b.dataset.id=n.id; b.setAttribute("aria-pressed","false");
-  if(n.key) b.dataset.key="1";
-  b.innerHTML=`${n.key?'<span class="keytag">keystone</span>':""}
-    <span class="nt">${mk(n.s)}<span>${n.t}</span></span><span class="nk">${n.k}</span>`;
-  b.addEventListener("click",()=>openNode(n.id));
-  nodeEl[n.id]=b;
-  return b;
-}
-
-function groupsFor(l){
-  return l==="chain"
-    ? STAGES.map(s=>({ k:s.k, h:s.h, title:s.note, nodes:NODES.filter(n=>n.stage===s.id) }))
-    : ["done","running","planned"].map(s=>({ k:mk(s), h:SHEAD[s], title:"", nodes:NODES.filter(n=>n.s===s) }));
-}
-
-function paint(l){
-  const board=$("#board"), layer=$("#threadlayer");
-  $$(".group",board).forEach(g=>g.remove());
-  groupsFor(l).forEach(g=>{
-    const col=el("div","group");
-    const h=el("div","ghead",`<span class="k">${g.k}</span><span class="h">${g.h}</span><span class="n">${g.nodes.length}</span>`);
-    if(g.title) h.title=g.title;
-    col.appendChild(h);
-    g.nodes.forEach(n=>col.appendChild(nodeEl[n.id]||makeNode(n)));
-    board.appendChild(col);
-  });
-  board.appendChild(layer);
-  board.dataset.lens=l;
-}
-
-function setLens(l){
-  if(l===lens) return;
-  const before={}; Object.entries(nodeEl).forEach(([id,e])=>before[id]=e.getBoundingClientRect());
-  lens=l; paint(l);
-  $$(".lens button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.lens===l ? "true":"false"));
-  $("#lenswhy").textContent = l==="chain"
-    ? "Six stages, left to right, in the order the work has to happen."
-    : "The same twenty-three cards, sorted by how much of each one is actually finished.";
-  if(!noMotion){
-    Object.entries(nodeEl).forEach(([id,e])=>{
-      const a=before[id], b=e.getBoundingClientRect();
-      const dx=a.left-b.left, dy=a.top-b.top;
-      if(!dx && !dy) return;
-      e.style.transform=`translate(${dx}px,${dy}px)`;
-    });
-    requestAnimationFrame(()=>{
-      Object.values(nodeEl).forEach(e=>{ e.classList.add("flip"); e.style.transform=""; });
-      setTimeout(()=>{ Object.values(nodeEl).forEach(e=>e.classList.remove("flip")); redraw(); }, 640);
-    });
-  }
-  redraw();
-}
-
-/* ── threads ──────────────────────────────────────────────────────────── */
-function buildThreadbar(){
-  const bar=$("#threadbar");
-  THREADS.forEach(t=>{
-    const b=el("button","tbtn",`<span class="sw"></span>${t.name}`);
-    b.type="button"; b.style.setProperty("--c",t.c); b.dataset.t=t.id; b.setAttribute("aria-pressed","false");
-    b.addEventListener("click",()=>setThread(activeThread===t.id?null:t.id));
-    bar.appendChild(b);
-  });
-  const c=el("button","tbtn tbtn--clear","Clear"); c.type="button";
-  c.addEventListener("click",()=>{ setThread(null); pinnedStation=null; hoverStation=null; applyStation(); closeNode(); });
-  bar.appendChild(c);
-}
-
-const IDLE = `<em>Pick a thread to light the route it takes across the board, or hover a station on
-  the loop. A thread is how a result at the bench turns into a number a farmer could act on, and it
-  crosses every stage to get there.</em>`;
-function setReadout(html){ $("#readout").innerHTML = html || (activeThread ? THREADS.find(t=>t.id===activeThread).say : IDLE); }
-
-function setThread(id){
-  activeThread=id;
-  const board=$("#board");
-  $$(".tbtn[data-t]").forEach(b=>b.setAttribute("aria-pressed", b.dataset.t===id ? "true":"false"));
-  Object.values(nodeEl).forEach(n=>n.removeAttribute("data-on"));
-  if(!id){ delete board.dataset.thread; board.style.removeProperty("--c"); setReadout(); return drawThread(null); }
-  const t=THREADS.find(x=>x.id===id);
-  board.dataset.thread=id; board.style.setProperty("--c",t.c);
-  t.path.forEach(nid=>nodeEl[nid] && nodeEl[nid].setAttribute("data-on",""));
-  setReadout(); drawThread(t);
-}
-
-function drawThread(t){
-  const board=$("#board"), layer=$("#threadlayer");
-  const br=board.getBoundingClientRect();
-  layer.setAttribute("viewBox",`0 0 ${br.width} ${br.height}`);
-  layer.setAttribute("width",br.width); layer.setAttribute("height",br.height);
-  layer.innerHTML="";
-  if(!t) return;
-  const R=t.path.map(id=>{ const e=nodeEl[id]; if(!e) return null; const r=e.getBoundingClientRect();
-    return { l:r.left-br.left, r:r.right-br.left, t:r.top-br.top, b:r.bottom-br.top,
-             cx:r.left-br.left+r.width/2, cy:r.top-br.top+r.height/2 }; }).filter(Boolean);
-  let d="", len=0;
-  for(let i=0;i<R.length-1;i++){
-    const a=R[i], b=R[i+1];
-    if(b.l > a.r-2){
-      const k=Math.max(18,(b.l-a.r)*0.55);
-      d+=`M${a.r},${a.cy} C${a.r+k},${a.cy} ${b.l-k},${b.cy} ${b.l},${b.cy} `;
-      len+=Math.hypot(b.l-a.r,b.cy-a.cy)+k;
-    }else if(a.l > b.r-2){
-      const k=Math.max(18,(a.l-b.r)*0.55);
-      d+=`M${a.l},${a.cy} C${a.l-k},${a.cy} ${b.r+k},${b.cy} ${b.r},${b.cy} `;
-      len+=Math.hypot(a.l-b.r,b.cy-a.cy)+k;
-    }else{
-      const dn=b.t>a.b, from={x:a.cx,y:dn?a.b:a.t}, to={x:b.cx,y:dn?b.t:b.b};
-      const k=Math.max(9,Math.abs(to.y-from.y)*0.4), sg=dn?1:-1;
-      d+=`M${from.x},${from.y} C${from.x},${from.y+k*sg} ${to.x},${to.y-k*sg} ${to.x},${to.y} `;
-      len+=Math.abs(to.y-from.y)+k;
-    }
-  }
-  const p=sv("path",{d:d,fill:"none",stroke:t.c,"stroke-width":2.2,"stroke-linecap":"round","stroke-opacity":".95"});
-  layer.appendChild(p);
-  if(!noMotion){
-    const L=Math.max(len,1)*1.2;
-    p.style.strokeDasharray=L; p.style.strokeDashoffset=L; p.getBoundingClientRect();
-    p.style.transition="stroke-dashoffset 700ms cubic-bezier(.16,1,.3,1)";
-    p.style.strokeDashoffset=0;
-  }
-}
-function redraw(){ drawThread(activeThread ? THREADS.find(t=>t.id===activeThread) : null); }
-
-/* ── detail, over the canvas ──────────────────────────────────────────── */
-function openNode(id){
-  const n=byId[id]; if(!n) return;
-  activeNode=id;
-  Object.values(nodeEl).forEach(b=>b.setAttribute("aria-pressed", b.dataset.id===id ? "true":"false"));
-  const stage=STAGES.find(s=>s.id===n.stage);
-  const on=THREADS.filter(t=>t.path.includes(id));
-  const st=RING.find(s=>s.n===n.r);
-  const d=$("#detail"); d.dataset.open="1";
-  d.innerHTML=`<div class="card">
-    <div class="dhead">
-      <span class="st">${stage.k} · ${stage.h}</span>
-      <h3>${n.t}</h3>
-      <span class="st">${mk(n.s)} ${SLABEL[n.s]}</span>
-      <button class="dclose" type="button">Close ✕</button>
-    </div>
-    <div class="dgrid">
-      <div>
-        <div class="dbody">${n.body.map(p=>`<p>${p}</p>`).join("")}</div>
-        ${n.sub?`<ul class="dsub">${n.sub.map(s=>`<li>${mk(s.s)}<span>${s.t}</span><span class="s">${SLABEL[s.s]}</span></li>`).join("")}</ul>`:""}
-      </div>
-      <div class="dside">
-        <div class="dfact"><span class="label">What it produces</span><span>${n.produces}</span></div>
-        <div class="dfact"><span class="label">What it hands on</span><span>${n.feeds}</span></div>
-        <div class="dfact"><span class="label">Where it sits in the loop</span><span>${st?`Step ${st.n}, ${st.t.toLowerCase()}`:"Outside the loop. This is the work that decides whether the loop is allowed to exist at all."}</span></div>
-        ${on.length?`<div class="dfact"><span class="label">On these threads</span><div class="chiprow">${on.map(t=>`<button class="chip" type="button" data-t="${t.id}" style="--c:${t.c}">${t.name}</button>`).join("")}</div></div>`:""}
-        ${n.links?`<div class="dfact"><span class="label">Published</span><div class="chiprow">${n.links.map(l=>`<a class="chip" href="${l.u}" target="_blank" rel="noopener" style="--c:var(--color-accent)">${l.t} ↗</a>`).join("")}</div></div>`:""}
-      </div>
-    </div></div>`;
-  $(".dclose",d).addEventListener("click",closeNode);
-  $$(".chip[data-t]",d).forEach(c=>c.addEventListener("click",()=>{ setThread(c.dataset.t); closeNode(); }));
-}
-function closeNode(){
-  activeNode=null; $("#detail").dataset.open="0"; $("#detail").innerHTML="";
-  Object.values(nodeEl).forEach(b=>b.setAttribute("aria-pressed","false"));
-}
-
-/* ── the arithmetic ───────────────────────────────────────────────────── */
-function buildConv(){
-  const c=$("#conv");
-  CONV.forEach(r=>{
-    const b=el(r.owner?"button":"div","step"+(r.have?" step--have":""));
-    if(r.owner){ b.type="button"; b.addEventListener("click",()=>{ openNode(r.owner); }); }
-    else b.style.cursor="default";
-    b.innerHTML=`<span class="op">${r.op||"·"}</span><span><span class="q">${r.q}</span>
-      <span class="slot">${r.have?`<b>${r.v}</b>`:r.v}<i>${r.cite || (r.owner?byId[r.owner].t:"")}</i></span></span>`;
-    c.appendChild(b);
-  });
-  $("#claimtext").textContent=END.claim;
-  $("#claimsub").textContent=END.sub;
-}
-
-/* ── the counts · read off the board, never typed by hand ─────────────── */
-function buildCounts(){
-  const C=$("#counts");
-  ["done","running","planned"].forEach(s=>{
-    const n=NODES.filter(x=>x.s===s).length;
-    C.appendChild(el("div","count",
-      `<span class="n">${n}<span> / ${NODES.length}</span></span><span class="l">${mk(s)} ${SLABEL[s]}</span>`));
-  });
-  const sub=NODES.flatMap(n=>n.sub||[]);
-  C.appendChild(el("div","count",
-    `<span class="n">${sub.filter(x=>x.s==="done").length}<span> / ${sub.length}</span></span><span class="l">individual pieces finished</span>`));
-}
-
-/* ── init ─────────────────────────────────────────────────────────────── */
-buildSpine(); paint("chain"); buildThreadbar(); buildConv(); buildCounts(); setReadout();
-$("#outside").innerHTML=`<b>Outside the loop</b>${NODES.filter(n=>n.r===0).map(n=>n.t).join(" · ")}.
-  Not steps of the machine. They decide whether it is allowed to exist, who owns it, and who hears
-  about it.`;
-$$(".lens button").forEach(b=>b.addEventListener("click",()=>setLens(b.dataset.lens)));
-
-let rt; addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(redraw,130); });
-addEventListener("keydown",e=>{ if(e.key==="Escape"){ closeNode(); setThread(null); pinnedStation=null; applyStation(); } });
-$("#detail").addEventListener("click",e=>{ if(e.target===e.currentTarget) closeNode(); });
-</script>
+<script src="assets/js/big-picture.js"></script>
 </body>
 </html>

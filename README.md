@@ -1,102 +1,93 @@
-# Project big picture
+# The big picture
 
-The terminal section of the ReLeaf homepage, built to stand alone while it is being developed.
+The closing section of the ReLeaf homepage, built to stand alone while it is being worked on.
 
 **Live page:** https://timmy97-tw.github.io/releaf-big-picture/
 
-## What this is
+Drawn on the wiki's own design tokens, copied unmodified from
+[`releaf-wiki`](https://github.com/Timmy97-TW/releaf-wiki) at `assets/css/tokens.css`, with the
+same self-hosted Inter. Nothing in this repo forks the palette or the type.
 
-A judge scrolls to the bottom of the homepage having been told what we believe. This is where they
-are shown that the work holds together. It occupies exactly one viewport and never scrolls the page,
-because the argument is that the project is one object, and an object you have to scroll is not one
-object.
+## What it is
 
-Twenty-three workstreams. They are not twenty-three projects. Each one sits on a single chain: a
-field in Taiwan, a molecule chosen for the stress in it, a machine that makes the molecule, an assay
-that says whether it did anything, and a route back to that field at a cost somebody will pay under a
-law that exists.
+A judge who has read the whole homepage arrives with one question left: does all of that add up to
+one thing. This section answers it as a drawing rather than a paragraph.
 
-## How the screen is divided
+Six numbered steps run left to right on a tinted band, from a field under stress to a crop that came
+through it, and the band ends in a dark block naming what still has to be true before the line
+reaches a farm. Above the band is what we made. Below it is how we know. A hairline returns along
+the bottom to the start, because the map and the farmers are both where the work began and where it
+goes back to.
 
-| | Column | Answers |
-|---|---|---|
-| left | **The loop** | What the thing is. Eight steps, one drawn open. |
-| centre | **The board** | What we did. All twenty-three workstreams, in two arrangements. |
-| right | **The arithmetic** | What it is for. Six numbers that either close or do not. |
-| foot | **Threads and counts** | How it hangs together, and how far along it honestly is. |
+Fourteen pieces of work, six steps, one end block. That is the resolution the drawing holds. An
+earlier version carried twenty-three workstreams with a subtitle each, and the subtitles turned
+fourteen cards into fourteen paragraphs competing with the line they were meant to feed.
 
-Each column filters the other two.
+## Reading it
 
-- **Hover a station on the loop** and the board shows only the work serving that step of the machine.
-  Four workstreams sit outside the loop entirely, and the left column names them.
-- **Pick a thread** and its route lights across the board. Six threads, drawn behind the cards so a
-  route reads as one continuous line rather than a hairball.
-- **Click an arithmetic row** and it opens the workstream that owes that number.
-- **Click any card** for what it produces, what it hands on, where it sits in the loop, and the
-  individual pieces of work inside it with their own status.
+- **Nothing opens.** No panel, no modal, no drawer, no page change. Every label is on screen before
+  you touch anything.
+- **Point at a step** and the work that feeds it lights up.
+- **Point at a piece of work** and it lights the step it joins, every step after that one, and the
+  block at the end. That is the answer to the only question worth asking of a figure like this:
+  how does my work reach a farm.
+- **Point at the end block** and the whole line lights.
+- One readout line under the drawing names the relationship in words. It is the only thing that
+  changes, and it changes in place.
 
-## The two arrangements
+Keyboard reaches all of it: every card is focusable and focus runs the same code path as hover.
 
-**By stage** puts the twenty-three cards in six columns, left to right, in the order the work has to
-happen. **By evidence** puts the same twenty-three cards into three bands: data in hand, under way,
-not yet run. The cards animate between the two arrangements rather than being redrawn, so it stays
-visible that it is one set of work seen two ways.
+## The marks
 
-The second arrangement is the one worth showing a judge. Trace *the molecule* thread under it and the
-route starts in the top band and finishes in the bottom, which says in one picture that the design is
-done and the biology is not.
+| Mark | Means |
+|---|---|
+| Filled | data in hand |
+| Hollow | built or running, result still open |
+| Dashed | designed, not run |
 
-## The rule this page keeps
+Most of this project is not finished, and drawing it as finished would be the one thing on the
+homepage that lies. Three of the six steps carry a sentence saying where the evidence stops, at the
+same size as the claim it limits. The end block names the three conditions the line still depends
+on, and says plainly that none of them is closed.
 
-Filled marks are data in hand. Outline marks are designed and not yet run. The counts at the foot are
-computed from the board at load, so they cannot be rounded up by hand.
+## Behaviour worth keeping
 
-Two slots in the arithmetic are open on purpose and will stay open. There is no bill-of-materials
-total, so no page of ours may say cheap, low-cost or affordable, or quote a per-unit price. Contained
-use is a classification we are pursuing rather than one we hold, and it has not been confirmed by a
-Taiwan regulator.
-
-No biological output has been measured. The light response is design intent and not a curve in our
-hands, the membrane is intended to retain every cell rather than demonstrated to, and no plant has
-received anything. Step 7 to step 8 of the loop is drawn as a gap because delivery currently stops at
-a reservoir.
-
-## The keystone
-
-One card carries a ring: **the reactor to hydroponics tandem run** (串聯bioreactor與水耕箱). It is the
-only experiment on the board that closes the chain end to end. Everything else proves a link. That
-one proves the line, and it is also what would close the open step of the loop, because it forces the
-reservoir to root-zone interface to exist rather than be deferred.
+- **Readable with no JavaScript and no motion.** The hidden state of the entrance is added by
+  script, never by the stylesheet, so with scripting off the drawing is simply there. Check with
+  `prefers-reduced-motion` before shipping a change.
+- **Under 820px the line turns vertical**: each step, then the work that made it, then the work
+  that checks it. Same markup, same order of argument, no second copy of the content to keep in
+  sync. Between 820 and 1060 the drawing scrolls sideways inside its own frame and says so.
+- **Two motion primitives only**: one entrance on first sight, one highlight on point. Nothing
+  scales, nothing bounces, and the focus ring is never transitioned.
 
 ## Merging into the homepage
 
-Single self-contained `index.html`. No build step and no dependencies beyond Google Fonts. Open it
-directly in a browser to work on it.
+Four steps.
 
-At merge time:
+1. Copy `assets/css/big-picture.css` and `assets/js/big-picture.js` into the wiki's `assets/`.
+2. Paste the `<section class="band bigpic">` element into `index.html`. It reads as the last band,
+   after **Explore our project**, which is `band--tint`, so this one stays on white.
+3. Add the stylesheet link and the script tag.
+4. Delete two things from this repo's copy: the `<div class="shell">` element and the whole inline
+   `<style>` block in the head. Both exist only so the standalone page has a body to sit in.
 
-1. Delete the whole `<div class="devshell">` element.
-2. Swap the Google Fonts link for the wiki's self-hosted, subset Source faces. The iGEM wiki blocks
-   external font hosts.
-3. Keep everything else. Tokens are lifted from the homepage (Studio theme, Source superfamily,
-   forest green anchor), so the section drops in without a reskin.
+The section also declares `--ink` and `--sig-green` in its own token block. `home.css` already
+defines both for the dark act, so those two lines can go at merge.
 
-The section claims one full viewport only where there is room to honour it. Below 821px wide or
-620px tall the same markup falls back to ordinary flow and scrolls, and a compressed tier steps
-every size down one notch on short laptop screens so no pane ever grows its own scrollbar.
+## A conflict worth knowing about
+
+`tokens.css` sets `--font-display` and `--font-body` to the same face. The pre-flight rule is to
+preserve a project's font stack rather than fork it, so this section does. The comment at the top of
+`tokens.css` already notes that the homepage brief argues against Inter and that swapping the site
+over is an edit to two variables. If that swap happens, this section follows it with no changes.
 
 ## Editing the content
 
-Everything readable on the page comes from four arrays at the top of the `<script>` block:
-`STAGES`, `THREADS`, `RING` with `EDGES`, `NODES`, and `CONV` with `END`. Add a workstream by adding
-one object to `NODES`; the board, the loop filter, the counts and the thread membership all follow.
-Nothing below the data block needs to change.
-
-## Sources
-
-Content is drawn from the team's project brief, the wet-lab instructor's assay list, the stakeholder
-engagement log and the regulation research. Where a number is not on record the page says so rather
-than guessing. Context figures are FAO, cited on the page.
+Everything readable is in `index.html`. A card is a `.chip` with `data-feeds="<step number>"` and a
+`data-say="..."` sentence. A step is a `.step` with `data-step` and `data-say`. The script reads
+those attributes and holds no content of its own, so adding a piece of work is one element and no
+JavaScript.
 
 Related pages: the [judging session board](https://timmy97-tw.github.io/judging-session-prep/) and
 the [iGEM bioreactor landscape](https://timmy97-tw.github.io/igem-bioreactor-landscape/).
