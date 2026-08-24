@@ -1,8 +1,12 @@
-# The big picture
+# The big picture &middot; V1
 
 The closing section of the ReLeaf homepage, built to stand alone while it is being worked on.
 
 **Live page:** https://timmy97-tw.github.io/releaf-big-picture/
+
+This repository is **V1** and is settled. It is tagged `v1`. A second reading of the same
+material, one level of abstraction higher, is being explored separately as V2; this one does not
+change to accommodate it.
 
 Drawn on the wiki's own design tokens, copied unmodified from
 [`releaf-wiki`](https://github.com/Timmy97-TW/releaf-wiki) at `assets/css/tokens.css`, with the
